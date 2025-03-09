@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>品質マニュアル要求事項の関連図 (大項目のみ)</title>
+    <link rel="stylesheet" href="diagram.css">
+</head>
+<body>
+    <h2 class="diagram-title">品質マニュアル要求事項の関連図 (大項目のみ)</h2>
+    <svg viewBox="0 0 800 600">
+        <!-- 矢印の定義 -->
+        <defs>
+            <marker id="arrowhead" viewBox="0 -5 10 10" refX="8" refY="0"
+                markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,-5L10,0L0,5" fill="#666"/>
+            </marker>
+        </defs>
+
+        <!-- 接続線 -->
+        <path d="M400,80 L400,180" class="link" />
+        <path d="M400,180 L250,280" class="link" />
+        <path d="M400,180 L550,280" class="link" />
+        <path d="M250,280 L400,380" class="link" />
+        <path d="M550,280 L400,380" class="link" />
+        <path d="M400,380 L250,480" class="link" />
+        <path d="M400,380 L550,480" class="link" />
+        <path d="M250,480 L550,480" class="link" />
+        <path d="M550,480 C650,480 650,80 400,80" class="link" />
+
+        <!-- ノード -->
+        <g class="node" transform="translate(320,55)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">4. 組織の状況</text>
+        </g>
+        <g class="node" transform="translate(320,155)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">5. リーダーシップ</text>
+        </g>
+        <g class="node" transform="translate(170,255)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">6. 計画</text>
+        </g>
+        <g class="node" transform="translate(470,255)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">7. 支援</text>
+        </g>
+        <g class="node" transform="translate(320,355)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">8. 運用</text>
+        </g>
+        <g class="node" transform="translate(170,455)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">9. パフォーマンス評価</text>
+        </g>
+        <g class="node" transform="translate(470,455)">
+            <rect width="160" height="50" rx="5"/>
+            <text x="80" y="25">10. 改善</text>
+        </g>
+    </svg>
+    <p class="diagram-note">※各項目にマウスを重ねると強調表示されます</p>
+</body>
+</html>
+
+

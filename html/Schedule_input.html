@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head><!DOCTYPE html>
+    <html>
+    <head>
+        <title>My Daily Schedule</title>
+        <style>
+            /* CSS styles */
+        </style>
+    </head>
+    <body>
+        <h1>My Daily Schedule</h1>
+
+        <div class="container">
+            <!-- Schedule table -->
+        </div>
+
+        <!-- Schedule input form -->
+        <div class="form">
+            <label for="time">Time:</label>
+            <input type="text" id="time" name="time">
+            <label for="event">Event:</label>
+            <input type="text" id="event" name="event">
+            <button onclick="addEvent()">Add Event</button>
+        </div>
+
+        <script>
+            function addEvent() {
+                // Get form data
+                let timeInput = document.getElementById("time");
+                let eventInput = document.getElementById("event");
+                let time = timeInput.value;
+                let event = eventInput.value;
+
+                // Create new schedule element
+                let scheduleElement = document.createElement("div");
+                scheduleElement.className = "schedule";
+                let timeElement = document.createElement("div");
+                timeElement.className = "schedule__time";
+                timeElement.innerText = time;
+                scheduleElement.appendChild(timeElement);
+                let eventElement = document.createElement("div");
+                eventElement.className = "schedule__event";
+                eventElement.innerText = event;
+                scheduleElement.appendChild(eventElement);
+
+                // Add new element to schedule
+                let scheduleContainer = document.querySelector(".container");
+                scheduleContainer.appendChild(scheduleElement);
+
+                // Reset form
+                timeInput.value = "";
+                eventInput.value = "";
+            }
+        </script>
+    </body>
+    </html>
+
+	<title>My Daily Schedule</title>
+	<style>
+		/* CSS styles */
+	</style>
+</head>
+<body>
+	<h1>My Daily Schedule</h1>
+
+	<div class="container">
+		<!-- Schedule table -->
+	</div>
+
+	<!-- Schedule input form -->
+	<div class="form">
+		<label for="time">Time:</label>
+		<input type="text" id="time" name="time">
+		<label for="event">Event:</label>
+		<input type="text" id="event" name="event">
+		<button onclick="addEvent()">Add Event</button>
+	</div>
+
+	<script>
+		function addEvent() {
+			// Get form data
+			let timeInput = document.getElementById("time");
+			let eventInput = document.getElementById("event");
+			let time = timeInput.value;
+			let event = eventInput.value;
+
+			// Create new schedule element
+			let scheduleElement = document.createElement("div");
+			scheduleElement.className = "schedule";
+			let timeElement = document.createElement("div");
+			timeElement.className = "schedule__time";
+			timeElement.innerText = time;
+			scheduleElement.appendChild(timeElement);
+			let eventElement = document.createElement("div");
+			eventElement.className = "schedule__event";
+			eventElement.innerText = event;
+			scheduleElement.appendChild(eventElement);
+
+			// Add new element to schedule
+			let scheduleContainer = document.querySelector(".container");
+			scheduleContainer.appendChild(scheduleElement);
+
+			// Reset form
+			timeInput.value = "";
+			eventInput.value = "";
+		}
+	</script>
+</body>
+</html>

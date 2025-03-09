@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全用品パッケージ表示規程</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 10px solid #ffcc00;
+        }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .document-date {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        .section {
+            background-color: white;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .section-header {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .section-number {
+            background-color: #333;
+            color: #ffcc00;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .section-content {
+            padding: 15px 20px;
+        }
+        h3 {
+            color: #333;
+            font-size: 16px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .note {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .important {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffcc00;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        .review-section {
+            background-color: #333;
+            color: white;
+            padding: 15px 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+        .review-section h2 {
+            color: #ffcc00;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,204,0,0.3);
+            padding-bottom: 10px;
+        }
+        .review-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* 目立たせる対象のレビュー項目 */
+        .review-item.highlight {
+            background-color: rgba(255, 204, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #ffcc00;
+            margin-left: -5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+        /* 目立たせる項目のタイトル */
+        .review-item.highlight h3 {
+            color: #ffcc00;
+            font-size: 20px;
+            margin-top: 0;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 8px;
+        }
+        /* 目立たせる項目の内容 */
+        .review-item.highlight p {
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .example {
+            font-style: italic;
+            background-color: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #999;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        /* 注目を集めるための点滅エフェクト（控えめに） */
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255,204,0,0.5); }
+            50% { box-shadow: 0 0 15px rgba(255,204,0,0.8); }
+            100% { box-shadow: 0 0 5px rgba(255,204,0,0.5); }
+        }
+        .highlight-effect {
+            animation: glow 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>安全用品パッケージ表示規程</h1>
+        <div class="document-date">作成日: 2025年3月5日</div>
+    </header>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">1</div>
+            墜落制止用器具
+        </div>
+        <div class="section-content">
+            <h3>パッケージに関する規程</h3>
+            <ul>
+                <li><strong>こん包の要件</strong>:
+                    <ul>
+                        <li>運搬中及び保管時の損傷・劣化を防ぐため、製品に対して適切なこん包を施す</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="note">
+                <p>※包装時の規定はありません。</p>
+                <p>ただし、購入者にとって必要な情報は記載するべき（使用可能質量等）。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">2</div>
+            防じんマスク
+        </div>
+        <div class="section-content">
+            <h3>パッケージに関する規程</h3>
+            <ul>
+                <li><strong>包装に表示する事項</strong>:
+                    <ul>
+                        <li>a) 品名（防じんマスク）</li>
+                        <li>b) 種類（隔離式／直結式・吸気補助具付き・使い捨て式）</li>
+                        <li>c) 等級</li>
+                        <li>d) 製造業者名</li>
+                        <li>e) <strong>製造年月</strong></li>
+                        <li>f) 使用限度時間（使い捨て式防じんマスクのみ）</li>
+                        <li>g) 商品名又は型式の名称</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="important">
+                <p>※上記は厚生労働省の「防じんマスクの規格」による本体表示の規定。</p>
+                <p>　ただし、上記は購入時、購入者にとって必要な表示なので包装にも必要。</p>
+                <p>※使い捨て式防じんマスクは製造年月表示ですが、取替え式防じんマスクは
+                　製造年月日表示必要。→ロットの大きさを小さくする為。→買取試験時、不合格
+                　発生時の対応。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">3</div>
+            防毒マスク
+        </div>
+        <div class="section-content">
+            <h3>パッケージに関する規程</h3>
+            <ul>
+                <li><strong>吸収缶の包装に表示する事項</strong>:
+                    <ul>
+                        <li>吸収缶の有効期限</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="important">
+                <p>※上記は工業会と厚生労働省との取り決め。→当社は製造日より2年</p>
+                <p>※本体又は取扱説明書に記載するべき事項は多々あります。</p>
+                <p>※購入時、購入者にとって必要な表示は包装に記載すべきだと思います。</p>
+                <p>※製造年月日表示必要。→ロットの大きさを小さくする為。→買取試験時、不合格
+                　発生時の対応。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">4</div>
+            電動ファン付き呼吸用保護具（PAPR）
+        </div>
+        <div class="section-content">
+            <h3>パッケージに関する規程</h3>
+            <ul>
+                <li><strong>包装に表示する事項</strong>:
+                    <ul>
+                        <li>a) 種類
+                            <ul>
+                                <li>呼吸用保護具の種類／形状による区分／電動ファンの性能による区分／漏れ率の等級／ろ過材の粒子捕集効率による等級</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="example">
+                例1: 電動ファン付き呼吸用保護具／面体形・直結式・全面形面体／大風量形／S級／PL3
+            </div>
+            <div class="example">
+                例2: 電動ファン付き呼吸用保護具／ルーズフィット形・隔離式・フード／通常風量形／B級／PS1
+            </div>
+            <ul>
+                <li>b) PAPRの商品名又は型式の名称</li>
+                <li>c) ろ過材の商品名又は記号（他の同類のろ過材と重複しない固有の名称又は記号）</li>
+            </ul>
+            <div class="note">
+                <p>※検討時期はもっと先でよいと思います。</p>
+                <p>　現行品の検討を優先するべきだと思います。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">5</div>
+            産業用ヘルメット
+        </div>
+        <div class="section-content">
+            <p>特に記載なし（包装に関する具体的な表示義務は明示されていない）</p>
+            <div class="note">
+                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">6</div>
+            ベルトラッシング
+        </div>
+        <div class="section-content">
+            <p>特に記載なし</p>
+            <div class="note">
+                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">7</div>
+            スリングベルト
+        </div>
+        <div class="section-content">
+            <p>特に記載なし</p>
+            <div class="note">
+                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">8</div>
+            保護めがね
+        </div>
+        <div class="section-content">
+            <h3>パッケージに関する規程</h3>
+            <ul>
+                <li><strong>包装に表示する事項</strong>:
+                    <p>次の事項を包装に表示しなければならない。なお、略号は一般に分かりやすい方法とする。</p>
+                    <ul>
+                        <li>a) 規格名称</li>
+                        <li>b) 形式又はその記号</li>
+                        <li>c) 製造業者名又はその略号</li>
+                        <li>d) <strong>製造年月</strong>又はその略号</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="important">
+                <p>※製造年月日表示必要。→ロットの大きさを小さくする為。</p>
+                <p>※JISでは</p>
+                <p>　・JISマーク（寸法規定あり）・TOYO・JQA→JQAとも契約済</p>
+                <p>　・規格名称：保護めがね</p>
+                <p>　・日本産業規格番号：JIS T 8147</p>
+                <p>　・記号：2025年改正される為、記号が変更になる品番があるので注意必要。</p>
+                <p>　・認証番号：JQ0507030</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header">
+            <div class="section-number">9</div>
+            自転車用ヘルメット
+        </div>
+        <div class="section-content">
+            <p>特に記載なし</p>
+            <div class="note">
+                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="review-section">
+        <h2>検討して欲しい事項</h2>
+
+        <!-- ハイライト表示したレビュー項目 -->
+        <div class="review-item highlight highlight-effect">
+            <h3>現状のロット表示の確認</h3>
+            <p>現状のロット表示がどのようになっているかを確認したい。</p>
+        </div>
+
+        <div class="review-item">
+            <h3>ロット番号について</h3>
+            <p>ロット№は製造年月日又は製造年月、等を使用しています。
+            しかし、理解不能なロット表示している製品が残っています。</p>
+            <div class="example">例：TB-21→501.63：№63の内職さんが2025年1月に製造？</div>
+            <ul>
+                <li>代理店、販売店の在庫が古いということわからないようにして欲しいという要請により？</li>
+                <li>製造日が分からないようにして販売するのでは時代に逆行。</li>
+                <li>以前、変更を依頼していたが、変更されていない品番が残っています。</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>本資料は安全用品パッケージ表示規程に関する内部用参考資料です</p>
+        <p>© 2025 東洋物産工業株式会社</p>
+    </footer>
+</body>
+</html>

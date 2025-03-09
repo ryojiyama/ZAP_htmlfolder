@@ -1,0 +1,71 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	text-align: center;
+	color: #555;
+	margin-top: 40px;
+}
+
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.schedule {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 40px;
+}
+
+.schedule__time {
+	display: table-cell;
+	width: 120px;
+	text-align: right;
+	vertical-align: top;
+	padding: 10px;
+	border-top: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	color: #777;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #f8f8f8;
+}
+
+.schedule__event {
+	display: table-cell;
+	padding: 10px;
+	border-top: 1px solid #ddd;
+	color: #555;
+	font-size: 16px;
+}
+
+.schedule__event--highlight {
+	background-color: #e6f7ff;
+	color: #0077c2;
+	font-weight: bold;
+}
+
+.schedule__event--complete {
+	background-color: #f2f2f2;
+	color: #bbb;
+	text-decoration: line-through;
+}
+
+.schedule__event--upcoming {
+	background-color: #fff4cc;
+	color: #996600;
+	font-style: italic;
+}
+
+.schedule__event--empty {
+	background-color: #fff;
+	color: #999;
+	font-style: italic;
+}

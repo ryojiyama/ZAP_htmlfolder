@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3ペインレイアウト - 目次・本文・関連リンク</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* 左ペイン: 関連文書リンク */
+        .related-pane {
+            width: 20%;
+            height: 100vh;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            padding: 20px;
+        }
+
+        .nav-pane h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4a6da7;
+            text-align: center;
+        }
+
+        .table-of-contents ul {
+            list-style: none;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 10px;
+        }
+
+        .table-of-contents a {
+            text-decoration: none;
+            color: #555;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .table-of-contents a:hover {
+            background: #e9ecef;
+        }
+
+        .table-of-contents a.active {
+            background: #4a6da7;
+            color: white;
+        }
+
+        /* 中央ペイン: 本文コンテンツ */
+        .content-pane {
+            width: 60%;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 300px;
+            padding-top: 20px;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #4a6da7;
+            padding-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        /* 右ペイン: 目次ナビゲーション */
+        .nav-pane {
+            width: 20%;
+            height: 100vh;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-left: 1px solid #e9ecef;
+            padding: 20px;
+        }
+
+        .related-pane h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4a6da7;
+            text-align: center;
+        }
+
+        .related-links ul {
+            list-style: none;
+        }
+
+        .related-links li {
+            margin-bottom: 15px;
+        }
+
+        .related-links a {
+            text-decoration: none;
+            color: #4a6da7;
+            display: block;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .related-links a:hover {
+            background: #e9ecef;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 992px) {
+            body {
+                flex-direction: column;
+                overflow-y: auto;
+                height: auto;
+            }
+
+            .nav-pane, .content-pane, .related-pane {
+                width: 100%;
+                height: auto;
+                overflow-y: visible;
+            }
+
+            .related-pane {
+                order: 1;
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+
+            .content-pane {
+                order: 2;
+            }
+
+            .nav-pane {
+                order: 3;
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+            }
+
+            .table-of-contents ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 左ペイン: 関連文書リンク -->
+    <div class="related-pane">
+        <h3>関連文書</h3>
+        <div class="related-links">
+            <ul>
+                <li><a href="#">レスポンシブデザインガイド</a></li>
+                <li><a href="#">CSSフレックスボックスの使い方</a></li>
+                <li><a href="#">効果的なナビゲーション設計</a></li>
+                <li><a href="#">ウェブアクセシビリティの基本</a></li>
+                <li><a href="#">JavaScriptイベント処理の最適化</a></li>
+                <li><a href="#">モダンなUIデザインのトレンド</a></li>
+                <li><a href="#">ユーザーエクスペリエンスの向上テクニック</a></li>
+                <li><a href="#">コンテンツ構造化のベストプラクティス</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 中央ペイン: 本文コンテンツ -->
+    <div class="content-pane">
+        <section id="section1" class="content-section">
+            <h2>はじめに</h2>
+            <p>このページでは、3ペインレイアウトの実装例をご紹介します。左に関連文書リンク、中央に本文コンテンツ、右に目次ナビゲーションという構成になっています。このレイアウトは情報量の多いドキュメントやマニュアル、技術資料などに適しています。</p>
+            <p>右側のナビゲーションからは、クリックで対応するセクションまで滑らかに移動することができます。また、現在表示中のセクションが目次上で強調表示されます。</p>
+            <p>左側の関連リンクからは、関連する文書や参考資料にアクセスすることができます。これにより、ユーザーは必要な情報に効率的にアクセスできます。</p>
+        </section>
+
+        <section id="section2" class="content-section">
+            <h2>特徴</h2>
+            <p>このレイアウトの主な特徴は以下の通りです：</p>
+            <p><strong>3ペイン構造</strong>：画面を左・中央・右の3つのエリアに分割し、それぞれ異なる役割を持たせています。これにより情報の整理と閲覧効率が向上します。</p>
+            <p><strong>固定表示のサイドバー</strong>：左右のペインは固定表示されるため、本文をスクロールしても常にアクセスできます。</p>
+            <p><strong>スムーススクロール</strong>：目次リンクのクリック時に、対応するセクションへ滑らかに移動します。</p>
+            <p><strong>アクティブ表示</strong>：現在閲覧しているセクションが目次上で強調表示されるため、ユーザーは常に自分の位置を把握できます。</p>
+            <p><strong>レスポンシブデザイン</strong>：画面サイズに応じてレイアウトが調整されます。小さな画面では縦型のレイアウトに切り替わります。</p>
+        </section>
+
+        <section id="section3" class="content-section">
+            <h2>使い方</h2>
+            <p>このレイアウトの実装は比較的シンプルです。必要なHTMLとCSSとJavaScriptの基本構造は以下の通りです：</p>
+            <p><strong>HTML</strong>：3つの主要なコンテナ（関連リンク、本文、目次）を作成します。本文内には各セクションを配置し、それぞれにユニークなIDを付与します。</p>
+            <p><strong>CSS</strong>：flexboxを使用して3つのペインを横に並べ、それぞれに適切な幅と高さを設定します。スクロールは本文部分のみに適用し、サイドバーは固定表示します。</p>
+            <p><strong>JavaScript</strong>：スムーススクロール機能と、スクロール位置に応じた目次項目のアクティブ表示を実装します。</p>
+            <p>このレイアウトは、コンテンツの種類や量に応じてカスタマイズすることができます。例えば、目次の階層を深くしたり、関連リンクにカテゴリーを設けたりといった拡張が可能です。</p>
+        </section>
+
+        <section id="section4" class="content-section">
+            <h2>応用例</h2>
+            <p>このレイアウトは以下のようなケースで特に効果的です：</p>
+            <p><strong>オンラインドキュメント</strong>：技術マニュアルやAPIドキュメントなど、体系的な情報を提供する場合に適しています。</p>
+            <p><strong>ヘルプセンター</strong>：サポート記事やFAQを掲載する際に、関連トピックへの素早いアクセスを提供できます。</p>
+            <p><strong>教育コンテンツ</strong>：オンライン講座や学習教材において、目次とリソースリンクを提供することで学習効率を向上させます。</p>
+            <p><strong>ポータルサイト</strong>：情報のハブとして機能するサイトでは、このレイアウトにより情報間の関連性を視覚的に示すことができます。</p>
+            <p>レイアウトの比率や色使いは、コンテンツの性質や量に応じて調整することができます。例えば、本文部分をより広くしたり、目次を階層的にしたりといったカスタマイズが可能です。</p>
+        </section>
+    </div>
+
+    <!-- 右ペイン: 目次ナビゲーション -->
+    <div class="nav-pane">
+        <h3>目次</h3>
+        <nav class="table-of-contents">
+            <ul>
+                <li><a href="#section1" class="active">はじめに</a></li>
+                <li><a href="#section2">特徴</a></li>
+                <li><a href="#section3">使い方</a></li>
+                <li><a href="#section4">応用例</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // コンテンツペイン要素の取得
+            const contentPane = document.querySelector('.content-pane');
+
+            // 目次リンクのクリックイベント
+            document.querySelectorAll('.table-of-contents a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // 対象セクションの取得
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+
+                    // コンテンツペイン内でのスクロール
+                    contentPane.scrollTo({
+                        top: targetSection.offsetTop - 30,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // スクロールイベント監視
+            const sections = document.querySelectorAll('.content-section');
+            const navLinks = document.querySelectorAll('.table-of-contents a');
+
+            contentPane.addEventListener('scroll', function() {
+                let current = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+
+                    // 現在のスクロール位置
+                    const scrollPosition = contentPane.scrollTop;
+
+                    // 現在表示されているセクションを特定
+                    // この「-100」の値を調整することで、ハイライト切り替えのタイミングを変更できます
+                    // 値を大きくすると早めに切り替わり、小さくすると遅めに切り替わります
+                    if (scrollPosition >= sectionTop - 500) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                // 対応する目次リンクをアクティブに
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

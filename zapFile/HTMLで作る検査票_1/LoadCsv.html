@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!-- 任意のCSVを読込"Kensa_Yoko3.html"の形式で並べてくれる。 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to Questions Converter</title>
+</head>
+<body>
+    <input type="file" id="csv-file" accept=".csv">
+    <pre id="output"></pre>
+    <script>
+        function loadQuestionsFromCsv(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const text = event.target.result;
+                const rows = text.split('\n');
+                const questions = rows.map(row => {
+                    const [id, text, type] = row.split(',');
+                    return { id, text, type };
+                });
+
+                // 結果を表示要素に設定します
+                const output = document.getElementById('output');
+                const formattedQuestions = questions.map(question => {
+                    return `{ id: '${question.id}', text: '${question.text}', type: '${question.type}' }`;
+                }).join('\n');
+                output.textContent = formattedQuestions;
+            };
+            reader.readAsText(file);
+        }
+
+        const fileInput = document.getElementById('csv-file');
+        fileInput.addEventListener('change', event => {
+            const file = event.target.files[0];
+            if (file) {
+                loadQuestionsFromCsv(file);
+            }
+        });
+    </script>
+</body>
+</html>
