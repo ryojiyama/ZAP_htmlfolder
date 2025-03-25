@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.questions-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.question {
+    width: 30%;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.question label {
+    font-weight: bold;
+}
+
+.question input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #FFF;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* メディアクエリでスマートフォン対応を追加 */
+@media screen and (max-width: 768px) {
+    form {
+        width: 100%;
+    }
+
+    .question {
+        width: 100%;
+    }
+}

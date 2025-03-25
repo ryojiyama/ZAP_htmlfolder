@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>製品検査アンケート</title>
+	<link rel="stylesheet" type="text/css" href="Kensa_Style0413.css">
+</head>
+<body>
+    <div class="container">
+        <h1>製品検査アンケート</h1>
+        <form id="survey-form">
+            <div class="questions-container">
+                <!-- 問題は、JavaScriptで動的に生成されます -->
+            </div>
+        </form>
+        <button id="submit-btn" onclick="submitSurvey()">回答を送信</button>
+    </div>
+    <script>
+        const questions = [
+            { id: 'Q1', text: '設問1のテキスト', type: 'number' },
+            { id: 'Q2', text: '設問2のテキスト', type: 'text' },
+            { id: 'Q3', text: '設問3のテキスト', type: 'number' },
+            // 他の設問を追加してください。
+        ];
+
+        function addQuestion(question) {
+            const form = document.getElementById('survey-form').querySelector('.questions-container');
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `
+                <label for="${question.id}">${question.text}</label>
+                <input id="${question.id}" type="${question.type}" required>
+            `;
+            form.appendChild(div);
+        }
+
+        function displayQuestions() {
+            for (const question of questions) {
+                addQuestion(question);
+            }
+        }
+
+        displayQuestions();
+
+        function exportToCsv(answers) {
+            // 設問IDを1行目に追加
+            const header = questions.map(question => question.id).join(',');
+
+            // 回答データを2行目に追加
+            const data = answers.map(answer => answer.value).join(',');
+
+            // CSVデータを作成し、headerとdataを改行で区切る
+            const csv = 'data:text/csv;charset=utf-8,' + header + '\n' + data;
+
+            // ダウンロードリンクの作成とクリック処理
+            const link = document.createElement('a');
+            link.setAttribute('href', encodeURI(csv));
+            link.setAttribute('download', 'answers.csv');
+            link.click();
+        }
+
+        function submitSurvey() {
+            const answers = [];
+            for (const question of questions) {
+                const input = document.getElementById(question.id);
+                answers.push({ questionId: question.id, value: input.value });
+            }
+            exportToCsv(answers);
+        }
+    </script>
+</body>
+</html>
