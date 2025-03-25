@@ -3,232 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>安全用品パッケージ表示規程</title>
+    <title>パッケージ管理の現状と主な問題点</title>
     <link rel="stylesheet" href="../css/branding_package_kitei.css">
 </head>
 <body>
     <header>
-        <h1>安全用品パッケージ表示規程</h1>
-        <div class="document-date">作成日: 2025年3月5日</div>
+        <h1>パッケージ管理の現状と主な問題点</h1>
+        <div class="document-date">作成日: 2025年3月26日</div>
     </header>
 
     <div class="section">
         <div class="section-header">
             <div class="section-number">1</div>
-            墜落制止用器具
+            システム管理上の問題点
         </div>
         <div class="section-content">
-            <h3>パッケージに関する規程</h3>
             <ul>
-                <li><strong>こん包の要件</strong>:
+                <li><strong>二重管理による不整合</strong>:
                     <ul>
-                        <li>運搬中及び保管時の損傷・劣化を防ぐため、製品に対して適切なこん包を施す</li>
+                        <li>基幹システム(Gen)では「部品」として個別IDで管理</li>
+                        <li>品質管理部では「版番号付き書類」として別形式で管理</li>
+                        <li>データと実物が正しく紐づいていない</li>
+                    </ul>
+                </li>
+                <li><strong>バージョン管理の課題</strong>:
+                    <ul>
+                        <li>修正版が入荷すると古いバージョンと新しいバージョンが倉庫内に混在</li>
+                        <li>新旧バージョン切替時のプロセスが明確でない</li>
+                    </ul>
+                </li>
+                <li><strong>ISO規定対応の不備</strong>:
+                    <ul>
+                        <li>「パッケージ」と「取扱説明書」は文書化した情報として管理対象だが適切に管理できていない</li>
                     </ul>
                 </li>
             </ul>
-            <div class="note">
-                <p>※包装時の規定はありません。</p>
-                <p>ただし、購入者にとって必要な情報は記載するべき（使用可能質量等）。</p>
-            </div>
         </div>
     </div>
 
     <div class="section">
         <div class="section-header">
             <div class="section-number">2</div>
-            防じんマスク
+            製品別パッケージの法令・規格対応の整理
         </div>
         <div class="section-content">
-            <h3>パッケージに関する規程</h3>
+            <h3>パッケージ表示要件がある製品</h3>
             <ul>
-                <li><strong>包装に表示する事項</strong>:
+                <li><strong>防じんマスク</strong>:
                     <ul>
-                        <li>a) 品名（防じんマスク）</li>
-                        <li>b) 種類（隔離式／直結式・吸気補助具付き・使い捨て式）</li>
-                        <li>c) 等級</li>
-                        <li>d) 製造業者名</li>
-                        <li>e) <strong>製造年月</strong></li>
-                        <li>f) 使用限度時間（使い捨て式防じんマスクのみ）</li>
-                        <li>g) 商品名又は型式の名称</li>
+                        <li>必須表示：品名、種類、等級、製造業者名、製造年月、使用限度時間（使い捨て式のみ）、商品名/型式</li>
+                        <li>取替え式は製造年月日表示が必要（不適合の際のロットを小さくするための処置）</li>
+                    </ul>
+                </li>
+                <li><strong>防毒マスク</strong>:
+                    <ul>
+                        <li>吸収缶の包装に有効期限表示が必要（当社は製造日より2年）</li>
+                        <li>製造年月日表示が必要（不適合の際のロットを小さくするための処置）</li>
+                    </ul>
+                </li>
+                <li><strong>電動ファン付き呼吸用保護具(PAPR)</strong>:
+                    <ul>
+                        <li>表示要件：
+                            <ul>
+                                <li>呼吸用保護具の種類</li>
+                                <li>形状による区分</li>
+                                <li>電動ファンの性能による区分</li>
+                                <li>漏れ率の等級</li>
+                                <li>ろ過材の粒子捕集効率による等級</li>
+                            </ul>
+                        </li>
+                        <li>商品名または型式の名称、ろ過材の商品名または記号</li>
+                    </ul>
+                </li>
+                <li><strong>保護めがね</strong>:
+                    <ul>
+                        <li>必須表示：規格名称、形式またはその記号、製造業者名またはその略号、製造年月またはその略号</li>
+                        <li>製造年月日表示が必要（ロットを小さくするため）</li>
                     </ul>
                 </li>
             </ul>
-            <div class="important">
-                <p>※上記は厚生労働省の「防じんマスクの規格」による本体表示の規定。</p>
-                <p>　ただし、上記は購入時、購入者にとって必要な表示なので包装にも必要。</p>
-                <p>※使い捨て式防じんマスクは製造年月表示ですが、取替え式防じんマスクは
-                　製造年月日表示必要。→ロットの大きさを小さくする為。→買取試験時、不合格
-                　発生時の対応。</p>
-            </div>
+
+            <h3>パッケージ表示要件が明示されていない製品</h3>
+            <ul>
+                <li><strong>墜落制止用器具</strong>:
+                    <ul>
+                        <li>こん包要件のみ：運搬中・保管時の損傷・劣化防止のため適切なこん包が必要</li>
+                    </ul>
+                </li>
+                <li><strong>産業用ヘルメット</strong>:
+                    <ul>
+                        <li>特に記載なし</li>
+                    </ul>
+                </li>
+                <li><strong>ベルトラッシング</strong>:
+                    <ul>
+                        <li>特に記載なし</li>
+                    </ul>
+                </li>
+                <li><strong>スリングベルト</strong>:
+                    <ul>
+                        <li>特に記載なし</li>
+                    </ul>
+                </li>
+                <li><strong>自転車用ヘルメット</strong>:
+                    <ul>
+                        <li>特に記載なし</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
 
     <div class="section">
         <div class="section-header">
             <div class="section-number">3</div>
-            防毒マスク
+            実務上の問題点
         </div>
         <div class="section-content">
-            <h3>パッケージに関する規程</h3>
             <ul>
-                <li><strong>吸収缶の包装に表示する事項</strong>:
+                <li><strong>ブリスター製品の使いづらさ</strong>:
                     <ul>
-                        <li>吸収缶の有効期限</li>
+                        <li>台紙をホッチキスやP鋲で固定しており、取り扱いが不便</li>
+                    </ul>
+                </li>
+                <li><strong>ヘルメット関連製品の検査性</strong>:
+                    <ul>
+                        <li>パッケージ袋の開封方向が統一されていないので不便。</li>
+                        <li>検査後の復元が困難</li>
                     </ul>
                 </li>
             </ul>
-            <div class="important">
-                <p>※上記は工業会と厚生労働省との取り決め。→当社は製造日より2年</p>
-                <p>※本体又は取扱説明書に記載するべき事項は多々あります。</p>
-                <p>※購入時、購入者にとって必要な表示は包装に記載すべきだと思います。</p>
-                <p>※製造年月日表示必要。→ロットの大きさを小さくする為。→買取試験時、不合格
-                　発生時の対応。</p>
-            </div>
         </div>
     </div>
 
     <div class="section">
         <div class="section-header">
             <div class="section-number">4</div>
-            電動ファン付き呼吸用保護具（PAPR）
+            今後の課題
         </div>
         <div class="section-content">
-            <h3>パッケージに関する規程</h3>
             <ul>
-                <li><strong>包装に表示する事項</strong>:
+                <li><strong>システム連携の改善</strong>:
                     <ul>
-                        <li>a) 種類
-                            <ul>
-                                <li>呼吸用保護具の種類／形状による区分／電動ファンの性能による区分／漏れ率の等級／ろ過材の粒子捕集効率による等級</li>
-                            </ul>
-                        </li>
+                        <li>旧在庫がなくなった際の新バージョン切替トリガーの設定</li>
+                        <li>在庫減少時のアラート機能の実装</li>
+                    </ul>
+                </li>
+                <li><strong>ユーザビリティの向上</strong>:
+                    <ul>
+                        <li>ブリスター製品：ホッチキスやP鋲を使わない固定方法への改善</li>
+                        <li>ヘルメット関連：袋の開封方向を下側に統一し、検査後の復元を容易にする工夫をしてほしい。</li>
+                    </ul>
+                </li>
+                <li><strong>文書管理体制の整備</strong>:
+                    <ul>
+                        <li>ISO規定に準拠した文書管理システムの構築</li>
+                        <li>パッケージデータの一元管理の実現</li>
+                    </ul>
+                </li>
+                <li><strong>ロット表示の確認と改善</strong>:
+                    <ul>
+                        <li>現状のロット表示方法を確認</li>
+                        <li>理解困難なロット表示（例：TB-21→501.63）の改善</li>
+                        <li>製造日を明確に表示する方法への統一</li>
                     </ul>
                 </li>
             </ul>
-            <div class="example">
-                例1: 電動ファン付き呼吸用保護具／面体形・直結式・全面形面体／大風量形／S級／PL3
-            </div>
-            <div class="example">
-                例2: 電動ファン付き呼吸用保護具／ルーズフィット形・隔離式・フード／通常風量形／B級／PS1
-            </div>
-            <ul>
-                <li>b) PAPRの商品名又は型式の名称</li>
-                <li>c) ろ過材の商品名又は記号（他の同類のろ過材と重複しない固有の名称又は記号）</li>
-            </ul>
-            <div class="note">
-                <p>※検討時期はもっと先でよいと思います。</p>
-                <p>　現行品の検討を優先するべきだと思います。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">
-            <div class="section-number">5</div>
-            産業用ヘルメット
-        </div>
-        <div class="section-content">
-            <p>特に記載なし（包装に関する具体的な表示義務は明示されていない）</p>
-            <div class="note">
-                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">
-            <div class="section-number">6</div>
-            ベルトラッシング
-        </div>
-        <div class="section-content">
-            <p>特に記載なし</p>
-            <div class="note">
-                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">
-            <div class="section-number">7</div>
-            スリングベルト
-        </div>
-        <div class="section-content">
-            <p>特に記載なし</p>
-            <div class="note">
-                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">
-            <div class="section-number">8</div>
-            保護めがね
-        </div>
-        <div class="section-content">
-            <h3>パッケージに関する規程</h3>
-            <ul>
-                <li><strong>包装に表示する事項</strong>:
-                    <p>次の事項を包装に表示しなければならない。なお、略号は一般に分かりやすい方法とする。</p>
-                    <ul>
-                        <li>a) 規格名称</li>
-                        <li>b) 形式又はその記号</li>
-                        <li>c) 製造業者名又はその略号</li>
-                        <li>d) <strong>製造年月</strong>又はその略号</li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="important">
-                <p>※製造年月日表示必要。→ロットの大きさを小さくする為。</p>
-                <p>※JISでは</p>
-                <p>　・JISマーク（寸法規定あり）・TOYO・JQA→JQAとも契約済</p>
-                <p>　・規格名称：保護めがね</p>
-                <p>　・日本産業規格番号：JIS T 8147</p>
-                <p>　・記号：2025年改正される為、記号が変更になる品番があるので注意必要。</p>
-                <p>　・認証番号：JQ0507030</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">
-            <div class="section-number">9</div>
-            自転車用ヘルメット
-        </div>
-        <div class="section-content">
-            <p>特に記載なし</p>
-            <div class="note">
-                <p>※購入時、購入者にとって必要な表示は包装（梱包）に記載すべきだと思います。</p>
-            </div>
         </div>
     </div>
 
     <div class="review-section">
-        <h2>検討して欲しい事項</h2>
+        <h2>検討事項のまとめ</h2>
 
-        <!-- ハイライト表示したレビュー項目 -->
         <div class="review-item highlight highlight-effect">
-            <h3>現状のロット表示の確認</h3>
-            <p>現状のロット表示がどのようになっているかを確認したい。</p>
+            <h3>パッケージ版管理の一元化</h3>
+            <p>基幹システムと品質管理部門での管理を一元化し、データと実物の紐づけを確実にする仕組みの構築</p>
         </div>
 
         <div class="review-item">
-            <h3>ロット番号について</h3>
-            <p>ロット№は製造年月日又は製造年月、等を使用しています。
-            しかし、理解不能なロット表示している製品が残っています。</p>
-            <div class="example">例：TB-21→501.63：№63の内職さんが2025年1月に製造？</div>
-            <ul>
-                <li>代理店、販売店の在庫が古いということわからないようにして欲しいという要請により？</li>
-                <li>製造日が分からないようにして販売するのでは時代に逆行。</li>
-                <li>以前、変更を依頼していたが、変更されていない品番が残っています。</li>
-            </ul>
+            <h3>製品別表示要件の標準化</h3>
+            <p>法令・規格で要求される表示要件を満たしつつ、社内での表示方法を可能な限り標準化する</p>
+        </div>
+
+        <div class="review-item">
+            <h3>作業性・検査性の向上</h3>
+            <p>ブリスター製品の固定方法改善やヘルメット関連製品のパッケージ開封方向統一など、現場作業の効率化</p>
         </div>
     </div>
 
     <footer>
-        <p>本資料は安全用品パッケージ表示規程に関する内部用参考資料です</p>
-        <p>© 2025 東洋物産工業株式会社</p>
+        <p>本資料はパッケージ管理体制の改善に関する内部用資料です</p>
+        <p>© 2025 品質保証本部</p>
     </footer>
 </body>
 </html>
