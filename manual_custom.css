@@ -1,0 +1,9 @@
+#quality-manual {
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+#SuiteNavWrapper, #spCommandBar, #spLeftNav {
+  display: none !important;
+}

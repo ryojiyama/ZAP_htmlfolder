@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>製品分類</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* 大カテゴリ用アコーディオン */
+        .accordion {
+            background-color: #f1f1f1;
+            color: #333;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            position: relative;
+            display: flex; /* 追加: flexbox を使用 */
+            align-items: center; /* 追加: 垂直方向中央揃え */
+        }
+
+        .active, .accordion:hover {
+            background-color: #ddd;
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            margin-bottom: 5px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* 中カテゴリ用アコーディオン */
+        .sub-accordion {
+            background-color: #e7e7e7;
+            color: #444;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.3s;
+            font-size: 15px;
+            border-radius: 4px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .sub-accordion img{
+            height: 80px;
+            margin-right: 40px;
+            vertical-align: middle;
+        }
+
+        .sub-accordion:hover {
+            background-color: #d7d7d7;
+        }
+
+        .sub-accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .sub-active:after {
+            content: "\2212";
+        }
+
+        .sub-panel {
+            padding: 0 15px;
+            background-color: #f9f9f9;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            margin-bottom: 5px;
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* 小カテゴリ用アコーディオン */
+        .item-accordion {
+            background-color: #eef0f2;
+            color: #555;
+            cursor: pointer;
+            padding: 12px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.3s;
+            font-size: 14px;
+            border-radius: 3px;
+            margin: 3px 0;
+        }
+
+        .item-accordion:hover {
+            background-color: #e0e3e6;
+        }
+
+        .item-accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .item-active:after {
+            content: "\2212";
+        }
+
+        .item-panel {
+            padding: 0 12px;
+            background-color: #fafbfc;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            margin-bottom: 3px;
+            border-radius: 0 0 3px 3px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 5px;
+            margin: 10px 0;
+        }
+
+        li {
+            padding: 6px 0;
+        }
+
+        .product-no {
+            color: #666;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* 画像用スタイル */
+        .accordion img {
+            height: 100px; /* 画像の高さを調整 */
+            margin-right: 40px; /* テキストとの間隔 */
+            vertical-align: middle; /* テキストと垂直方向中央揃え */
+        }
+    </style>
+</head>
+<body>
+    <h1>製品分類</h1>
+
+    <!-- ヘルメット -->
+    <button class="accordion">
+        1. ヘルメット
+    </button>
+    <div class="panel">
+        <button class="sub-accordion">1. 保護帽<img src="../image/package_typeF.png" alt="TypeF"></button>
+        <div class="sub-panel">
+            <button class="item-accordion">1. 熱可塑性</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.110</span></li>
+                    <li><span class="product-no">No.111FOT</span></li>
+                    <li><span class="product-no">No.170</span></li>
+                    <li><span class="product-no">No.170FSHOT</span></li>
+                    <li><span class="product-no">No.171</span></li>
+                    <li><span class="product-no">No.300</span></li>
+                    <li><span class="product-no">No.310</span></li>
+                    <li><span class="product-no">No.360</span></li>
+                    <li><span class="product-no">No.370FOT</span></li>
+                    <li><span class="product-no">No.375FOT</span></li>
+                    <li><span class="product-no">No.380FOT</span></li>
+                    <li><span class="product-no">No.385FOT</span></li>
+                    <li><span class="product-no">No.390FOT</span></li>
+                    <li><span class="product-no">No.391F</span></li>
+                    <li><span class="product-no">No.391F</span></li>
+                    <li><span class="product-no">No.392F</span></li>
+                    <li><span class="product-no">No.393F</span></li>
+                    <li><span class="product-no">No.395F</span></li>
+                    <li><span class="product-no">No.396F</span></li>
+                    <li><span class="product-no">No.396FEM</span></li>
+                    <li><span class="product-no">No.397F</span></li>
+                    <li><span class="product-no">No.397FSHSC</span></li>
+                    <li><span class="product-no">No.398F</span></li>
+                    <li><span class="product-no">No.3220F</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">2. FRP</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.217</span></li>
+                    <li><span class="product-no">No.260</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">3. 折りたたみヘルメット</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.100</span></li>
+                    <li><span class="product-no">No.101</span></li>
+                    <li><span class="product-no">No.105</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="sub-accordion">2. ケーボー</button>
+        <div class="sub-panel">
+            <ul>
+                <li><span class="product-no">No.80</span></li>
+                <li><span class="product-no">No.81</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- スリング -->
+    <button class="accordion">2. スリング</button>
+    <div class="panel">
+        <button class="sub-accordion">1. 3等級<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">キングスリングベルト</span></li>
+                <li><span class="product-no">ノンスリップキングスリングベルト</span></li>
+                <li><span class="product-no">Aスリングベルト</span></li>
+                <li><span class="product-no">キングスリングベルト・エンドレス形</span></li>
+                <li><span class="product-no">キングスリングベルト・モッコ形</span></li>
+            </ul>
+        </div>
+
+        <button class="sub-accordion">1. 4等級<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">Jスリングベルト</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 防じんマスク -->
+    <button class="accordion">3. 防じんマスク</button>
+    <div class="panel">
+        <button class="sub-accordion">1. 使い捨て式<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="sub-panel">
+            <button class="item-accordion">1. DS1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1700</span></li>
+                    <li><span class="product-no">No.1700A</span></li>
+                    <li><span class="product-no">No.1702</span></li>
+                    <li><span class="product-no">No.1702A</span></li>
+                    <li><span class="product-no">No.1707</span></li>
+                    <li><span class="product-no">No.1707A</span></li>
+                    <li><span class="product-no">No.1717</span></li>
+                    <li><span class="product-no">No.1717A</span></li>
+                    <li><span class="product-no">No.1709C</span></li>
+                    <li><span class="product-no">No.1709</span></li>
+                    <li><span class="product-no">No.1732</span></li>
+                    <li><span class="product-no">No.1732A</span></li>
+                    <li><span class="product-no">No.1733</span></li>
+                    <li><span class="product-no">No.1733A</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">2. DS2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">3. DS3</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">4. スリープライマスク</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1785</span></li>
+                    <li><span class="product-no">No.1785KD</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">5. 検定外マスク</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1705</span></li>
+                    <li><span class="product-no">No.1750</span></li>
+                    <li><span class="product-no">No.1705A</span></li>
+                    <li><span class="product-no">No.1706</span></li>
+                    <li><span class="product-no">No.1760</span></li>
+                    <li><span class="product-no">No.1795</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="sub-accordion">2. 取替え式<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="sub-panel">
+            <button class="item-accordion">1. RS1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">2. RS2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1821</span></li>
+                    <li><span class="product-no">No.1826</span></li>
+                    <li><span class="product-no">No.1837</span></li>
+                    <li><span class="product-no">No.1830</span></li>
+                    <li><span class="product-no">No.1835</span></li>
+                    <li><span class="product-no">No.1835A</span></li>
+                    <li><span class="product-no">No.1836</span></li>
+                    <li><span class="product-no">No.1837</span></li>
+                    <li><span class="product-no">No.1840</span></li>
+                    <li><span class="product-no">No.1845</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">3. RS3</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">4. RL1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">5. RL2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">6. RL3</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1850N</span></li>
+                    <li><span class="product-no">No.1850B</span></li>
+                    <li><span class="product-no">No.1855</span></li>
+                    <li><span class="product-no">No.1887</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">7. 農薬用</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1830N</span></li>
+                    <li><span class="product-no">No.1880N</span></li>
+                </ul>
+            </div>
+            <button class="item-accordion">7. 塵埃用</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1500</span></li>
+                    <li><span class="product-no">No.1510</span></li>
+                    <li><span class="product-no">No.1518</span></li>
+                    <li><span class="product-no">No.1512</span></li>
+                    <li><span class="product-no">No.1600</span></li>
+                    <li><span class="product-no">No.1610</span></li>
+                    <li><span class="product-no">No.1614</span></li>
+                    <li><span class="product-no">No.1514</span></li>
+                    <li><span class="product-no">No.1550</span></li>
+                    <li><span class="product-no">No.1551</span></li>
+                    <li><span class="product-no">No.1560</span></li>
+                    <li><span class="product-no">No.1561</span></li>
+                    <li><span class="product-no">No.1513</span></li>
+                    <li><span class="product-no">No.1520</span></li>
+                    <li><span class="product-no">No.1521</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 防毒マスク -->
+    <button class="accordion">4. 防毒マスク</button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">No.1880</span></li>
+            <li><span class="product-no">No.1882</span></li>
+            <li><span class="product-no">No.1884</span></li>
+            <li><span class="product-no">No.1887</span></li>
+            <li><span class="product-no">No.1890</span></li>
+            <li><span class="product-no">No.1892</span></li>
+            <li><span class="product-no">No.1894</span></li>
+        </ul>
+    </div>
+
+    <!-- 墜落制止用器具 -->
+    <button class="accordion">5. 墜落制止用器具</button>
+    <div class="panel">
+        <button class="sub-accordion">1. フルハーネス<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.FH001</span></li>
+            </ul>
+        </div>
+
+        <button class="sub-accordion">2. 胴ベルト<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.DB001</span></li>
+            </ul>
+        </div>
+
+        <button class="sub-accordion">3. 部品<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.PT001</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 保護めがね_JIS -->
+    <button class="accordion">7. 保護めがね_JIS</button>
+    <div class="panel">
+        <button class="sub-accordion">1. 完成品<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="sub-panel">
+            <button class="item-accordion">1. HA-1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1343</span></li>
+                    <li><span class="product-no">No.1345</span></li>
+                    <li><span class="product-no">No.1377</span></li>
+                    <li><span class="product-no">No.1395</span></li>
+                    <li><span class="product-no">No.1308C</span></li>
+                    <li><span class="product-no">No.1340C</span></li>
+                    <li><span class="product-no">No.1344Bu</span></li>
+                    <li><span class="product-no">No.1344p</span></li>
+                    <li><span class="product-no">No.1370C</span></li>
+                    <li><span class="product-no">No.W1343</span></li>
+                    <li><span class="product-no">No.W1344Bu</span></li>
+                    <li><span class="product-no">No.W1344p</span></li>
+                    <li><span class="product-no">No.W1377</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">2. HA-2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1325C</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">5. HB-1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">6. HB-2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">9. HC-1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1200</span></li>
+                    <li><span class="product-no">No.1210</span></li>
+                    <li><span class="product-no">No.1220</span></li>
+                    <li><span class="product-no">No.1250</span></li>
+                    <li><span class="product-no">No.1270</span></li>
+                    <li><span class="product-no">No.1280</span></li>
+                    <li><span class="product-no">No.1290</span></li>
+                    <li><span class="product-no">No.1291</span></li>
+                    <li><span class="product-no">No.1292</span></li>
+                    <li><span class="product-no">No.1293</span></li>
+                    <li><span class="product-no">No.1390</span></li>
+                    <li><span class="product-no">No.HC1271</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">10. HC-1-X</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.1391</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">11. HC-2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">12. HC-2-X</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="sub-accordion">2. 交換用レンズ及びアイピース<img src="../image/package_typeD.png" alt="TypeF"> </button>
+        <div class="sub-panel">
+            <button class="item-accordion">1. HAK-1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.SP1345</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">2. HAK-2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">3. HBK-1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">4. HBK-2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">5. HCK-1</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">No.SP1</span></li>
+                    <li><span class="product-no">No.SP2</span></li>
+                    <li><span class="product-no">No.SP3</span></li>
+                    <li><span class="product-no">No.SP4</span></li>
+                    <li><span class="product-no">No.SP6</span></li>
+                    <li><span class="product-no">No.SP8</span></li>
+                    <li><span class="product-no">No.SP14</span></li>
+                    <li><span class="product-no">No.SP1292</span></li>
+                    <li><span class="product-no">No.SP1390</span></li>
+                </ul>
+            </div>
+
+            <button class="item-accordion">6. HCK-2</button>
+            <div class="item-panel">
+                <ul>
+                    <li><span class="product-no">該当なし</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 保護めがね_JIS外 -->
+    <button class="accordion">8. 保護めがね_JIS外<img src="../image/package_typeF.png" alt="TypeF"></button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">No.13902G</span></li>
+            <li><span class="product-no">No.13952G</span></li>
+            <li><span class="product-no">No.1290P</span></li>
+            <li><span class="product-no">No.1300</span></li>
+            <li><span class="product-no">No.1350</span></li>
+            <li><span class="product-no">No.1352</span></li>
+            <li><span class="product-no">No.1308C</span></li>
+            <li><span class="product-no">No.1377Y</span></li>
+            <li><span class="product-no">No.13772G_しゃ光</span></li>
+            <li><span class="product-no">No.13774G_しゃ光</span></li>
+            <li><span class="product-no">No.1370S</span></li>
+            <li><span class="product-no">No.1370G</span></li>
+            <li><span class="product-no">No.1370B</span></li>
+            <li><span class="product-no">No.1375</span></li>
+            <li><span class="product-no">No.13454G_しゃ光</span></li>
+            <li><span class="product-no">No.1340S</span></li>
+            <li><span class="product-no">No.1341S</span></li>
+            <li><span class="product-no">No.1341Y</span></li>
+            <li><span class="product-no">No.1341CB</span></li>
+        </ul>
+    </div>
+
+    <!-- 保護メガネ_フェースシールド -->
+    <button class="accordion">9. 保護メガネ_フェースシールド<img src="../image/package_typeF.png" alt="TypeF"></button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">No.1430C</span></li>
+            <li><span class="product-no">No.1430S</span></li>
+            <li><span class="product-no">No.14303G_しゃ光</span></li>
+            <li><span class="product-no">No.1400C</span></li>
+            <li><span class="product-no">No.1400Y</span></li>
+            <li><span class="product-no">No.1400LG</span></li>
+            <li><span class="product-no">No.1400G_しゃ光</span></li>
+            <li><span class="product-no">No.1400DB_しゃ光</span></li>
+            <li><span class="product-no">No.1400B_しゃ光</span></li>
+            <li><span class="product-no">No.1430C</span></li>
+            <li><span class="product-no">No.1430C</span></li>
+            <li><span class="product-no">No.1310</span></li>
+            <li><span class="product-no">No.1315</span></li>
+            <li><span class="product-no">No.1351</span></li>
+            <li><span class="product-no">No.1410</span></li>
+            <li><span class="product-no">No.1420</span></li>
+            <li><span class="product-no">No.1430C</span></li>
+            <li><span class="product-no">No.1100</span></li>
+            <li><span class="product-no">No.1160</span></li>
+            <li><span class="product-no">No.1110</span></li>
+            <li><span class="product-no">No.1115</span></li>
+            <li><span class="product-no">No.SP1100</span></li>
+            <li><span class="product-no">No.SP1160</span></li>
+            <li><span class="product-no">No.SP1110</span></li>
+            <li><span class="product-no">No.SP1115</span></li>
+            <li><span class="product-no">No.1170C</span></li>
+            <li><span class="product-no">No.1170G_しゃ光</span></li>
+            <li><span class="product-no">No.1170GB_しゃ光</span></li>
+            <li><span class="product-no">No.1175G_しゃ光</span></li>
+            <li><span class="product-no">No.1175GB_しゃ光</span></li>
+            <li><span class="product-no">No.1175C</span></li>
+            <li><span class="product-no">No.1195OK</span></li>
+            <li><span class="product-no">No.1195S</span></li>
+            <li><span class="product-no">No.1190</span></li>
+        </ul>
+    </div>
+
+    <!-- ヘルメット関連製品 -->
+    <button class="accordion">10. ヘルメット関連製品<img src="../image/package_typeF.png" alt="TypeF"></button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">No.HR001</span></li>
+        </ul>
+    </div>
+
+    <!-- 耳栓 -->
+    <button class="accordion">11. 耳栓<img src="../image/package_typeF.png" alt="TypeF"></button>
+    <div class="panel">
+        <button class="item-accordion">1. フォームタイプ</button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.1900</span></li>
+                <li><span class="product-no">No.1901</span></li>
+            </ul>
+        </div>
+
+        <button class="item-accordion">2. 成形型：固形タイプ</button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.1915</span></li>
+                <li><span class="product-no">No.1960</span></li>
+            </ul>
+        </div>
+
+        <button class="item-accordion">3. 成形型：フランジタイプ</button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.1930</span></li>
+                <li><span class="product-no">No.1935</span></li>
+            </ul>
+        </div>
+
+        <button class="item-accordion">4. イヤーマフ</button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.3000</span></li>
+                <li><span class="product-no">No.3002TS</span></li>
+                <li><span class="product-no">No.3005TS</span></li>
+                <li><span class="product-no">No.3201</span></li>
+                <li><span class="product-no">No.3201N</span></li>
+                <li><span class="product-no">No.3202</span></li>
+                <li><span class="product-no">No.3205</span></li>
+                <li><span class="product-no">No.3221F</span></li>
+                <li><span class="product-no">No.3221FN</span></li>
+                <li><span class="product-no">No.3222F</span></li>
+                <li><span class="product-no">No.3223FN</span></li>
+                <li><span class="product-no">No.3225F</span></li>
+            </ul>
+        </div>
+        <button class="item-accordion">4. ホイッスル</button>
+        <div class="item-panel">
+            <ul>
+                <li><span class="product-no">No.21</span></li>
+                <li><span class="product-no">No.22</span></li>
+                <li><span class="product-no">No.23</span></li>
+                <li><span class="product-no">No.24</span></li>
+                <li><span class="product-no">No.25</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 荷締機 -->
+    <button class="accordion">12. 荷締機</button>
+    <div class="panel">
+        <button class="sub-accordion">1. 製品<img src="../image/package_typeD.png" alt="TypeF"> </button>
+            <ul>
+                <li><span class="product-no">No.5010</span></li>
+                <li><span class="product-no">No.5020</span></li>
+                <li><span class="product-no">No.5030</span></li>
+                <li><span class="product-no">No.5040</span></li>
+                <li><span class="product-no">No.5050</span></li>
+                <li><span class="product-no">No.5010H</span></li>
+                <li><span class="product-no">No.5020H</span></li>
+                <li><span class="product-no">No.5030H</span></li>
+                <li><span class="product-no">No.5040H</span></li>
+                <li><span class="product-no">No.5050H</span></li>
+                <li><span class="product-no">No.5040R</span></li>
+                <li><span class="product-no">No.5040D</span></li>
+                <li><span class="product-no">No.ET5010</span></li>
+                <li><span class="product-no">No.ET5020</span></li>
+                <li><span class="product-no">No.ET5030</span></li>
+                <li><span class="product-no">No.ET5040</span></li>
+                <li><span class="product-no">No.ET5050</span></li>
+                <li><span class="product-no">No.TR5050</span></li>
+                <li><span class="product-no">No.5001</span></li>
+                <li><span class="product-no">No.5002</span></li>
+            </ul>
+            <button class="sub-accordion">2. 部品<img src="../image/package_typeD.png" alt="TypeF"> </button>
+            <ul>
+                <li><span class="product-no">バックルシート</span></li>
+                <li><span class="product-no">No.PT-1</span></li>
+                <li><span class="product-no">No.SH-1</span></li>
+                <li><span class="product-no">No.SH-2</span></li>
+                <li><span class="product-no">No.SH-3</span></li>
+                <li><span class="product-no">No.5100R</span></li>
+                <li><span class="product-no">No.5100D</span></li>
+            </ul>
+
+    </div>
+
+    <!-- 腕章・他 -->
+    <button class="accordion">13. 腕章・他<img src="../image/package_typeF.png" alt="TypeF"></button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">No.60</span></li>
+            <li><span class="product-no">No.63</span></li>
+            <li><span class="product-no">No.64</span></li>
+            <li><span class="product-no">No.65N</span></li>
+            <li><span class="product-no">No.65P</span></li>
+            <li><span class="product-no">No.7047</span></li>
+            <li><span class="product-no">No.59L</span></li>
+            <li><span class="product-no">No.59S</span></li>
+            <li><span class="product-no">No.7065</span></li>
+            <li><span class="product-no">No.7068</span></li>
+        </ul>
+    </div>
+
+    <!-- 野球帽 -->
+    <button class="accordion">14. 野球帽</button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">パッケージなし</span></li>
+        </ul>
+    </div>
+
+    <!-- 自転車帽 -->
+    <button class="accordion">15. 自転車帽<img src="../image/package_typeF.png" alt="TypeF"></button>
+    <div class="panel">
+        <ul>
+            <li><span class="product-no">No.500</span></li>
+            <li><span class="product-no">No.530</span></li>
+        </ul>
+    </div>
+
+    <script>
+        // アコーディオンの動作を制御するJavaScript
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+
+        var subAcc = document.getElementsByClassName("sub-accordion");
+
+        for (i = 0; i < subAcc.length; i++) {
+            subAcc[i].addEventListener("click", function(e) {
+                e.stopPropagation(); // 親要素へのイベント伝播を停止
+                this.classList.toggle("sub-active");
+                var subPanel = this.nextElementSibling;
+                var parentPanel = this.parentElement;
+
+                if (subPanel.style.maxHeight) {
+                    subPanel.style.maxHeight = null;
+                    // 親パネルの高さを調整
+                    parentPanel.style.maxHeight = parentPanel.scrollHeight - subPanel.scrollHeight + "px";
+                } else {
+                    subPanel.style.maxHeight = subPanel.scrollHeight + "px";
+                    // 親パネルの高さを調整
+                    parentPanel.style.maxHeight = parentPanel.scrollHeight + subPanel.scrollHeight + "px";
+                }
+            });
+        }
+
+        var itemAcc = document.getElementsByClassName("item-accordion");
+
+        for (i = 0; i < itemAcc.length; i++) {
+            itemAcc[i].addEventListener("click", function(e) {
+                e.stopPropagation(); // 親要素へのイベント伝播を停止
+                this.classList.toggle("item-active");
+                var itemPanel = this.nextElementSibling;
+                var parentPanel = this.parentElement;
+                var grandParentPanel = parentPanel.parentElement;
+
+                if (itemPanel.style.maxHeight) {
+                    itemPanel.style.maxHeight = null;
+                    // 親パネルの高さを調整
+                    parentPanel.style.maxHeight = parentPanel.scrollHeight - itemPanel.scrollHeight + "px";
+                    // 祖父パネルの高さを調整（存在する場合）
+                    if (grandParentPanel && grandParentPanel.classList.contains('panel')) {
+                        grandParentPanel.style.maxHeight = grandParentPanel.scrollHeight - itemPanel.scrollHeight + "px";
+                    }
+                } else {
+                    itemPanel.style.maxHeight = itemPanel.scrollHeight + "px";
+                    // 親パネルの高さを調整
+                    parentPanel.style.maxHeight = parentPanel.scrollHeight + itemPanel.scrollHeight + "px";
+                    // 祖父パネルの高さを調整（存在する場合）
+                    if (grandParentPanel && grandParentPanel.classList.contains('panel')) {
+                        grandParentPanel.style.maxHeight = grandParentPanel.scrollHeight + itemPanel.scrollHeight + "px";
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
