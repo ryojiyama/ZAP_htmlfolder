@@ -1,1 +1,367 @@
-html5
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクト管理ダッシュボード</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+
+        .project-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 221, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 221, 0, 0.2);
+            border-color: rgba(255, 221, 0, 0.5);
+        }
+
+        .project-header {
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
+            border-bottom: 3px solid #ffdd00;
+        }
+
+        .project-header:hover {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+            border-bottom-color: #ffdd00;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-section.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .project-content {
+            padding: 25px;
+            display: block;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .project-section.collapsed .project-content {
+            max-height: 0;
+            padding: 0 25px;
+        }
+
+        .subsection {
+            margin-bottom: 25px;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection h3 {
+            color: #333333;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-left: 4px solid #ffdd00;
+            padding-left: 12px;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background-color 0.2s ease;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-item:hover {
+            background-color: rgba(255, 221, 0, 0.1);
+            padding-left: 10px;
+        }
+
+        .task-checkbox {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #666666;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .task-checkbox:hover {
+            border-color: #ffdd00;
+            transform: scale(1.1);
+        }
+
+        .task-checkbox.checked {
+            background-color: #ffdd00;
+            border-color: #ffdd00;
+            color: #333333;
+        }
+
+        .task-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .task-text {
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        .task-item.completed .task-text {
+            text-decoration: line-through;
+            color: #666666;
+        }
+
+        .simple-project {
+            background: rgba(245, 245, 245, 0.95);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 18px 22px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #ffdd00;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #333333;
+            position: relative;
+        }
+
+        .simple-project:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(255, 221, 0, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+            border-left-color: #ffdd00;
+        }
+
+        .simple-project::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #ffdd00 0%, #333333 100%);
+            transition: width 0.3s ease;
+        }
+
+        .simple-project:hover::before {
+            width: 6px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e5e5;
+            border-radius: 4px;
+            margin-top: 15px;
+            overflow: hidden;
+            border: 1px solid #cccccc;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffdd00, #333333);
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: #666666;
+            margin-top: 8px;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .project-header {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+
+            .project-content {
+                padding: 20px;
+            }
+
+            .simple-project {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>プロジェクト管理ダッシュボード</h1>
+        
+        <div class="project-section" id="sharepoint">
+            <div class="project-header" onclick="toggleSection('sharepoint')">
+                <span>Sharepointライブラリの完成</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="project-content">
+                <div class="subsection">
+                    <h3>書類整理</h3>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">製造部の書類の整理</span>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">品質管理部の書類の整理</span>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">営業部門の書類整理</span>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">開発部門の書類整理</span>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">総務部門の書類整理</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3>PowerAutomateフローの作成</h3>
+                    <ul class="task-list">
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">管理番号自動付与</span>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">印刷依頼フロー</span>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-checkbox" onclick="toggleTask(this)"></div>
+                            <span class="task-text">書類承認フロー</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">進捗: 0/8 完了</div>
+            </div>
+        </div>
+
+        <div class="simple-project">新体制での内部監査の準備</div>
+        <div class="simple-project">新体制でのマネジメントレビューの準備</div>
+        <div class="simple-project">品質マニュアルの完成</div>
+        <div class="simple-project">新しい品質マニュアルの説明会の準備</div>
+        <div class="simple-project">SQLを使用した会計管理システムの作成</div>
+        <div class="simple-project">Cloud MCPの本格運用</div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('collapsed');
+        }
+
+        function toggleTask(checkbox) {
+            checkbox.classList.toggle('checked');
+            const taskItem = checkbox.closest('.task-item');
+            taskItem.classList.toggle('completed');
+            
+            // Update progress for Sharepoint section
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const sharepointSection = document.getElementById('sharepoint');
+            const checkboxes = sharepointSection.querySelectorAll('.task-checkbox');
+            const checkedBoxes = sharepointSection.querySelectorAll('.task-checkbox.checked');
+            
+            const total = checkboxes.length;
+            const completed = checkedBoxes.length;
+            const percentage = total > 0 ? (completed / total) * 100 : 0;
+            
+            const progressFill = sharepointSection.querySelector('.progress-fill');
+            const progressText = sharepointSection.querySelector('.progress-text');
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = `進捗: ${completed}/${total} 完了`;
+        }
+
+        // Initialize progress on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
