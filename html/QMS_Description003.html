@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第03回：内部監査と是正処置 - ヘルメット製造現場の実例で学ぶ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .expand-all {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .agenda-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        .agenda-section h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .agenda-item {
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-left: 5px solid #3498db;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .agenda-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .agenda-number {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 15px;
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 30px 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .section-number {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            padding: 50px;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-content h3 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .section-content h4 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+            border-left: 6px solid #f39c12;
+            padding: 30px;
+            margin: 30px 0;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #d68910;
+            border-radius: 8px;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #e8f8f5 0%, #d5f4e6 100%);
+            border: 2px solid #16a085;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .example-box::before {
+            content: "具体例";
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: #16a085;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .example-box ul {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .example-box li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+            border-left: 6px solid #e74c3c;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .problem-tag {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 10px 5px 10px 0;
+            font-size: 0.9em;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .benefit-card {
+            background: white;
+            border: 2px solid #27ae60;
+            padding: 30px;
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+
+        .benefit-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            gap: 15px;
+        }
+
+        .process-item {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .process-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .process-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .process-desc {
+            font-size: 1.05em;
+            color: #7f8c8d;
+        }
+
+        .process-arrow {
+            font-size: 2.5em;
+            color: #3498db;
+            flex: 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 30px 0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            font-size: 1.2em;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 1.05em;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%);
+            border: 3px solid #3498db;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .summary-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .summary-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .summary-point {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .summary-point:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.2);
+        }
+
+        .point-number {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .point-title {
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .point-desc {
+            color: #7f8c8d;
+            font-size: 1.05em;
+            line-height: 1.7;
+        }
+
+        .action-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 6px solid #ff9800;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .action-title {
+            font-size: 1.5em;
+            color: #e65100;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .action-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .action-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, #fff59d 60%);
+            font-weight: 600;
+            padding: 0 3px;
+        }
+
+        .layer-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .layer-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #3498db;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .layer-box strong {
+            color: #2c3e50;
+            font-size: 1.2em;
+        }
+
+        .audit-connection {
+            text-align: center;
+            color: #3498db;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .step-card {
+            background: white;
+            border: 2px solid #3498db;
+            border-left: 6px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .checklist-box {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e4ecf5 100%);
+            border: 2px solid #5a9fd4;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .checklist-item {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            font-size: 1.05em;
+        }
+
+        .vs-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .comparison-side {
+            padding: 25px;
+            border-radius: 12px;
+            min-height: 200px;
+        }
+
+        .old-way {
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+            border: 2px solid #e74c3c;
+        }
+
+        .new-way {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 2px solid #27ae60;
+        }
+
+        .vs-badge {
+            background: #f39c12;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .final-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+            border: 4px solid #f39c12;
+            border-radius: 15px;
+            padding: 50px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(243, 156, 18, 0.2);
+        }
+
+        .final-section h3 {
+            color: #d68910;
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #f39c12;
+            padding-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .section-content {
+                padding: 30px 20px;
+            }
+
+            .process-flow {
+                flex-direction: column;
+            }
+
+            .process-arrow {
+                transform: rotate(90deg);
+            }
+
+            .vs-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .vs-badge {
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>第03回：内部監査と是正処置</h1>
+            <p>～ヘルメット製造現場の実例で学ぶ改善活動～</p>
+        </header>
+
+        <div class="expand-all">
+            <button class="btn" onclick="toggleAll()">全セクションを展開/折りたたみ</button>
+        </div>
+
+        <div class="agenda-section">
+            <h2>今日の議題（時間配分：45分）</h2>
+            <div class="agenda-item">
+                <span class="agenda-number">1</span>
+                <strong>オープニング</strong> - アンケート結果と内部監査の位置づけ（3分）
+            </div>
+            <div class="agenda-item">
+                <span class="agenda-number">2</span>
+                <strong>実例で見る内部監査（前半）</strong> - 外部監査員の進め方を学ぶ（10分）
+            </div>
+            <div class="agenda-item">
+                <span class="agenda-number">3</span>
+                <strong>実例で見る内部監査（後半）</strong> - DNV監査員の指摘トップ3（7分）
+            </div>
+            <div class="agenda-item">
+                <span class="agenda-number">4</span>
+                <strong>まとめ（最重要）</strong> - 皆さんにお願いしたいこと（10分）
+            </div>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(1)">
+                <span class="section-number">01</span>
+                <span class="section-title">オープニング</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="section-content" id="section1">
+                <h3>第2回アンケート結果の共有</h3>
+
+                <div class="summary-box">
+                    <div class="summary-title">皆さんの声から見えたこと</div>
+                    <div class="summary-points">
+                        <div class="summary-point">
+                            <div class="point-title">「自分の業務との関係が分からない」</div>
+                            <div class="point-desc">
+                                → 7名の方から<br>
+                                <strong style="color: #3498db;">今日は実際のヘルメット製造の例で説明します</strong>
+                            </div>
+                        </div>
+                        <div class="summary-point">
+                            <div class="point-title">「時間が長い」</div>
+                            <div class="point-desc">
+                                → 90%の方から<br>
+                                <strong style="color: #3498db;">今日は45分に短縮しました</strong>
+                            </div>
+                        </div>
+                        <div class="summary-point">
+                            <div class="point-title">「QMSのどこを見るか分からない」</div>
+                            <div class="point-desc">
+                                → 多数の方から<br>
+                                <strong style="color: #3498db;">製造工程とQMSの対応表を用意しました</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>今日のゴール</h3>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-number">1</div>
+                        <div style="font-size: 1.3em; color: #2c3e50; font-weight: 700; margin-bottom: 15px;">
+                            内部監査で何を見るか
+                        </div>
+                        <div style="color: #7f8c8d; font-size: 1.05em;">
+                            外部監査員（DNV、JQA）のプロの視点を学び、実際に何を確認するのか具体的に理解する
+                        </div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-number">2</div>
+                        <div style="font-size: 1.3em; color: #2c3e50; font-weight: 700; margin-bottom: 15px;">
+                            自分ができる改善を見つける
+                        </div>
+                        <div style="color: #7f8c8d; font-size: 1.05em;">
+                            「今週中にやること」を明確にし、小さな改善から始める
+                        </div>
+                    </div>
+                </div>
+
+                <h3>品質マニュアルの構造と内部監査の役割</h3>
+
+                <div class="key-point">
+                    内部監査は「PDCAを回し、3層をつなぐ要」です
+                </div>
+
+                <div class="layer-diagram">
+                    <div class="layer-box" style="border-color: #e74c3c;">
+                        <strong>【経営層】4章, 5章, 9.3章, 10章</strong><br>
+                        品質方針・資源配分・マネジメントレビュー
+                    </div>
+                    <div class="audit-connection">↑ 内部監査報告</div>
+                    <div class="layer-box" style="border-color: #f39c12;">
+                        <strong>【管理職層】6章, 7章, 9.2章, 10章</strong><br>
+                        <span style="color: #f39c12; font-size: 1.3em;">◆内部監査（9.2章）← 今日のテーマ！</span><br>
+                        計画・資源管理・改善
+                    </div>
+                    <div class="audit-connection">↓ 現場監査</div>
+                    <div class="layer-box" style="border-color: #27ae60;">
+                        <strong>【コア層（現場）】8章</strong><br>
+                        製造・サービス提供
+                    </div>
+                </div>
+
+                <h3>内部監査とPDCAサイクル</h3>
+
+                <div class="process-flow">
+                    <div class="process-item" style="border-color: #f39c12;">
+                        <div class="process-title">Plan（計画）</div>
+                        <div class="process-desc">6章・7章</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item" style="border-color: #27ae60;">
+                        <div class="process-title">Do（実行）</div>
+                        <div class="process-desc">8章</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item" style="border-color: #3498db;">
+                        <div class="process-title" style="font-weight: 800; color: #1976d2;">Check（監視）</div>
+                        <div class="process-desc" style="font-weight: 700; color: #2c3e50;">9.2 内部監査<br>今日のテーマ!</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item" style="border-color: #e74c3c;">
+                        <div class="process-title">Act（改善）</div>
+                        <div class="process-desc">10章</div>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    内部監査なし = PDCAが回らない
+                </div>
+
+                <h3>内部監査が果たす3階層への役割</h3>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>階層</th>
+                            <th>役割</th>
+                            <th>価値</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 700; color: #e74c3c;">経営層</td>
+                            <td>監査結果を報告し、マネジメントレビューへのインプットを提供</td>
+                            <td>普段見えにくい「現場の実態」を正確に把握でき、適切な意思決定が可能</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700; color: #f39c12;">管理職層</td>
+                            <td>計画や資源管理が機能しているかを監視・測定</td>
+                            <td>運用上の課題や仕組みの問題点が見える化され、具体的な改善活動へ</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700; color: #27ae60;">現場</td>
+                            <td>記録と実態の一致を確認</td>
+                            <td>ルール遵守の不備に気づき、現場自らが業務を見直す「きっかけ」</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(2)">
+                <span class="section-number">02</span>
+                <span class="section-title">実例で見る内部監査（前半）</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="section-content" id="section2">
+                <h3>なぜ外部監査員のやり方を学ぶのか？</h3>
+
+                <div class="example-box">
+                    <strong style="font-size: 1.2em; display: block; margin-bottom: 15px;">DNV、JQA等の外部監査員は</strong>
+                    <ul>
+                        <li>年間数百社を監査するプロフェッショナル</li>
+                        <li>効率的に問題を見つける技術を持っている</li>
+                        <li>同じ視点で内部監査をすれば、本質的な問題解決につながる</li>
+                    </ul>
+                </div>
+
+                <div class="key-point">
+                    内部監査のゴール：「外部監査員が来る前に、自分たちで問題を見つけて改善する」
+                </div>
+
+                <h3>外部監査員の5つのステップ</h3>
+
+                <div class="step-card">
+                    <div class="step-number">ステップ1</div>
+                    <div style="font-size: 1.3em; color: #2c3e50; margin: 10px 0; font-weight: 700;">事前準備（監査前）</div>
+                    <div style="color: #7f8c8d;">前回の監査記録、是正処置の状況、QMSの変更点を確認</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">ステップ2</div>
+                    <div style="font-size: 1.3em; color: #2c3e50; margin: 10px 0; font-weight: 700;">オープニング（監査開始時）</div>
+                    <div style="color: #7f8c8d;">監査の目的、範囲、スケジュールを確認</div>
+                </div>
+
+                <div class="step-card" style="border-left-color: #f39c12; border-color: #f39c12;">
+                    <div class="step-number" style="background: #f39c12;">ステップ3</div>
+                    <div style="font-size: 1.3em; color: #d68910; margin: 10px 0; font-weight: 700;">プロセスを追う（現場監査）← 今日の重点</div>
+                    <div style="color: #7f8c8d;">製品の流れに沿って、実際の作業を確認</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">ステップ4</div>
+                    <div style="font-size: 1.3em; color: #2c3e50; margin: 10px 0; font-weight: 700;">証拠を集める（記録確認）</div>
+                    <div style="color: #7f8c8d;">記録、文書、インタビューで客観的な証拠を収集</div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">ステップ5</div>
+                    <div style="font-size: 1.3em; color: #2c3e50; margin: 10px 0; font-weight: 700;">クロージング（監査終了時）</div>
+                    <div style="color: #7f8c8d;">発見事項の報告、是正処置の合意</div>
+                </div>
+
+                <h3>当社の製造工程とQMSのマッピング</h3>
+
+                <div class="key-point">
+                    ヘルメット製造の各工程が、品質マニュアルのどこに該当するかを理解しましょう
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>作業内容</th>
+                            <th>担当</th>
+                            <th>QMS該当箇所</th>
+                            <th>内部監査の確認ポイント</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>顧客仕様の確認</td>
+                            <td>営業</td>
+                            <td><strong>8.2.2, 8.2.3</strong></td>
+                            <td>仕様書が揃っているか</td>
+                        </tr>
+                        <tr>
+                            <td>生産計画の作成</td>
+                            <td>生産管理</td>
+                            <td><strong>8.1</strong></td>
+                            <td>納期が守れる計画か</td>
+                        </tr>
+                        <tr>
+                            <td>材料の発注</td>
+                            <td>購買</td>
+                            <td><strong>8.4.1</strong></td>
+                            <td>仕様を満たす材料か</td>
+                        </tr>
+                        <tr>
+                            <td>材料の受入検査</td>
+                            <td>品質管理</td>
+                            <td><strong>8.4.2</strong></td>
+                            <td>検査基準通りか</td>
+                        </tr>
+                        <tr style="background: #fffbf0;">
+                            <td><strong>成形機の設定</strong></td>
+                            <td><strong>製造</strong></td>
+                            <td><strong>8.5.1</strong></td>
+                            <td><strong>標準書通りの設定か</strong></td>
+                        </tr>
+                        <tr style="background: #fffbf0;">
+                            <td><strong>帽体の成形</strong></td>
+                            <td><strong>製造</strong></td>
+                            <td><strong>8.5.1</strong></td>
+                            <td><strong>作業標準書通りか</strong></td>
+                        </tr>
+                        <tr>
+                            <td>印刷指示</td>
+                            <td>生産管理</td>
+                            <td><strong>8.2.1</strong></td>
+                            <td>顧客仕様と一致するか</td>
+                        </tr>
+                        <tr>
+                            <td>印刷作業</td>
+                            <td>製造/外注</td>
+                            <td><strong>8.5.1, 8.4</strong></td>
+                            <td>位置・色が正確か</td>
+                        </tr>
+                        <tr>
+                            <td>外観検査</td>
+                            <td>製造</td>
+                            <td><strong>8.5.1</strong></td>
+                            <td>不良品が分離されているか</td>
+                        </tr>
+                        <tr>
+                            <td>最終検査</td>
+                            <td>品質管理</td>
+                            <td><strong>8.6</strong></td>
+                            <td>検査項目が全て確認されているか</td>
+                        </tr>
+                        <tr>
+                            <td>出荷判定</td>
+                            <td>品質管理</td>
+                            <td><strong>8.6</strong></td>
+                            <td>承認者の印があるか</td>
+                        </tr>
+                        <tr style="background: #fff0f0;">
+                            <td><strong>不良品の隔離</strong></td>
+                            <td><strong>製造</strong></td>
+                            <td><strong>8.7.1</strong></td>
+                            <td><strong>赤色表示で隔離されているか</strong></td>
+                        </tr>
+                        <tr style="background: #fff0f0;">
+                            <td><strong>不良原因の分析</strong></td>
+                            <td><strong>品質管理</strong></td>
+                            <td><strong>10.2.1</strong></td>
+                            <td><strong>なぜ5回が実施されているか</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>プロセスアプローチで見る内部監査</h3>
+
+                <div class="example-box">
+                    <strong style="font-size: 1.2em; display: block; margin-bottom: 15px;">外部監査員がよく使う質問</strong>
+                    <ul>
+                        <li>「この製品は、どこから来て、どこへ行くのですか？」</li>
+                        <li>「誰が、何を、どう確認していますか？」</li>
+                        <li>「それは記録されていますか？」</li>
+                        <li>「問題が起きたら、どうしますか？」</li>
+                    </ul>
+                </div>
+
+                <h3>【実例】ヘルメット製造ラインを外部監査員の目で見る</h3>
+
+                <div class="process-flow" style="margin-bottom: 30px;">
+                    <div class="process-item">
+                        <div class="process-title">受注</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item">
+                        <div class="process-title">材料調達</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item">
+                        <div class="process-title">成形</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item">
+                        <div class="process-title">印刷</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item">
+                        <div class="process-title">検査</div>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div class="process-item">
+                        <div class="process-title">出荷</div>
+                    </div>
+                </div>
+
+                <h4>場面1：成形工程で監査員が確認すること</h4>
+
+                <div class="example-box">
+                    <strong style="font-size: 1.2em; display: block; margin-bottom: 15px;">監査員の質問例</strong>
+                    <p style="font-size: 1.1em; margin: 15px 0;"><strong>Q1. 「この成形機の設定値は、誰がどのように決めていますか?」</strong></p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ QMS 8.5.1「製造及びサービス提供の管理」</p>
+                    <p style="margin: 10px 0 10px 20px; font-weight: 600;">確認する証拠：</p>
+                    <ul style="margin-left: 40px;">
+                        <li>作業標準書（成形条件：温度、圧力、時間）</li>
+                        <li>作業者への教育記録</li>
+                        <li>成形条件記録表（実際の設定値）</li>
+                    </ul>
+
+                    <p style="font-size: 1.1em; margin: 25px 0 15px 0;"><strong>Q2. 「作業者は標準書を理解していますか？確認させてください」</strong></p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ その場で作業者にインタビュー</p>
+                    <p style="margin: 10px 0 10px 20px; font-weight: 600;">見るポイント：</p>
+                    <ul style="margin-left: 40px;">
+                        <li>標準書が最新版か（改訂管理）</li>
+                        <li>作業者が標準書の場所を知っているか</li>
+                        <li>標準書通りに作業しているか</li>
+                    </ul>
+                </div>
+
+                <div class="checklist-box">
+                    <strong style="font-size: 1.3em; display: block; margin-bottom: 15px; color: #2c3e50;">内部監査員のチェックリスト（成形工程用）</strong>
+                    <div class="checklist-item">□ 作業標準書は最新版か（QMS 8.5.1）</div>
+                    <div class="checklist-item">□ 標準書は現場にあるか（QMS 8.5.1）</div>
+                    <div class="checklist-item">□ 作業者は内容を理解しているか（QMS 7.2）</div>
+                    <div class="checklist-item">□ 成形条件が記録されているか（QMS 8.5.1）</div>
+                    <div class="checklist-item">□ 不良品が分離されているか（QMS 8.7.1）</div>
+                </div>
+
+                <h4>場面2：印刷工程で監査員が確認すること</h4>
+
+                <div class="example-box">
+                    <strong style="font-size: 1.2em; display: block; margin-bottom: 15px;">監査員の質問例</strong>
+                    <p style="font-size: 1.1em; margin: 15px 0;"><strong>Q1. 「顧客の印刷指示は、どのように現場に伝わりますか？」</strong></p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ QMS 8.2.3「要求事項のレビュー」、8.5.1「情報の伝達」</p>
+
+                    <p style="font-size: 1.1em; margin: 25px 0 15px 0;"><strong>Q2. 「印刷ミスを防ぐために、何をしていますか？」</strong></p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ QMS 8.5.1「リスクに基づく取組み」</p>
+
+                    <p style="font-size: 1.1em; margin: 25px 0 15px 0;"><strong>Q3. 「外注先の印刷業者は、どのように管理していますか？」</strong></p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ QMS 8.4「外部提供者の管理」</p>
+                </div>
+
+                <div class="checklist-box">
+                    <strong style="font-size: 1.3em; display: block; margin-bottom: 15px; color: #2c3e50;">内部監査員のチェックリスト（印刷工程用）</strong>
+                    <div class="checklist-item">□ 印刷指示書は正確に伝達されているか（QMS 8.5.1）</div>
+                    <div class="checklist-item">□ 印刷サンプルの承認記録はあるか（QMS 8.2.3）</div>
+                    <div class="checklist-item">□ 初回品の確認手順は守られているか（QMS 8.5.1）</div>
+                    <div class="checklist-item">□ 外注先の評価記録はあるか（QMS 8.4.1）</div>
+                    <div class="checklist-item">□ 外注品の受入検査記録はあるか（QMS 8.4.2）</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(3)">
+                <span class="section-number">03</span>
+                <span class="section-title">実例で見る内部監査（後半）</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="section-content" id="section3">
+                <h3>DNV監査員が実際に指摘する不適合トップ3</h3>
+
+                <div class="key-point">
+                    これらは、どの製造現場でも起こりやすい典型例です。外部監査前に自分たちで見つけましょう。
+                </div>
+
+                <h4>第1位：8.5.1 製造及びサービス提供の管理（7.0%）</h4>
+
+                <div class="case-study">
+                    <div class="problem-tag">ヘルメット成形工程での実例</div>
+                    <p style="font-size: 1.15em; margin: 15px 0; font-weight: 600;">【監査員の発見】</p>
+                    <p style="margin-left: 20px; line-height: 1.9;">
+                        現場の作業標準書を確認したところ、2年前の版（Rev.3）だった。<br>
+                        最新版（Rev.5）は製造事務所にあるが、現場には配布されていない。
+                    </p>
+                    <p style="font-size: 1.1em; margin: 15px 0; font-weight: 600;">監査員の質問：</p>
+                    <p style="margin-left: 20px;">「この作業標準書は最新版ですか？」</p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ 作業者：「多分そうだと思います...」</p>
+
+                    <p style="font-size: 1.15em; margin: 20px 0 10px 0; font-weight: 600;">【問題点】</p>
+                    <ul style="margin-left: 40px; line-height: 1.9;">
+                        <li>文書管理の仕組みが機能していない</li>
+                        <li>旧版作業標準書で作業していた</li>
+                        <li>成形温度の設定値が古いままだった</li>
+                    </ul>
+
+                    <p style="margin-top: 15px; font-weight: 600; color: #c0392b;">【QMS該当箇所】</p>
+                    <p style="margin-left: 20px;">→ 7.5.3「文書化した情報の管理」<br>
+                    → 8.5.1「製造及びサービス提供の管理」</p>
+                </div>
+
+                <div class="case-study">
+                    <div class="problem-tag">成形機点検での実例</div>
+                    <p style="font-size: 1.15em; margin: 15px 0; font-weight: 600;">【監査員の発見】</p>
+                    <p style="margin-left: 20px; line-height: 1.9;">
+                        成形機の定期点検手順書はあるが、点検記録が3ヶ月分しかない。<br>
+                        ベテラン作業者：「毎日目視で確認していますが、記録はつけていません」
+                    </p>
+
+                    <p style="font-size: 1.15em; margin: 20px 0 10px 0; font-weight: 600;">【問題点】</p>
+                    <ul style="margin-left: 40px; line-height: 1.9;">
+                        <li>設備保全の記録が不十分</li>
+                        <li>トレーサビリティが確保できない</li>
+                        <li>不良発生時に原因追跡ができない</li>
+                    </ul>
+                </div>
+
+                <h4>第2位：7.1.5 監視及び測定資源（5.8%）</h4>
+
+                <div class="case-study">
+                    <div class="problem-tag">検査工程での実例</div>
+                    <p style="font-size: 1.15em; margin: 15px 0; font-weight: 600;">【監査員の発見】</p>
+                    <p style="margin-left: 20px; line-height: 1.9;">
+                        スケールの校正シールを確認すると、校正期限が2ヶ月前に切れていた。
+                    </p>
+
+                    <p style="font-size: 1.1em; margin: 15px 0; font-weight: 600;">監査員の質問：</p>
+                    <p style="margin-left: 20px;">「この測定器の校正はいつ実施しましたか？」</p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ 検査員：「あれ？期限切れていますね...気づきませんでした」</p>
+
+                    <p style="font-size: 1.15em; margin: 20px 0 10px 0; font-weight: 600;">【問題点】</p>
+                    <ul style="margin-left: 40px; line-height: 1.9;">
+                        <li>校正期限管理が不十分</li>
+                        <li>過去2ヶ月の測定データの信頼性が疑問</li>
+                        <li>出荷済み製品の品質保証ができない</li>
+                    </ul>
+
+                    <p style="font-size: 1.15em; margin: 20px 0 10px 0; font-weight: 600; color: #c0392b;">【影響範囲】</p>
+                    <ul style="margin-left: 40px; line-height: 1.9; color: #c0392b;">
+                        <li>該当期間に製造した500個のヘルメット</li>
+                        <li>すでに顧客に出荷済み</li>
+                        <li>トレーサビリティ調査が必要に</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <strong style="font-size: 1.2em; display: block; margin-bottom: 15px;">実際の対応</strong>
+                    <p style="font-weight: 600; margin: 10px 0;">応急処置：</p>
+                    <ul style="margin-left: 20px;">
+                        <li>該当測定器の使用停止</li>
+                        <li>校正済み測定器で再測定</li>
+                        <li>顧客への報告</li>
+                    </ul>
+                    <p style="font-weight: 600; margin: 15px 0 10px 0;">是正処置：</p>
+                    <ul style="margin-left: 20px;">
+                        <li>校正管理台帳の整備</li>
+                        <li>期限1ヶ月前にアラート設定</li>
+                        <li>月次で校正状況を確認する仕組み導入</li>
+                    </ul>
+                </div>
+
+                <h4>第3位：7.2 力量（5.4%）</h4>
+
+                <div class="case-study">
+                    <div class="problem-tag">印刷工程での実例</div>
+                    <p style="font-size: 1.15em; margin: 15px 0; font-weight: 600;">【監査員の発見】</p>
+                    <p style="margin-left: 20px; line-height: 1.9;">
+                        印刷工程で新人作業者Aさんが単独で作業中。<br>
+                        教育記録を確認すると、実技訓練記録がない。
+                    </p>
+
+                    <p style="font-size: 1.1em; margin: 15px 0; font-weight: 600;">監査員の質問：</p>
+                    <p style="margin-left: 20px;">「Aさんは、この作業の訓練を受けましたか？」</p>
+                    <p style="margin-left: 20px; color: #7f8c8d;">→ リーダー：「ベテランが横について教えましたが、記録は...」</p>
+
+                    <p style="font-size: 1.15em; margin: 20px 0 10px 0; font-weight: 600;">【問題点】</p>
+                    <ul style="margin-left: 40px; line-height: 1.9;">
+                        <li>力量を確実にするための教育が不十分</li>
+                        <li>OJT記録が作成されていない</li>
+                        <li>力量評価の基準が不明確</li>
+                    </ul>
+                </div>
+
+                <h3>内部監査チェックリストを見直してみませんか？</h3>
+
+                <div class="vs-comparison">
+                    <div class="comparison-side old-way">
+                        <h4 style="color: #c0392b; font-size: 1.4em; margin-bottom: 15px;">従来型チェックリスト</h4>
+                        <div style="padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            □ 作業標準書はありますか？<br>→ はい/いいえ
+                        </div>
+                        <div style="padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            □ 記録は保管されていますか？<br>→ はい/いいえ
+                        </div>
+                        <div style="padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            □ 教育は実施していますか？<br>→ はい/いいえ
+                        </div>
+                        <p style="margin-top: 15px; color: #c0392b; font-weight: 600;">問題点：</p>
+                        <ul style="margin-left: 20px; color: #7f8c8d;">
+                            <li>実態が見えない</li>
+                            <li>形式的なチェック</li>
+                            <li>改善につながらない</li>
+                        </ul>
+                    </div>
+
+                    <div class="vs-badge">VS</div>
+
+                    <div class="comparison-side new-way">
+                        <h4 style="color: #1e8449; font-size: 1.4em; margin-bottom: 15px;">DNV式チェックリスト</h4>
+                        <div style="padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            □ 作業標準書は最新版ですか？<br>
+                            □ 作業者は内容を理解していますか？<br>
+                            □ 標準書通りに作業していますか？
+                        </div>
+                        <div style="padding: 15px; background: white; border-radius: 8px; margin: 10px 0;">
+                            □ 校正シールの期限は切れていませんか？<br>
+                            □ 校正記録は保管されていますか？<br>
+                            □ 期限管理の仕組みはありますか？
+                        </div>
+                        <p style="margin-top: 15px; color: #1e8449; font-weight: 600;">メリット：</p>
+                        <ul style="margin-left: 20px; color: #7f8c8d;">
+                            <li>実態を確認できる</li>
+                            <li>問題の本質が見える</li>
+                            <li>具体的な改善につながる</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    従来の内部監査：「書類にハンコが押してあるか？」<br>
+                    ↓<br>
+                    これからの内部監査：「外部監査員と同じ視点で、実態を確認する」
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4 - 最重要 -->
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(4)" style="background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);">
+                <span class="section-number" style="background: rgba(255,255,255,0.3);">04</span>
+                <span class="section-title">まとめ（最重要）</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="section-content" id="section4">
+                <div class="final-section">
+                    <h3>3回の説明会を通じて伝えたいこと</h3>
+
+                    <div class="summary-points">
+                        <div class="summary-point">
+                            <div class="point-number">1</div>
+                            <div class="point-title">根本理解</div>
+                            <div class="point-desc">
+                                <strong style="color: #2c3e50; font-size: 1.1em;">ISOは特別なことではない</strong><br>
+                                • 皆さんの日常業務そのもの<br>
+                                • 当たり前のことを当たり前にやる仕組み<br>
+                                • 「やらされている」ではなく「自分たちのための仕組み」
+                            </div>
+                        </div>
+
+                        <div class="summary-point">
+                            <div class="point-number">2</div>
+                            <div class="point-title">全体像の理解</div>
+                            <div class="point-desc">
+                                <strong style="color: #2c3e50; font-size: 1.1em;">品質マニュアルの構造</strong><br>
+                                • 3層構造：経営層・管理職層・現場層<br>
+                                • PDCAサイクル：計画→実行→監視→改善<br>
+                                • 自分の業務がどこに該当するか理解
+                            </div>
+                        </div>
+
+                        <div class="summary-point">
+                            <div class="point-number">3</div>
+                            <div class="point-title">実践の理解</div>
+                            <div class="point-desc">
+                                <strong style="color: #2c3e50; font-size: 1.1em;">内部監査と改善活動</strong><br>
+                                • 外部監査員の視点で「プロセスを追う」<br>
+                                • 記録だけでなく実態を確認<br>
+                                • 小さな気づきを深堀りし、本質的な改善へ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>手順書や作業標準書の整備は「投資」です</h3>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-number">1</div>
+                        <div style="font-size: 1.3em; color: #2c3e50; font-weight: 700; margin-bottom: 15px;">
+                            リーダーの負担軽減
+                        </div>
+                        <div style="color: #7f8c8d; font-size: 1.05em;">
+                            手順書があれば、リーダーが不在でも作業が進む。毎回同じことを教える手間が省ける
+                        </div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-number">2</div>
+                        <div style="font-size: 1.3em; color: #2c3e50; font-weight: 700; margin-bottom: 15px;">
+                            部署の安定化
+                        </div>
+                        <div style="color: #7f8c8d; font-size: 1.05em;">
+                            人の入れ替わりがあっても、品質を維持できる。属人化を防ぎ、組織として強くなる
+                        </div>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-number">3</div>
+                        <div style="font-size: 1.3em; color: #2c3e50; font-weight: 700; margin-bottom: 15px;">
+                            経験の財産化
+                        </div>
+                        <div style="color: #7f8c8d; font-size: 1.05em;">
+                            ベテランの知恵と経験が、次の世代に引き継がれる。組織の知的財産として蓄積
+                        </div>
+                    </div>
+                </div>
+
+                <h3>これからの内部監査</h3>
+
+                <div class="vs-comparison">
+                    <div class="comparison-side old-way">
+                        <h4 style="color: #c0392b; font-size: 1.4em; margin-bottom: 15px;">従来型の監査</h4>
+                        <p style="font-size: 1.1em; line-height: 1.9;">
+                            「書類にハンコが押してあるか？」<br><br>
+                            ↓<br><br>
+                            形式的なチェックで終わる<br><br>
+                            ↓<br><br>
+                            改善につながらない
+                        </p>
+                    </div>
+
+                    <div class="vs-badge">→</div>
+
+                    <div class="comparison-side new-way">
+                        <h4 style="color: #1e8449; font-size: 1.4em; margin-bottom: 15px;">これからの内部監査</h4>
+                        <p style="font-size: 1.1em; line-height: 1.9;">
+                            「外部監査員と同じ視点で、実態を確認する」<br><br>
+                            ↓<br><br>
+                            プロセスを追い、問題の本質を見つける<br><br>
+                            ↓<br><br>
+                            組織全体の改善サイクルを回す
+                        </p>
+                    </div>
+                </div>
+
+                <div class="key-point" style="font-size: 1.3em;">
+                    内部監査の真の目的：<br>
+                    「外部監査員が来る前に、自分たちで問題を見つけて改善する」
+                </div>
+
+                <div class="example-box">
+                    <strong style="font-size: 1.3em; display: block; margin-bottom: 15px;">これができる会社は</strong>
+                    <ul style="font-size: 1.15em; line-height: 2;">
+                        <li>問題が小さいうちに解決できる</li>
+                        <li>大きなトラブルを未然に防げる</li>
+                        <li>会社の品質レベルが向上し続ける</li>
+                        <li>顧客からの信頼が高まる</li>
+                    </ul>
+                </div>
+
+                <h3>皆さんにお願いしたいこと</h3>
+
+                <div class="action-box" style="border-left-width: 8px;">
+                    <div class="action-title" style="font-size: 1.8em;">今週中にやってほしいこと</div>
+
+                    <div class="action-item" style="border-left: 4px solid #f39c12;">
+                        <strong style="color: #e65100; font-size: 1.2em;">□ 自分の作業で「記録がない」「手順が曖昧」なことを1つ見つける</strong><br>
+                        <span style="color: #7f8c8d; margin-top: 10px; display: block;">
+                            例：「この作業、口頭で教えてもらっただけで、手順書がない」<br>
+                            例：「この検査、記録を取っていなかった」
+                        </span>
+                    </div>
+
+                    <div class="action-item" style="border-left: 4px solid #f39c12;">
+                        <strong style="color: #e65100; font-size: 1.2em;">□ 「これ、標準書と違うな」と思ったら声を上げる</strong><br>
+                        <span style="color: #7f8c8d; margin-top: 10px; display: block;">
+                            例：「標準書には温度180度と書いてあるけど、実際は190度で作業している」<br>
+                            小さな違和感が、大きな改善のきっかけになります
+                        </span>
+                    </div>
+
+                    <div class="action-item" style="border-left: 4px solid #f39c12;">
+                        <strong style="color: #e65100; font-size: 1.2em;">□ 小さな改善を積み重ねる</strong><br>
+                        <span style="color: #7f8c8d; margin-top: 10px; display: block;">
+                            完璧を目指さなくて大丈夫です<br>
+                            まずは「今日から始められる小さな改善」を1つだけ
+                        </span>
+                    </div>
+
+                    <div class="action-item" style="border-left: 4px solid #f39c12;">
+                        <strong style="color: #e65100; font-size: 1.2em;">□ 他部署の良い取り組みを自部署に取り入れる</strong><br>
+                        <span style="color: #7f8c8d; margin-top: 10px; display: block;">
+                            「○○部のあのやり方、うちでも使えそう」<br>
+                            部署間で学び合うことで、会社全体が良くなります
+                        </span>
+                    </div>
+                </div>
+
+                <div class="summary-box" style="background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%); border-color: #f39c12;">
+                    <div class="summary-title" style="color: #d68910; font-size: 2em;">目指すのは</div>
+                    <p style="font-size: 1.4em; text-align: center; color: #2c3e50; font-weight: 700; line-height: 1.9;">
+                        「外部監査員が来る前に、<br>
+                        自分たちで問題を見つけて改善する会社」
+                    </p>
+                    <p style="font-size: 1.2em; text-align: center; color: #7f8c8d; margin-top: 20px;">
+                        皆さん一人ひとりの小さな気づきと行動が、<br>
+                        会社全体の品質を高めていきます
+                    </p>
+                </div>
+                <div class="summary-box" style="border-color: #3498db; background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f2 100%); min-height: 500px; display: flex; align-items: center; justify-content: center;">
+                    <strong style="color: #2c3e50; font-size: 1.5em; text-align: center;">ご清聴ありがとうございました</strong>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let allExpanded = false;
+
+        function toggleSection(sectionNum) {
+            const content = document.getElementById('section' + sectionNum);
+            const arrow = content.previousElementSibling.querySelector('.arrow');
+
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                arrow.textContent = '▼';
+            } else {
+                content.classList.add('active');
+                arrow.textContent = '▲';
+            }
+        }
+
+        function toggleAll() {
+            const sections = document.querySelectorAll('.section-content');
+            const arrows = document.querySelectorAll('.arrow');
+
+            allExpanded = !allExpanded;
+
+            sections.forEach((section, index) => {
+                if (allExpanded) {
+                    section.classList.add('active');
+                    arrows[index].textContent = '▲';
+                } else {
+                    section.classList.remove('active');
+                    arrows[index].textContent = '▼';
+                }
+            });
+        }
+
+        // キーボードナビゲーション
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                const sections = document.querySelectorAll('.section-header');
+                let currentIndex = -1;
+
+                sections.forEach((section, index) => {
+                    if (section.getBoundingClientRect().top > 0 && currentIndex === -1) {
+                        currentIndex = index;
+                    }
+                });
+
+                if (e.key === 'ArrowUp' && currentIndex > 0) {
+                    sections[currentIndex - 1].scrollIntoView({ behavior: 'smooth' });
+                } else if (e.key === 'ArrowDown' && currentIndex < sections.length - 1) {
+                    sections[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
