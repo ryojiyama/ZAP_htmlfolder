@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内部監査 報告・説明資料</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-mid: #243356;
+    --blue: #2c5fad;
+    --accent: #e8872a;
+    --accent-light: #f5a84e;
+    --light: #f4f6fb;
+    --white: #ffffff;
+    --gray: #6b7a9a;
+    --gray-light: #e2e8f4;
+    --green: #2a8f6a;
+    --red-soft: #c94040;
+    --text: #1e2a3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ===== NAVIGATION ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 52px;
+    z-index: 1000;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  }
+  nav .logo {
+    font-size: 0.8rem; font-weight: 700; color: #a0b4d8;
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; gap: 0.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: #a0b4d8; text-decoration: none;
+    font-size: 0.72rem; padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    background: var(--blue); color: var(--white);
+  }
+
+  /* ===== EXPAND ALL ===== */
+  .expand-all {
+    text-align: center;
+    padding: 1rem 0 0;
+    position: sticky; top: 52px; z-index: 50;
+    background: var(--light);
+    border-bottom: 1px solid var(--gray-light);
+    padding-bottom: 0.7rem;
+  }
+  .btn {
+    background: var(--navy); color: var(--white);
+    border: none; padding: 0.5rem 1.5rem;
+    border-radius: 20px; font-family: inherit;
+    font-size: 0.82rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: var(--blue); }
+
+  /* ===== SECTIONS ===== */
+  section {
+    max-width: 960px; margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 20px rgba(26,39,68,0.08);
+    border: 1px solid var(--gray-light);
+  }
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 1.8rem;
+    cursor: pointer;
+    background: var(--white);
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .section-header:hover { background: var(--light); }
+
+  .section-label {
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: var(--navy); color: var(--white);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title-text {
+    font-size: 1.05rem; font-weight: 700; color: var(--navy);
+  }
+  .section-sub {
+    font-size: 0.78rem; color: var(--gray); margin-top: 0.1rem;
+  }
+  .toggle-icon {
+    font-size: 1.2rem; color: var(--gray);
+    transition: transform 0.3s;
+    font-weight: 700;
+  }
+  .section-header.open .toggle-icon { transform: rotate(180deg); }
+
+  .section-body {
+    padding: 0 1.8rem 1.8rem;
+    display: none;
+  }
+  .section-body.open { display: block; }
+
+  /* ===== TITLE SECTION ===== */
+  .title-section {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e3a6e 100%);
+    color: var(--white);
+    border-radius: 20px;
+    padding: 3.5rem 3rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .title-section::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(44,95,173,0.3);
+  }
+  .title-section::after {
+    content: '';
+    position: absolute; bottom: -60px; left: -20px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(232,135,42,0.1);
+  }
+  .title-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--white);
+    font-size: 0.72rem; font-weight: 700;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px; letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  .title-main {
+    font-size: 2.2rem; font-weight: 900;
+    line-height: 1.25; margin-bottom: 0.8rem;
+  }
+  .title-main span { color: var(--accent-light); }
+  .title-sub {
+    font-size: 0.95rem; color: #a0b4d8; max-width: 520px;
+  }
+  .title-meta {
+    display: flex; gap: 2rem; margin-top: 1.8rem;
+  }
+  .title-meta-item {
+    font-size: 0.8rem; color: #8aa0c8;
+  }
+  .title-meta-item strong { color: var(--white); display: block; font-size: 1rem; }
+
+  /* ===== AGENDA ===== */
+  .agenda-list {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.8rem; margin-top: 1rem;
+  }
+  .agenda-item {
+    background: var(--light); border-radius: 10px;
+    padding: 0.9rem 1rem;
+    border-left: 4px solid var(--blue);
+    font-size: 0.85rem;
+  }
+  .agenda-item .step-num {
+    font-size: 0.7rem; color: var(--blue); font-weight: 700; margin-bottom: 0.2rem;
+  }
+  .agenda-item .step-name { font-weight: 700; color: var(--navy); }
+
+  /* ===== WHAT IS SECTION ===== */
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1rem;
+  }
+  .info-box {
+    background: var(--light);
+    border-radius: 12px; padding: 1.2rem 1.3rem;
+  }
+  .info-box h4 {
+    font-size: 0.85rem; font-weight: 700;
+    color: var(--blue); margin-bottom: 0.6rem;
+  }
+  .info-box ul { padding-left: 1rem; font-size: 0.85rem; color: var(--text); }
+  .info-box ul li { margin-bottom: 0.3rem; }
+
+  /* ===== PDCA CYCLE ===== */
+  .pdca-wrap {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.4rem; margin: 1.5rem 0; flex-wrap: wrap;
+  }
+  .pdca-item {
+    text-align: center; padding: 1rem 1.2rem;
+    border-radius: 12px; min-width: 120px;
+  }
+  .pdca-item .pdca-letter {
+    font-size: 2rem; font-weight: 900; display: block;
+  }
+  .pdca-item .pdca-label {
+    font-size: 0.78rem; font-weight: 700; margin-top: 0.2rem;
+  }
+  .pdca-item .pdca-sub { font-size: 0.7rem; color: rgba(255,255,255,0.8); margin-top: 0.3rem; }
+  .pdca-arrow { font-size: 1.4rem; color: var(--gray); }
+  .p-item { background: #2c5fad; color: white; }
+  .d-item { background: #2a8f6a; color: white; }
+  .c-item { background: #e8872a; color: white; }
+  .a-item { background: #c94040; color: white; }
+  .audit-highlight {
+    background: linear-gradient(135deg, #fff8f0, #fff3e8);
+    border: 2px solid var(--accent);
+    border-radius: 12px; padding: 1rem 1.3rem;
+    text-align: center; font-size: 0.88rem;
+    color: var(--text);
+  }
+  .audit-highlight strong { color: var(--accent); }
+
+  /* ===== STATS GRID ===== */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; margin: 1.2rem 0;
+  }
+  .stat-card {
+    background: var(--navy);
+    color: white; border-radius: 14px;
+    padding: 1.3rem; text-align: center;
+  }
+  .stat-num {
+    font-size: 2.4rem; font-weight: 900;
+    color: var(--accent-light); line-height: 1;
+  }
+  .stat-unit { font-size: 1rem; }
+  .stat-label { font-size: 0.78rem; color: #a0b4d8; margin-top: 0.4rem; }
+
+  /* ===== BAR CHART ===== */
+  .chart-section { margin: 1.2rem 0; }
+  .chart-title {
+    font-size: 0.82rem; font-weight: 700; color: var(--gray);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.8rem;
+  }
+  .bar-row {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+  .bar-label {
+    font-size: 0.8rem; color: var(--text);
+    width: 130px; flex-shrink: 0; text-align: right;
+  }
+  .bar-track {
+    flex: 1; height: 28px; background: var(--gray-light);
+    border-radius: 4px; overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 4px;
+    display: flex; align-items: center; padding-left: 8px;
+    font-size: 0.75rem; font-weight: 700; color: white;
+    transition: width 1s ease;
+  }
+  .bar-fill.blue { background: var(--blue); }
+  .bar-fill.accent { background: var(--accent); }
+  .bar-fill.green { background: var(--green); }
+  .bar-fill.navy { background: var(--navy); }
+
+  .bar-val {
+    font-size: 0.82rem; font-weight: 700; color: var(--navy);
+    width: 36px; flex-shrink: 0;
+  }
+
+  /* ===== YEAR TREND ===== */
+  .trend-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1rem; margin: 1.2rem 0;
+  }
+  .trend-year {
+    border-radius: 14px; padding: 1.2rem; text-align: center;
+    border: 2px solid var(--gray-light);
+    position: relative; overflow: hidden;
+  }
+  .trend-year.latest {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #fff8f0, #fff3e8);
+  }
+  .trend-year .year-label {
+    font-size: 0.78rem; color: var(--gray); font-weight: 700;
+  }
+  .trend-year .year-count {
+    font-size: 2.6rem; font-weight: 900; color: var(--navy);
+    line-height: 1.1;
+  }
+  .trend-year .year-count span { font-size: 1rem; }
+  .trend-year .year-note { font-size: 0.73rem; color: var(--gray); margin-top: 0.3rem; }
+  .latest-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--accent); color: white;
+    font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.4rem;
+    border-radius: 8px;
+  }
+
+  /* ===== CAUSE PIE-LIKE ===== */
+  .cause-grid {
+    display: grid; grid-template-columns: repeat(2,1fr);
+    gap: 0.7rem; margin-top: 1rem;
+  }
+  .cause-item {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 0.8rem 1rem; background: var(--light);
+    border-radius: 10px;
+  }
+  .cause-dot {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 900; color: white;
+    flex-shrink: 0;
+  }
+  .cause-info .cause-name { font-size: 0.82rem; font-weight: 700; }
+  .cause-info .cause-cnt { font-size: 1.1rem; font-weight: 900; color: var(--navy); }
+  .cause-info .cause-sub { font-size: 0.7rem; color: var(--gray); }
+
+  /* ===== DIRECTION SECTION ===== */
+  .direction-hero {
+    background: linear-gradient(135deg, var(--navy), #2c4a7e);
+    color: white; border-radius: 16px;
+    padding: 2rem; text-align: center; margin-bottom: 1.5rem;
+  }
+  .direction-hero .dir-headline {
+    font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem;
+  }
+  .direction-hero .dir-headline span { color: var(--accent-light); }
+  .direction-hero .dir-sub { font-size: 0.88rem; color: #a0b4d8; }
+
+  .vs-row {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 1rem; align-items: center; margin: 1.2rem 0;
+  }
+  .vs-box {
+    border-radius: 14px; padding: 1.3rem;
+  }
+  .vs-box.current {
+    background: #f5f5f7; border: 2px solid #dde4f0;
+  }
+  .vs-box.future {
+    background: linear-gradient(135deg, #e8f4ed, #d6eee0);
+    border: 2px solid #2a8f6a;
+  }
+  .vs-box h4 {
+    font-size: 0.8rem; font-weight: 700; margin-bottom: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+  .vs-box.current h4 { color: var(--gray); }
+  .vs-box.future h4 { color: var(--green); }
+  .vs-box ul {
+    padding-left: 1rem; font-size: 0.83rem;
+  }
+  .vs-box ul li { margin-bottom: 0.4rem; }
+  .vs-arrow {
+    font-size: 1.8rem; color: var(--accent); font-weight: 900;
+    text-align: center;
+  }
+
+  /* ===== STEPS ===== */
+  .steps-wrap { margin: 1.2rem 0; }
+  .step-item {
+    display: flex; gap: 1rem; margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+  .step-badge {
+    width: 40px; height: 40px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 900; font-size: 0.9rem;
+    color: white; flex-shrink: 0;
+  }
+  .step-badge.s1 { background: var(--gray); }
+  .step-badge.s2 { background: var(--blue); }
+  .step-badge.s3 { background: var(--green); }
+  .step-content { flex: 1; }
+  .step-content h5 { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+  .step-content p { font-size: 0.8rem; color: var(--gray); margin-top: 0.2rem; }
+  .step-connector {
+    width: 2px; height: 16px; background: var(--gray-light);
+    margin: 0 0 0 19px;
+  }
+
+  /* ===== QUESTIONS BOX ===== */
+  .question-highlight {
+    background: linear-gradient(135deg, #f0f7ff, #e8f2ff);
+    border: 2px solid var(--blue); border-radius: 14px;
+    padding: 1.3rem; margin: 1rem 0;
+  }
+  .question-highlight h4 {
+    font-size: 0.88rem; font-weight: 700; color: var(--blue);
+    margin-bottom: 0.8rem;
+  }
+  .question-item {
+    display: flex; gap: 0.7rem; align-items: flex-start;
+    margin-bottom: 0.6rem; font-size: 0.85rem;
+  }
+  .q-icon {
+    width: 22px; height: 22px; background: var(--blue);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; color: white; font-size: 0.7rem;
+    font-weight: 900; flex-shrink: 0; margin-top: 0.1rem;
+  }
+
+  /* ===== SUMMARY ===== */
+  .summary-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 0.8rem; margin: 1.2rem 0;
+  }
+  .summary-point {
+    background: var(--navy);
+    color: white; border-radius: 12px;
+    padding: 1.1rem; text-align: center;
+  }
+  .summary-point .sp-icon {
+    font-size: 0.8rem; background: rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 0.2rem 0.6rem;
+    margin-bottom: 0.5rem; display: inline-block;
+  }
+  .summary-point .sp-text { font-size: 0.82rem; font-weight: 700; }
+
+  .closing-message {
+    background: linear-gradient(135deg, var(--accent), #d4731a);
+    color: white; border-radius: 16px;
+    padding: 1.8rem; text-align: center;
+    margin-top: 1rem;
+  }
+  .closing-message .cm-main {
+    font-size: 1.3rem; font-weight: 900; margin-bottom: 0.5rem;
+  }
+  .closing-message .cm-sub { font-size: 0.88rem; opacity: 0.9; }
+
+  /* ===== SECTION HEADING ===== */
+  .sec-h2 {
+    font-size: 1.1rem; font-weight: 900; color: var(--navy);
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 3px solid var(--accent);
+    display: inline-block;
+  }
+  .sec-h2-full {
+    font-size: 1.1rem; font-weight: 900; color: var(--navy);
+    margin-bottom: 0.8rem; border-left: 4px solid var(--accent);
+    padding-left: 0.8rem;
+  }
+
+  .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.6rem 0; }
+  .tag {
+    background: var(--light); border: 1px solid var(--gray-light);
+    border-radius: 20px; padding: 0.25rem 0.7rem;
+    font-size: 0.74rem; color: var(--gray); font-weight: 500;
+  }
+  .tag.accent { background: #fff3e8; border-color: #f5c89a; color: var(--accent); }
+  .tag.blue { background: #e8f0fb; border-color: #b8cef0; color: var(--blue); }
+
+  .note-box {
+    background: #fffbf0; border: 1px solid #f5d990;
+    border-radius: 10px; padding: 0.9rem 1rem;
+    font-size: 0.82rem; color: #7a6010; margin-top: 0.8rem;
+  }
+
+  /* ===== DEPT TABLE ===== */
+  .dept-table {
+    width: 100%; border-collapse: collapse; font-size: 0.82rem;
+    margin-top: 0.8rem;
+  }
+  .dept-table th {
+    background: var(--navy); color: white;
+    padding: 0.6rem 0.8rem; text-align: left;
+    font-size: 0.75rem;
+  }
+  .dept-table td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .dept-table tr:nth-child(even) td { background: var(--light); }
+  .dept-table td.center { text-align: center; }
+  .badge-minor {
+    background: #e8f0fb; color: var(--blue);
+    border-radius: 10px; padding: 0.15rem 0.5rem;
+    font-size: 0.72rem; font-weight: 700;
+  }
+  .badge-obs {
+    background: #fff3e8; color: var(--accent);
+    border-radius: 10px; padding: 0.15rem 0.5rem;
+    font-size: 0.72rem; font-weight: 700;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center; padding: 2rem;
+    font-size: 0.76rem; color: var(--gray);
+    border-top: 1px solid var(--gray-light);
+    margin-top: 1rem;
+  }
+
+  /* ===== COLLAPSE ALL ===== */
+  .collapsible-content { overflow: hidden; transition: max-height 0.4s ease; }
+
+  @media (max-width: 700px) {
+    .two-col, .stats-grid, .trend-grid, .summary-grid, .cause-grid { grid-template-columns: 1fr; }
+    .vs-row { grid-template-columns: 1fr; }
+    .vs-arrow { transform: rotate(90deg); }
+    .title-main { font-size: 1.6rem; }
+    nav .nav-links { display: none; }
+    section { padding: 1.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="logo">内部監査 説明資料</div>
+  <ul class="nav-links">
+    <li><a href="#intro">はじめに</a></li>
+    <li><a href="#what">内部監査とは</a></li>
+    <li><a href="#summary">通年サマリー</a></li>
+    <li><a href="#direction">今後の方向性</a></li>
+    <li><a href="#close">まとめ</a></li>
+  </ul>
+</nav>
+
+<div style="height:52px;"></div>
+
+<section>
+
+<!-- EXPAND ALL -->
+<div class="expand-all">
+  <button class="btn" onclick="toggleAll()">全セクションを展開 / 折りたたみ</button>
+</div>
+
+<div style="height:1.5rem;"></div>
+
+<!-- ===== TITLE ===== -->
+<div class="title-section" id="top">
+  <div class="title-badge">2023–2025 通年報告</div>
+  <div class="title-main">内部監査<br><span>結果報告と今後の方向性</span></div>
+  <div class="title-sub">3年間の監査データをもとに、現状を共有し、これからの監査のあり方を一緒に考えます。</div>
+  <div class="title-meta">
+    <div class="title-meta-item"><strong>対象期間</strong>2023年〜2025年</div>
+    <div class="title-meta-item"><strong>累計件数</strong>35件</div>
+    <div class="title-meta-item"><strong>対象部門</strong>全社横断</div>
+    <div class="title-meta-item"><strong>所要時間</strong>約15分</div>
+  </div>
+</div>
+
+<!-- ===== AGENDA ===== -->
+<div class="section-card" id="intro">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <div class="section-label">
+      <div class="section-num">0</div>
+      <div>
+        <div class="section-title-text">本日のアジェンダ</div>
+        <div class="section-sub">全体の流れを確認します</div>
+      </div>
+    </div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body open">
+    <div class="agenda-list">
+      <div class="agenda-item">
+        <div class="step-num">STEP 01</div>
+        <div class="step-name">内部監査とは何か</div>
+        <div style="font-size:0.74rem;color:var(--gray);margin-top:0.2rem;">ISOと監査の基本的な役割</div>
+      </div>
+      <div class="agenda-item">
+        <div class="step-num">STEP 02</div>
+        <div class="step-name">3年間の監査サマリー</div>
+        <div style="font-size:0.74rem;color:var(--gray);margin-top:0.2rem;">件数・傾向・主な指摘事項</div>
+      </div>
+      <div class="agenda-item">
+        <div class="step-num">STEP 03</div>
+        <div class="step-name">今後の監査の方向性</div>
+        <div style="font-size:0.74rem;color:var(--gray);margin-top:0.2rem;">形式確認から本質的対話へ</div>
+      </div>
+      <div class="agenda-item">
+        <div class="step-num">STEP 04</div>
+        <div class="step-name">まとめと今回の試み</div>
+        <div style="font-size:0.74rem;color:var(--gray);margin-top:0.2rem;">次のステップに向けて</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WHAT IS ===== -->
+<div class="section-card" id="what">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <div class="section-label">
+      <div class="section-num">1</div>
+      <div>
+        <div class="section-title-text">内部監査とは何か</div>
+        <div class="section-sub">ISOの仕組みと監査の位置づけ</div>
+      </div>
+    </div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body open">
+
+    <p style="font-size:0.88rem;color:var(--text);margin-bottom:1rem;">
+      当社はISO 9001（品質マネジメントシステム）を取得しています。<br>
+      内部監査は、そのシステムが正しく機能しているかを<strong>自分たちで確認する活動</strong>です。
+    </p>
+
+    <!-- PDCA -->
+    <div class="chart-title">ISO 9001の基本サイクル（PDCA）における監査の役割</div>
+    <div class="pdca-wrap">
+      <div class="pdca-item p-item">
+        <span class="pdca-letter">P</span>
+        <div class="pdca-label">Plan 計画</div>
+        <div class="pdca-sub">目標・手順の策定</div>
+      </div>
+      <div class="pdca-arrow">→</div>
+      <div class="pdca-item d-item">
+        <span class="pdca-letter">D</span>
+        <div class="pdca-label">Do 実行</div>
+        <div class="pdca-sub">業務の実施</div>
+      </div>
+      <div class="pdca-arrow">→</div>
+      <div class="pdca-item c-item" style="position:relative;">
+        <span class="pdca-letter">C</span>
+        <div class="pdca-label">Check 確認</div>
+        <div class="pdca-sub">← 内部監査はここ</div>
+      </div>
+      <div class="pdca-arrow">→</div>
+      <div class="pdca-item a-item">
+        <span class="pdca-letter">A</span>
+        <div class="pdca-label">Act 改善</div>
+        <div class="pdca-sub">問題を直す</div>
+      </div>
+    </div>
+
+    <div class="audit-highlight" style="margin-bottom:1rem;">
+      内部監査 ＝ <strong>「Checkの専門部隊」</strong><br>
+      <span style="font-size:0.8rem;">外部審査員ではなく、自社の視点で日常業務を点検・改善する仕組み</span>
+    </div>
+
+    <div class="two-col">
+      <div class="info-box">
+        <h4>監査で確認すること</h4>
+        <ul>
+          <li>計画通りに業務が行われているか</li>
+          <li>記録・書類が適切に管理されているか</li>
+          <li>教育・訓練が実施されているか</li>
+          <li>問題が発生したとき対処できているか</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>監査の結果区分</h4>
+        <ul>
+          <li><strong>軽微な不適合</strong>：改善が必要な小さな問題</li>
+          <li><strong>重大な不適合</strong>：早急な対処が必要な問題</li>
+          <li><strong>観察事項</strong>：今後注意が必要な事柄</li>
+        </ul>
+        <div class="note-box" style="margin-top:0.7rem;">当社3年間は全て「軽微な不適合」または「観察事項」です。</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== SUMMARY ===== -->
+<div class="section-card" id="summary">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <div class="section-label">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title-text">3年間の監査サマリー（2023〜2025年）</div>
+        <div class="section-sub">全35件の指摘事項を分析</div>
+      </div>
+    </div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body open">
+
+    <!-- KEY STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">35<span class="stat-unit">件</span></div>
+        <div class="stat-label">3年間の累計指摘件数</div>
+      </div>
+      <div class="stat-card" style="background:var(--blue);">
+        <div class="stat-num">34<span class="stat-unit">件</span></div>
+        <div class="stat-label">軽微な不適合（全体の97%）</div>
+      </div>
+      <div class="stat-card" style="background:var(--green);">
+        <div class="stat-num">0<span class="stat-unit">件</span></div>
+        <div class="stat-label">重大な不適合（3年間連続）</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      重大な不適合がゼロという点は、組織としての基礎的な管理が機能している証拠です。
+    </div>
+
+    <!-- YEAR TREND -->
+    <div class="chart-title" style="margin-top:1.3rem;">年別 指摘件数の推移</div>
+    <div class="trend-grid">
+      <div class="trend-year">
+        <div class="year-label">2023年度</div>
+        <div class="year-count">9<span>件</span></div>
+        <div class="year-note">監査対象：9部門・班</div>
+      </div>
+      <div class="trend-year">
+        <div class="year-label">2024年度</div>
+        <div class="year-count">11<span>件</span></div>
+        <div class="year-note">監査対象：11部門・班</div>
+      </div>
+      <div class="trend-year latest">
+        <div class="latest-badge">最新</div>
+        <div class="year-label">2025年度</div>
+        <div class="year-count">15<span>件</span></div>
+        <div class="year-note">監査対象：9部門・班</div>
+      </div>
+    </div>
+
+    <!-- EVENT TYPE -->
+    <div class="chart-section">
+      <div class="chart-title">事象の分類（全35件）</div>
+      <div class="bar-row">
+        <div class="bar-label">記録のミス</div>
+        <div class="bar-track">
+          <div class="bar-fill blue" style="width:62.8%;">22件</div>
+        </div>
+        <div class="bar-val">63%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">計画・準備段階のミス</div>
+        <div class="bar-track">
+          <div class="bar-fill navy" style="width:17.1%;">6件</div>
+        </div>
+        <div class="bar-val">17%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">実行のミス</div>
+        <div class="bar-track">
+          <div class="bar-fill accent" style="width:17.1%;">6件</div>
+        </div>
+        <div class="bar-val">17%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">評価・改善の未実施</div>
+        <div class="bar-track">
+          <div class="bar-fill green" style="width:2.8%;">1件</div>
+        </div>
+        <div class="bar-val">3%</div>
+      </div>
+    </div>
+
+    <!-- CAUSE -->
+    <div class="chart-title" style="margin-top:0.5rem;">原因の分類（上位）</div>
+    <div class="cause-grid">
+      <div class="cause-item">
+        <div class="cause-dot" style="background:var(--blue);">12</div>
+        <div class="cause-info">
+          <div class="cause-name">力量・教育訓練</div>
+          <div class="cause-sub">教育計画・記録の不備が多数</div>
+        </div>
+      </div>
+      <div class="cause-item">
+        <div class="cause-dot" style="background:var(--accent);">11</div>
+        <div class="cause-info">
+          <div class="cause-name">記録管理</div>
+          <div class="cause-sub">捺印漏れ・更新忘れなど</div>
+        </div>
+      </div>
+      <div class="cause-item">
+        <div class="cause-dot" style="background:var(--green);">4</div>
+        <div class="cause-info">
+          <div class="cause-name">文書管理</div>
+          <div class="cause-sub">書類の配布・保管の問題</div>
+        </div>
+      </div>
+      <div class="cause-item">
+        <div class="cause-dot" style="background:var(--navy);">4</div>
+        <div class="cause-info">
+          <div class="cause-name">設備関連</div>
+          <div class="cause-sub">点検・台帳管理の漏れ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEPT BREAKDOWN -->
+    <div class="sec-h2-full" style="margin-top:1.5rem;">部門別 主な指摘内容</div>
+    <table class="dept-table">
+      <thead>
+        <tr>
+          <th>部門・班</th>
+          <th>件数</th>
+          <th>主な指摘内容</th>
+          <th>区分</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>製品開発部</td>
+          <td class="center">6</td>
+          <td>教育記録の未作成、文書レビュー未実施、測定器台帳不備など</td>
+          <td class="center"><span class="badge-minor">軽微</span></td>
+        </tr>
+        <tr>
+          <td>品質管理部</td>
+          <td class="center">5</td>
+          <td>教育計画・力量表の不備、測定器台帳記入漏れ、書類未配布</td>
+          <td class="center"><span class="badge-minor">軽微</span></td>
+        </tr>
+        <tr>
+          <td>成形班</td>
+          <td class="center">4</td>
+          <td>点検表の捺印漏れ、目標実施計画書の記載不足</td>
+          <td class="center"><span class="badge-minor">軽微</span></td>
+        </tr>
+        <tr>
+          <td>裁断班</td>
+          <td class="center">2</td>
+          <td>年間教育計画の不足、目標実施計画書の記載不足</td>
+          <td class="center"><span class="badge-minor">軽微</span></td>
+        </tr>
+        <tr>
+          <td>写植・印刷班</td>
+          <td class="center">2</td>
+          <td>教育記録と計画の不整合、点検漏れ</td>
+          <td class="center"><span class="badge-minor">軽微</span></td>
+        </tr>
+        <tr>
+          <td>製品開発部（2023）</td>
+          <td class="center">1</td>
+          <td>リスク管理項目の具体性不足</td>
+          <td class="center"><span class="badge-obs">観察</span></td>
+        </tr>
+        <tr>
+          <td>その他各班</td>
+          <td class="center">15</td>
+          <td>UVプリント班・自転車帽班・野球帽班・倉庫班・営業部ほか</td>
+          <td class="center"><span class="badge-minor">軽微</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- INSIGHT -->
+    <div style="margin-top:1.2rem; background:linear-gradient(135deg,#e8f0fb,#f0f4fc); border-radius:12px; padding:1.2rem;">
+      <div style="font-size:0.82rem; font-weight:700; color:var(--blue); margin-bottom:0.6rem;">— 3年間を通じた共通の傾向 —</div>
+      <div style="font-size:0.85rem; color:var(--text);">
+        多くの指摘事項は「<strong>書類・記録の抜け漏れ</strong>」に集中しています。<br>
+        原因として「<strong>認識不足</strong>」「<strong>業務多忙で後回し</strong>」が繰り返し見られます。<br>
+        これは個人の問題ではなく、<strong>仕組みとルールの整備</strong>が鍵となるパターンです。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== DIRECTION ===== -->
+<div class="section-card" id="direction">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <div class="section-label">
+      <div class="section-num">3</div>
+      <div>
+        <div class="section-title-text">今後の内部監査の方向性</div>
+        <div class="section-sub">形式的確認から本質的対話へ</div>
+      </div>
+    </div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body open">
+
+    <div class="direction-hero">
+      <div class="dir-headline">現状の積み重ねの上に、<br><span>次のステージ</span>へ</div>
+      <div class="dir-sub">これまでの監査活動が基盤。その上に、より本質的な対話を重ねていきます。</div>
+    </div>
+
+    <!-- VS -->
+    <div class="chart-title">監査の質的変化のイメージ</div>
+    <div class="vs-row">
+      <div class="vs-box current">
+        <h4>これまでの監査（確認型）</h4>
+        <ul>
+          <li>書類はあるか？</li>
+          <li>承認印はあるか？</li>
+          <li>手順通りに実施されているか？</li>
+          <li>記録の形式は正しいか？</li>
+        </ul>
+        <div style="font-size:0.75rem;color:var(--gray);margin-top:0.7rem;">→ 形式的な適合性の確認が中心</div>
+      </div>
+      <div class="vs-arrow">→</div>
+      <div class="vs-box future">
+        <h4>目指す監査（対話型）</h4>
+        <ul>
+          <li>なぜ書類が作成されなかったのか？</li>
+          <li>この業務は実務で本当に必要か？</li>
+          <li>会社のビジョンとどう繋がるか？</li>
+          <li>改善につながる本質は何か？</li>
+        </ul>
+        <div style="font-size:0.75rem;color:var(--green);margin-top:0.7rem;">→ 現場と共に考える、継続的改善の文化</div>
+      </div>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="question-highlight">
+      <h4>監査で大切にしたい問いかけ</h4>
+      <div class="question-item">
+        <div class="q-icon">?</div>
+        <div>なぜその書類が作成されていないのか — <span style="color:var(--blue);">背景・原因を一緒に探る</span></div>
+      </div>
+      <div class="question-item">
+        <div class="q-icon">?</div>
+        <div>その業務は実務上、本当に必要とされているのか — <span style="color:var(--blue);">業務の意義を見直す</span></div>
+      </div>
+      <div class="question-item">
+        <div class="q-icon">?</div>
+        <div>当社のVision・Valueに照らして、その業務はどんな意味を持つのか — <span style="color:var(--blue);">会社の方向性と接続する</span></div>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="chart-title" style="margin-top:1.2rem;">段階的な移行ステップ</div>
+    <div class="steps-wrap">
+      <div class="step-item">
+        <div class="step-badge s1">現在</div>
+        <div class="step-content">
+          <h5>基礎固め：形式的な確認を確実に</h5>
+          <p>書類・記録の整備。現在の監査活動を着実に継続する段階。</p>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-badge s2">次</div>
+        <div class="step-content">
+          <h5>対話の導入：反応を確認しながら質問を絞る</h5>
+          <p>今回の監査では、あえて質問数を絞り込み、各部門の反応を観察。次の質問設計につなげます。</p>
+        </div>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item">
+        <div class="step-badge s3">目標</div>
+        <div class="step-content">
+          <h5>本質的対話：継続的改善の文化の醸成</h5>
+          <p>被監査部門と共に考え、業務の意義を問い直す。会社のビジョンと日常業務が繋がる状態へ。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== CLOSE ===== -->
+<div class="section-card" id="close">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <div class="section-label">
+      <div class="section-num">4</div>
+      <div>
+        <div class="section-title-text">まとめ</div>
+        <div class="section-sub">今日の内容を振り返る</div>
+      </div>
+    </div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body open">
+
+    <div class="summary-grid">
+      <div class="summary-point">
+        <div class="sp-icon">データ</div>
+        <div class="sp-text">3年間35件、全て軽微な不適合。重大な問題はゼロ。</div>
+      </div>
+      <div class="summary-point" style="background:var(--blue);">
+        <div class="sp-icon">傾向</div>
+        <div class="sp-text">記録・教育訓練の抜け漏れが中心。仕組みの整備で改善できる。</div>
+      </div>
+      <div class="summary-point" style="background:var(--accent);">
+        <div class="sp-icon">方向性</div>
+        <div class="sp-text">段階的に、本質的な対話型監査へ発展させていく。</div>
+      </div>
+    </div>
+
+    <div class="closing-message">
+      <div class="cm-main">形式的確認から、本質的対話へ</div>
+      <div class="cm-sub">
+        内部監査は「チェックされる場」ではなく、<br>
+        部門と会社が共に成長するための<strong>対話の機会</strong>です。<br>
+        一緒に考え、より良い組織をつくっていきましょう。
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:1rem;">
+      ご質問・ご意見はぜひ監査後の対話の中でお聞かせください。
+      今回の試みへのフィードバックが、次の監査設計の参考になります。
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+<div class="footer">
+  内部監査説明資料 ／ 2023–2025年度 通年報告 ／ 作成：品質管理部門
+</div>
+
+<script>
+function toggleSection(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function toggleAll() {
+  const headers = document.querySelectorAll('.section-header');
+  const bodies = document.querySelectorAll('.section-body');
+  // Check if any are closed
+  const anyClosed = Array.from(bodies).some(b => !b.classList.contains('open'));
+  headers.forEach(h => anyClosed ? h.classList.add('open') : h.classList.remove('open'));
+  bodies.forEach(b => anyClosed ? b.classList.add('open') : b.classList.remove('open'));
+}
+
+// Animate bars on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => { bar.style.width = w; }, 100);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.chart-section').forEach(el => observer.observe(el));
+
+// Nav active state
+const sections = document.querySelectorAll('section [id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY + 100 >= s.offsetTop) current = s.id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
