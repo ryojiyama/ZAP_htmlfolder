@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「単位」をつけると数はピタッと決まる！</title>
+<style>
+  :root{
+    --bg:#FFF8EE;
+    --card:#FFFFFF;
+    --ink:#3A3226;
+    --sub:#7A6A55;
+    --orange:#F08C3C;
+    --orange-l:#FDE7CF;
+    --blue:#3E8FD6;
+    --blue-l:#DCEBFA;
+    --green:#3FA97A;
+    --green-l:#DDF2E8;
+    --pink:#E4667F;
+    --pink-l:#FBE0E5;
+    --line:#EADFCC;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:0 16px 64px;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN","Yu Gothic","游ゴシック",sans-serif;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  ruby rt{font-size:.5em;color:var(--sub);font-weight:normal;}
+
+  header{
+    text-align:center;
+    padding:48px 16px 32px;
+  }
+  header .eyebrow{
+    display:inline-block;
+    background:var(--orange);
+    color:#fff;
+    font-size:14px;
+    font-weight:bold;
+    padding:5px 16px;
+    border-radius:999px;
+    letter-spacing:.05em;
+  }
+  header h1{
+    font-size:clamp(24px,5.2vw,38px);
+    margin:18px 0 10px;
+    line-height:1.5;
+  }
+  header h1 .hl{
+    background:linear-gradient(transparent 62%, #FFE08A 62%);
+    padding:0 4px;
+  }
+  header p{color:var(--sub);margin:0;font-size:16px;}
+
+  section{
+    background:var(--card);
+    border:2px solid var(--line);
+    border-radius:24px;
+    padding:28px 24px 32px;
+    margin:26px 0;
+    box-shadow:0 6px 0 rgba(234,223,204,.55);
+  }
+  .num{
+    display:flex;align-items:center;gap:12px;
+    margin:0 0 6px;
+  }
+  .num .circle{
+    flex:none;
+    width:42px;height:42px;border-radius:50%;
+    background:var(--orange);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:bold;
+  }
+  .num h2{font-size:clamp(19px,3.6vw,24px);margin:0;line-height:1.45;}
+  .lead{margin:6px 0 22px;color:var(--sub);font-size:15.5px;}
+
+  .panel{
+    border-radius:18px;
+    padding:20px 18px 22px;
+    margin:16px 0;
+  }
+  .panel.a{background:var(--blue-l);}
+  .panel.b{background:var(--orange-l);}
+  .panel h3{
+    margin:0 0 4px;font-size:19px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .tag{
+    font-size:12.5px;font-weight:bold;color:#fff;
+    padding:3px 11px;border-radius:999px;
+  }
+  .tag.blue{background:var(--blue);}
+  .tag.orange{background:var(--orange);}
+  .panel p{margin:4px 0 0;font-size:15.5px;}
+
+  .figs{
+    display:flex;gap:10px;justify-content:center;align-items:flex-end;
+    flex-wrap:wrap;margin:18px 0 6px;
+  }
+  .fig{text-align:center;}
+  .fig .cap{font-size:13px;color:var(--sub);margin-top:2px;line-height:1.5;}
+  .fig .res{
+    font-size:17px;font-weight:bold;margin-top:6px;
+    padding:3px 0;border-radius:10px;
+  }
+  .res.blue{color:var(--blue);}
+  .res.orange{color:var(--orange);}
+
+  .kome{
+    display:flex;gap:10px;align-items:flex-start;
+    background:#fff;border-radius:14px;padding:12px 14px;margin-top:16px;
+    font-size:15px;
+  }
+  .kome .mark{flex:none;font-size:20px;}
+
+  .big{
+    text-align:center;
+    font-size:clamp(18px,3.8vw,23px);
+    font-weight:bold;
+    margin:26px 0 0;
+    line-height:1.65;
+  }
+  .big .hl{background:linear-gradient(transparent 62%, #FFE08A 62%);padding:0 4px;}
+
+  .word{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    justify-content:center;
+    background:var(--green-l);border-radius:18px;padding:22px 18px;margin-top:8px;
+  }
+  .word .box{
+    background:#fff;border:2px dashed var(--green);border-radius:14px;
+    padding:10px 20px;font-size:clamp(18px,3.6vw,22px);font-weight:bold;color:var(--green);
+  }
+  .word .arrow{font-size:22px;color:var(--green);}
+
+  .cards{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;}
+  @media(min-width:700px){.cards{grid-template-columns:repeat(3,1fr);}}
+  .card{
+    border-radius:18px;padding:18px 16px 20px;text-align:center;
+    display:flex;flex-direction:column;
+  }
+  .card.c1{background:var(--pink-l);}
+  .card.c2{background:var(--blue-l);}
+  .card.c3{background:var(--green-l);}
+  .card .where{
+    display:inline-block;font-size:12.5px;font-weight:bold;color:#fff;
+    padding:3px 12px;border-radius:999px;margin-bottom:8px;align-self:center;
+  }
+  .c1 .where{background:var(--pink);}
+  .c2 .where{background:var(--blue);}
+  .c3 .where{background:var(--green);}
+  .card h3{margin:0 0 10px;font-size:18px;}
+  .card p{margin:10px 0 0;font-size:14.5px;text-align:left;}
+  .card .art{margin:4px 0 2px;}
+
+  .code{
+    background:#2E2A24;color:#F5EFE4;border-radius:12px;
+    padding:12px 10px;font-family:"SFMono-Regular",Consolas,monospace;
+    font-size:16px;letter-spacing:.02em;
+  }
+  .code .k{color:#FFC46B;font-weight:bold;}
+  .code .v{color:#8FD6A8;}
+
+  .summary{
+    background:linear-gradient(160deg,#FFF1DC,#FFE6C7);
+    border:2px solid #F3D3A6;
+  }
+  .sum-row{
+    display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0 18px;
+  }
+  .chip{
+    background:#fff;border-radius:14px;padding:10px 16px;
+    font-size:17px;font-weight:bold;border:2px solid var(--line);
+  }
+  .summary .final{
+    background:#fff;border-radius:18px;padding:18px 16px;text-align:center;
+    font-size:clamp(16px,3.4vw,20px);font-weight:bold;line-height:1.7;
+  }
+  footer{text-align:center;color:var(--sub);font-size:13px;padding-top:10px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">さんすうの おはなし</span>
+  <h1><span class="hl">「たんい」をつけると</span><br>数はピタッと決まる！</h1>
+  <p>3/5 と 3/5kg は、まったくの べつもの です</p>
+</header>
+
+<!-- ============ 1 ============ -->
+<section>
+  <div class="num">
+    <div class="circle">1</div>
+    <h2>「たんい」があるか ないかの 大じけん</h2>
+  </div>
+  <p class="lead">ここに 1.1kg（1100g）の さとうが あります。<br>
+  「3/5 つかう」と「3/5kg つかう」──数字は同じなのに、いみが ぜんぜん ちがいます。</p>
+
+  <!-- A -->
+  <div class="panel a">
+    <h3><span class="tag blue">たんい なし</span>「そのうちの 3/5」を つかう</h3>
+    <p>これは <ruby>割合<rt>わりあい</rt></ruby>。ぜんたいを 5つに 分けた うちの 3つ分、という意味です。<br>
+    だから <strong>入れものが 大きくなると、つかう量も どんどん ふえます。</strong></p>
+
+    <div class="figs">
+      <!-- 1.1kg bag -->
+      <div class="fig">
+        <svg width="92" height="150" viewBox="0 0 92 150" role="img" aria-label="1100グラムのさとうの袋、5等分のうち3つ分に色">
+          <defs><clipPath id="b1"><rect x="20" y="66" width="52" height="76" rx="9"/></clipPath></defs>
+          <g clip-path="url(#b1)">
+            <rect x="20" y="66" width="52" height="76" fill="#FBF3E6"/>
+            <rect x="20" y="96.4" width="52" height="45.6" fill="#F08C3C" opacity=".85"/>
+            <path d="M20 81.2 h52 M20 96.4 h52 M20 111.6 h52 M20 126.8 h52" stroke="#C8A882" stroke-width="1.6"/>
+          </g>
+          <rect x="20" y="66" width="52" height="76" rx="9" fill="none" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="46" y="125" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">3/5</text>
+          <path d="M24 66 q22 -14 44 0 Z" fill="#E8D7BC" stroke="#C8A882" stroke-width="2.5" stroke-linejoin="round"/>
+          <text x="46" y="60" text-anchor="middle" font-size="15" font-weight="bold" fill="#7A6A55">1100g</text>
+          <text x="46" y="24" text-anchor="middle" font-size="15" fill="#3E8FD6" font-weight="bold">ふつうの袋</text>
+        </svg>
+        <div class="res blue">660g</div>
+      </div>
+      <!-- 2kg bag -->
+      <div class="fig">
+        <svg width="112" height="150" viewBox="0 0 112 150" role="img" aria-label="2000グラムのさとうの袋、5等分のうち3つ分に色">
+          <defs><clipPath id="b2"><rect x="18" y="46" width="76" height="96" rx="10"/></clipPath></defs>
+          <g clip-path="url(#b2)">
+            <rect x="18" y="46" width="76" height="96" fill="#FBF3E6"/>
+            <rect x="18" y="84.4" width="76" height="57.6" fill="#F08C3C" opacity=".85"/>
+            <path d="M18 65.2 h76 M18 84.4 h76 M18 103.6 h76 M18 122.8 h76" stroke="#C8A882" stroke-width="1.6"/>
+          </g>
+          <rect x="18" y="46" width="76" height="96" rx="10" fill="none" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="56" y="119" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">3/5</text>
+          <path d="M23 46 q33 -16 66 0 Z" fill="#E8D7BC" stroke="#C8A882" stroke-width="2.5" stroke-linejoin="round"/>
+          <text x="56" y="38" text-anchor="middle" font-size="15" font-weight="bold" fill="#7A6A55">2000g</text>
+          <text x="56" y="16" text-anchor="middle" font-size="15" fill="#3E8FD6" font-weight="bold">大きい袋</text>
+        </svg>
+        <div class="res blue">1200g</div>
+      </div>
+      <!-- bucket -->
+      <div class="fig">
+        <svg width="132" height="150" viewBox="0 0 132 150" role="img" aria-label="5000グラムのバケツ">
+          <defs><clipPath id="b3"><path d="M18 34 h96 l-10 100 a8 8 0 0 1 -8 7 h-60 a8 8 0 0 1 -8 -7 Z"/></clipPath></defs>
+          <g clip-path="url(#b3)">
+            <rect x="14" y="30" width="104" height="115" fill="#FBF3E6"/>
+            <rect x="14" y="76.8" width="104" height="68" fill="#F08C3C" opacity=".85"/>
+            <path d="M14 55.4 h104 M14 76.8 h104 M14 98.2 h104 M14 119.6 h104" stroke="#C8A882" stroke-width="1.6"/>
+          </g>
+          <path d="M18 34 h96 l-10 100 a8 8 0 0 1 -8 7 h-60 a8 8 0 0 1 -8 -7 Z" fill="none" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="66" y="115" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">3/5</text>
+          <rect x="14" y="26" width="104" height="12" rx="6" fill="#E8D7BC" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="66" y="16" text-anchor="middle" font-size="15" fill="#3E8FD6" font-weight="bold">バケツ 5000g</text>
+        </svg>
+        <div class="res blue">3000g</div>
+      </div>
+    </div>
+    <p style="text-align:center;font-weight:bold;">→ つかう量が コロコロ 変わる！</p>
+  </div>
+
+  <!-- B -->
+  <div class="panel b">
+    <h3><span class="tag orange">たんい あり</span>「そのうちの 3/5kg」を つかう</h3>
+    <p>3/5kg は <strong>600g</strong> のこと。「kg」が ついた とたん、<br>
+    もとの さとうが バケツいっぱいでも、小さい袋でも、<strong>いつでも きっちり 600g だけ</strong>を さします。</p>
+
+    <div class="figs">
+      <div class="fig">
+        <svg width="92" height="150" viewBox="0 0 92 150" role="img" aria-label="小さい袋から600グラム">
+          <rect x="20" y="66" width="52" height="76" rx="9" fill="#FBF3E6" stroke="#C8A882" stroke-width="2.5"/>
+          <rect x="22" y="112" width="48" height="28" rx="7" fill="#F08C3C" opacity=".85"/>
+          <rect x="20" y="66" width="52" height="76" rx="9" fill="none" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="46" y="131" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">600g</text>
+          <path d="M24 66 q22 -14 44 0 Z" fill="#E8D7BC" stroke="#C8A882" stroke-width="2.5" stroke-linejoin="round"/>
+          <text x="46" y="60" text-anchor="middle" font-size="15" font-weight="bold" fill="#7A6A55">1100g</text>
+          <text x="46" y="24" text-anchor="middle" font-size="15" fill="#F08C3C" font-weight="bold">ふつうの袋</text>
+        </svg>
+        <div class="res orange">600g</div>
+      </div>
+      <div class="fig">
+        <svg width="112" height="150" viewBox="0 0 112 150" role="img" aria-label="大きい袋から600グラム">
+          <rect x="18" y="46" width="76" height="96" rx="10" fill="#FBF3E6" stroke="#C8A882" stroke-width="2.5"/>
+          <rect x="20" y="112" width="72" height="28" rx="7" fill="#F08C3C" opacity=".85"/>
+          <rect x="18" y="46" width="76" height="96" rx="10" fill="none" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="56" y="131" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">600g</text>
+          <path d="M23 46 q33 -16 66 0 Z" fill="#E8D7BC" stroke="#C8A882" stroke-width="2.5" stroke-linejoin="round"/>
+          <text x="56" y="38" text-anchor="middle" font-size="15" font-weight="bold" fill="#7A6A55">2000g</text>
+          <text x="56" y="16" text-anchor="middle" font-size="15" fill="#F08C3C" font-weight="bold">大きい袋</text>
+        </svg>
+        <div class="res orange">600g</div>
+      </div>
+      <div class="fig">
+        <svg width="132" height="150" viewBox="0 0 132 150" role="img" aria-label="バケツから600グラム">
+          <path d="M18 34 h96 l-10 100 a8 8 0 0 1 -8 7 h-60 a8 8 0 0 1 -8 -7 Z" fill="#FBF3E6" stroke="#C8A882" stroke-width="2.5"/>
+          <rect x="27" y="113" width="78" height="28" rx="7" fill="#F08C3C" opacity=".85"/>
+          <path d="M18 34 h96 l-10 100 a8 8 0 0 1 -8 7 h-60 a8 8 0 0 1 -8 -7 Z" fill="none" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="66" y="132" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">600g</text>
+          <rect x="14" y="26" width="104" height="12" rx="6" fill="#E8D7BC" stroke="#C8A882" stroke-width="2.5"/>
+          <text x="66" y="16" text-anchor="middle" font-size="15" fill="#F08C3C" font-weight="bold">バケツ 5000g</text>
+        </svg>
+        <div class="res orange">600g</div>
+      </div>
+    </div>
+    <p style="text-align:center;font-weight:bold;">→ どの入れものでも ずーっと 600g！</p>
+
+    <div class="kome">
+      <span class="mark">⚖️</span>
+      <span>はかりに のせれば すぐ わかります。3/5kg は いつでも はりが <strong>600g</strong> のところで ピタッと 止まります。</span>
+    </div>
+  </div>
+
+  <p class="big">つまり <span class="hl">「たんい」をつけると、数は「ぜったいに 変わらない数」に へんしんする</span>のです。</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section>
+  <div class="num">
+    <div class="circle">2</div>
+    <h2>変わらない数のことを「<ruby>定数<rt>ていすう</rt></ruby>」とよぶ</h2>
+  </div>
+  <p class="lead">ぜんたいの量が どうなっても「いつでも 同じ！」と ピタッと 決まっている数。<br>
+  さんすうや 数学では、この数を <strong>定数</strong> とよびます。</p>
+
+  <div class="word">
+    <div class="box">3/5kg ＝ 600g</div>
+    <div class="arrow">➡</div>
+    <svg width="86" height="76" viewBox="0 0 86 76" role="img" aria-label="かぎのかかった箱">
+      <rect x="13" y="30" width="60" height="38" rx="8" fill="#fff" stroke="#3FA97A" stroke-width="3"/>
+      <path d="M30 30 v-9 a13 13 0 0 1 26 0 v9" fill="none" stroke="#3FA97A" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="43" cy="47" r="6" fill="#3FA97A"/>
+      <rect x="41" y="50" width="4" height="9" rx="2" fill="#3FA97A"/>
+    </svg>
+    <div class="arrow">➡</div>
+    <div class="box">これが 定数</div>
+  </div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section>
+  <div class="num">
+    <div class="circle">3</div>
+    <h2>いろんな「変わらない数」の 表しかた</h2>
+  </div>
+  <p class="lead">さとうは「kg」を つけて 定数に しました。<br>
+  ほかの せかいにも「これは 変わらない数だよ！」と みんなに 教える くふうが あります。</p>
+
+  <div class="cards">
+    <!-- 一律 -->
+    <div class="card c1">
+      <span class="where">ふだんの せいかつ</span>
+      <h3>ことばで 教える</h3>
+      <div class="art">
+        <svg width="200" height="112" viewBox="0 0 200 112" role="img" aria-label="小さい荷物も大きい荷物も送料500円">
+          <rect x="16" y="56" width="44" height="40" rx="5" fill="#F7E3C8" stroke="#C8A882" stroke-width="2.5"/>
+          <path d="M38 56 v40 M16 70 h44" stroke="#D8B98C" stroke-width="2.5"/>
+          <rect x="106" y="26" width="76" height="70" rx="6" fill="#F7E3C8" stroke="#C8A882" stroke-width="2.5"/>
+          <path d="M144 26 v70 M106 50 h76" stroke="#D8B98C" stroke-width="2.5"/>
+          <rect x="12" y="20" width="52" height="26" rx="13" fill="#E4667F"/>
+          <text x="38" y="38" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">500円</text>
+          <rect x="118" y="2" width="52" height="26" rx="13" fill="#E4667F"/>
+          <text x="144" y="20" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">500円</text>
+          <text x="84" y="70" text-anchor="middle" font-size="20" fill="#E4667F">＝</text>
+        </svg>
+      </div>
+      <p>「送料は <ruby>一律<rt>いちりつ</rt></ruby> 500円」<br>
+      <strong>「一律」</strong>と つけることで、荷物が 大きくても 小さくても 500円から ぜったいに 変わらない、と 決めています。</p>
+    </div>
+
+    <!-- π -->
+    <div class="card c2">
+      <span class="where">さんすう</span>
+      <h3>マークで 教える</h3>
+      <div class="art">
+        <svg width="200" height="112" viewBox="0 0 200 112" role="img" aria-label="円と円周率パイのマーク">
+          <circle cx="56" cy="56" r="38" fill="#fff" stroke="#3E8FD6" stroke-width="3"/>
+          <line x1="18" y1="56" x2="94" y2="56" stroke="#3E8FD6" stroke-width="2.5" stroke-dasharray="5 4"/>
+          <circle cx="56" cy="56" r="3.5" fill="#3E8FD6"/>
+          <text x="120" y="42" text-anchor="middle" font-size="13" fill="#7A6A55">3.1415…</text>
+          <text x="120" y="56" text-anchor="middle" font-size="17" fill="#3E8FD6">➡</text>
+          <circle cx="120" cy="82" r="21" fill="#3E8FD6"/>
+          <text x="120" y="92" text-anchor="middle" font-size="28" font-weight="bold" fill="#fff" font-family="Georgia,serif">π</text>
+          <text x="172" y="88" text-anchor="middle" font-size="13" fill="#7A6A55">パイ</text>
+        </svg>
+      </div>
+      <p>円の計算に つかう「3.1415…」は ずっと 変わらない とくべつな数。<br>
+      数字で書くと 長すぎるので <strong>π</strong> という マーク1つにして「あの 決まった数だよ」と 表します。</p>
+    </div>
+
+    <!-- MAX_HP -->
+    <div class="card c3">
+      <span class="where">プログラミング</span>
+      <h3>大文字で 教える</h3>
+      <div class="art">
+        <div class="code"><span class="k">MAX_HP</span> = <span class="v">100</span></div>
+        <svg width="200" height="56" viewBox="0 0 200 56" role="img" aria-label="HPバーとさわっちゃダメのマーク">
+          <text x="16" y="26" font-size="14" font-weight="bold" fill="#3A3226">HP</text>
+          <rect x="44" y="13" width="112" height="16" rx="8" fill="#fff" stroke="#3FA97A" stroke-width="2"/>
+          <rect x="47" y="16" width="106" height="10" rx="5" fill="#3FA97A"/>
+          <text x="166" y="26" font-size="13" fill="#3FA97A" font-weight="bold">100</text>
+          <text x="100" y="49" text-anchor="middle" font-size="13" fill="#7A6A55">🔒 かってに 変えちゃダメ</text>
+        </svg>
+      </div>
+      <p>パソコンに ゲームのルールを 教えるとき、<strong>ぜんぶ大文字</strong>で 書きます。<br>
+      これは「これは とちゅうで かってに 変えちゃ ダメな数だよ」という あいずに なります。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ まとめ ============ -->
+<section class="summary">
+  <div class="num">
+    <div class="circle">★</div>
+    <h2>まとめ</h2>
+  </div>
+  <div class="sum-row">
+    <div class="chip">kg を つける</div>
+    <div class="chip">「一律」と いう</div>
+    <div class="chip">π を つかう</div>
+    <div class="chip">大文字で 書く</div>
+  </div>
+  <div class="final">
+    ぜんぶ、<br>
+    <span style="color:#F08C3C;">「この数は コロコロ 変わらない、<br>ピタッと 決まった数（定数）なんだよ！」</span><br>
+    と みんなに <ruby>宣言<rt>せんげん</rt></ruby>するための、大切な くふう なのです。
+  </div>
+</section>
+
+<footer>1.1kg の 3/5 は 660g、3/5kg は 600g。にている けれど ちがいます。</footer>
+
+</div>
+</body>
+</html>
