@@ -1,0 +1,791 @@
+import React from 'react';
+import {
+  FileText, Upload, Link as LinkIcon, Users, MessageSquare,
+  CheckCircle, XCircle, Clock, ArrowDown, Database,
+  FolderOpen, MessageCircle, ThumbsUp, AlertTriangle,
+  PlayCircle, CheckSquare, Mail, ChevronRight
+} from 'lucide-react';
+
+const CatalogReviewFlow = () => {
+  const Section = ({ id, title, children, color = "blue" }) => {
+    const colorClasses = {
+      blue: "border-blue-500 bg-blue-50",
+      orange: "border-orange-500 bg-orange-50",
+      green: "border-green-500 bg-green-50",
+      gray: "border-gray-400 bg-gray-50"
+    };
+
+    return (
+      <section
+        className={`mb-8 p-6 rounded-lg border-l-4 ${colorClasses[color]} transition-all duration-300`}
+      >
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">{title}</h2>
+        {children}
+      </section>
+    );
+  };
+
+  const FlowStep = ({ icon: Icon, title, description, color = "blue" }) => {
+    const colorClasses = {
+      blue: "bg-blue-100 text-blue-600",
+      orange: "bg-orange-100 text-orange-600",
+      green: "bg-green-100 text-green-600"
+    };
+
+    return (
+      <div className="flex items-start gap-4 mb-4">
+        <div className={`p-3 rounded-full ${colorClasses[color]} flex-shrink-0`}>
+          <Icon size={24} />
+        </div>
+        <div>
+          <h3 className="font-bold text-lg text-gray-800">{title}</h3>
+          <p className="text-gray-600">{description}</p>
+        </div>
+      </div>
+    );
+  };
+
+  const SystemBox = ({ icon: Icon, name, description, color }) => {
+    const colorClasses = {
+      blue: "border-blue-400 text-blue-600",
+      orange: "border-orange-400 text-orange-600",
+      green: "border-green-400 text-green-600"
+    };
+
+    return (
+      <div className={`p-4 rounded-lg bg-white border-2 ${colorClasses[color].split(' ')[0]} shadow-sm`}>
+        <div className="flex items-center gap-3 mb-2">
+          <Icon className={colorClasses[color].split(' ')[1]} size={28} />
+          <h3 className="font-bold text-gray-800">{name}</h3>
+        </div>
+        <p className="text-sm text-gray-600">{description}</p>
+      </div>
+    );
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto bg-white p-4 sm:p-8">
+      {/* ヘッダー */}
+      <header className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          カタログレビュー運用フロー
+        </h1>
+        <p className="text-xl text-gray-600">
+          複雑な承認プロセスをシンプルに、見える化する仕組み
+        </p>
+        <div className="mt-4 text-sm text-gray-500">
+          📖 読了時間：約5分
+        </div>
+      </header>
+
+      {/* 1. 導入：なぜこの仕組みが必要？ */}
+      <Section id="problem" title="❌ 従来の課題：メールベースの限界" color="gray">
+        <div className="bg-white p-6 rounded-lg shadow-sm mb-4">
+          <h3 className="font-bold text-lg mb-3 text-gray-800 flex items-center gap-2">
+            <Mail className="text-gray-500" size={20} />
+            メール添付方式の問題点
+          </h3>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <XCircle className="text-red-500 flex-shrink-0 mt-1" size={20} />
+              <div>
+                <p className="font-semibold text-gray-800">進捗が見えない</p>
+                <p className="text-sm text-gray-600">誰がレビューしたか、誰が未完了かが分からない</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <XCircle className="text-red-500 flex-shrink-0 mt-1" size={20} />
+              <div>
+                <p className="font-semibold text-gray-800">個別返信の手間</p>
+                <p className="text-sm text-gray-600">レビュー担当者ごとに別々のメールスレッドが発生</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <XCircle className="text-red-500 flex-shrink-0 mt-1" size={20} />
+              <div>
+                <p className="font-semibold text-gray-800">集約作業の負担</p>
+                <p className="text-sm text-gray-600">複数のメールから指摘事項を手作業でまとめる必要がある</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <XCircle className="text-red-500 flex-shrink-0 mt-1" size={20} />
+              <div>
+                <p className="font-semibold text-gray-800">レビュー漏れのリスク</p>
+                <p className="text-sm text-gray-600">メールの見落としや、担当者の失念が発生しやすい</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+          <p className="text-gray-800 font-semibold mb-2">💡 解決のカギ</p>
+          <p className="text-gray-700">
+            <strong>中央管理システム</strong>で全レビューを一元化し、<strong>リアルタイム通知</strong>で進捗を可視化する仕組みが必要
+          </p>
+        </div>
+      </Section>
+
+      {/* 矢印 */}
+      <div className="flex justify-center my-8">
+        <ArrowDown className="text-gray-400" size={40} />
+      </div>
+
+      {/* 2. 全体像：3つのシステムの連携 */}
+      <Section id="overview" title="🔗 全体像：3つのシステムが連携して動く" color="blue">
+        <p className="text-gray-700 mb-6">
+          この運用フローは、<strong>3つの専門システム</strong>が役割分担しながら連携することで、効率的なレビュープロセスを実現しています。
+        </p>
+
+        <div className="grid gap-4 mb-6">
+          <SystemBox
+            icon={Database}
+            name="Q-Records"
+            description="原紙PDFを保管する「金庫」の役割。ファイルに固有のリンクを生成し、誰でも同じファイルにアクセスできるようにします。"
+            color="blue"
+          />
+          <SystemBox
+            icon={FileText}
+            name="PublicationReviewRecords"
+            description="レビュー管理の「台帳」の役割。カタログ名、期限、担当者、ステータスなどを記録し、レビューの進捗を一元管理します。"
+            color="blue"
+          />
+          <SystemBox
+            icon={MessageCircle}
+            name="Microsoft Teams"
+            description="コミュニケーションの「掲示板」の役割。リンク共有、進捗通知、リアクション機能で、チーム全体の情報共有を実現します。"
+            color="blue"
+          />
+        </div>
+
+        <div className="bg-white p-6 rounded-lg border-2 border-blue-300 shadow-sm">
+          <h3 className="font-bold text-lg mb-4 text-gray-800 flex items-center gap-2">
+            <ChevronRight className="text-blue-600" size={20} />
+            連携の仕組み
+          </h3>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">1</div>
+              <p className="text-gray-700"><strong>Q-Records</strong>が原紙を保管し、アクセス用URLを生成</p>
+            </div>
+            <ArrowDown className="text-gray-400 ml-3" size={24} />
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">2</div>
+              <p className="text-gray-700"><strong>PublicationReviewRecords</strong>がそのURLを記録し、レビュー項目を作成</p>
+            </div>
+            <ArrowDown className="text-gray-400 ml-3" size={24} />
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">3</div>
+              <p className="text-gray-700"><strong>Teams</strong>でレビュー項目のリンクを共有し、担当者に通知</p>
+            </div>
+            <ArrowDown className="text-gray-400 ml-3" size={24} />
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold">4</div>
+              <p className="text-gray-700">レビュー担当者が<strong>Teams</strong>のリアクションで完了を通知</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+          <p className="text-sm text-gray-700">
+            <strong>⚙️ 技術的ポイント：単一責任の原則</strong>
+          </p>
+          <p className="text-sm text-gray-700 mt-2">
+            それぞれのシステムが「単一責任の原則」に従って設計されています。ファイル保管、進捗管理、コミュニケーションを分離することで：
+          </p>
+          <ul className="text-sm text-gray-700 mt-2 ml-4 space-y-1">
+            <li>• <strong>変更に強い</strong>：一つのシステムの変更が他に影響しにくい</li>
+            <li>• <strong>置き換え可能</strong>：例えばQ-Recordsを別のストレージに変えても、他は影響を受けない</li>
+            <li>• <strong>テストしやすい</strong>：各システムを独立して検証できる</li>
+          </ul>
+          <p className="text-sm text-gray-700 mt-2">
+            これは「<strong>疎結合アーキテクチャ</strong>」と呼ばれ、長期的な保守性を高める設計手法です。
+          </p>
+        </div>
+      </Section>
+
+      {/* 矢印 */}
+      <div className="flex justify-center my-8">
+        <ArrowDown className="text-gray-400" size={40} />
+      </div>
+
+      {/* 3. 準備段階 */}
+      <Section id="preparation" title="🚀 準備段階：営業担当者が情報を登録" color="blue">
+        <p className="text-gray-700 mb-6">
+          レビュープロセスの起点となる<strong>準備作業</strong>です。ここで正確に情報を登録することで、後続の作業がスムーズに進みます。
+        </p>
+
+        <div className="space-y-4">
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-blue-500">
+            <FlowStep
+              icon={Upload}
+              title="ステップ1：原紙PDFをアップロード"
+              description="Q-Recordsに原紙PDFをアップロードします。ここでファイルに固有のURLが自動生成され、誰でも同じファイルにアクセスできるようになります。"
+              color="blue"
+            />
+            <div className="ml-16 mt-3 p-3 bg-gray-50 rounded text-sm text-gray-700">
+              <strong>なぜQ-Recordsを使う？</strong>
+              <p>メール添付と違い、全員が常に最新版にアクセスでき、「どのバージョンを見ればいい?」という混乱を防ぎます。</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-blue-500">
+            <FlowStep
+              icon={FileText}
+              title="ステップ2：PublicationReviewRecordsに新規アイテム作成"
+              description="レビュー管理台帳に新しいレビュー項目を作成します。以下の情報を入力します："
+              color="blue"
+            />
+            <div className="ml-16 mt-3 space-y-2">
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-blue-600 flex-shrink-0 mt-1" size={18} />
+                <p className="text-gray-700"><strong>カタログ名</strong>（例：「2024年春夏カタログ」）</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-blue-600 flex-shrink-0 mt-1" size={18} />
+                <p className="text-gray-700"><strong>期限</strong>（例：「2024年3月15日」）</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-blue-600 flex-shrink-0 mt-1" size={18} />
+                <p className="text-gray-700"><strong>原紙PDFリンク</strong>（Q-Recordsで生成されたURL）</p>
+              </div>
+            </div>
+            <div className="ml-16 mt-3 p-3 bg-gray-50 rounded text-sm text-gray-700">
+              <strong>データベース的な役割：</strong>
+              <p>この台帳が「真実の情報源（Single Source of Truth）」となり、レビューの全情報が一箇所に集約されます。</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-blue-500">
+            <FlowStep
+              icon={MessageSquare}
+              title="ステップ3：Teamsで通知"
+              description="PublicationReviewRecordsのアイテムリンクをTeamsグループチャットに投稿し、レビュー担当者にメンションします。"
+              color="blue"
+            />
+            <div className="ml-16 mt-3 p-3 bg-gray-50 rounded text-sm text-gray-700">
+              <strong>プッシュ通知の効果：</strong>
+              <p>メンション機能により、担当者に能動的に通知が届きます。メールのように「見落とし」のリスクが大幅に減少します。</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 bg-blue-100 border border-blue-300 p-4 rounded-lg">
+          <p className="text-gray-800 font-semibold mb-2">✅ 準備完了の状態</p>
+          <p className="text-gray-700 text-sm">
+            この段階で、レビュー担当者は<strong>(1) 何をレビューするか (2) いつまでに (3) どこにファイルがあるか</strong>の3つの情報を全て把握できます。
+          </p>
+        </div>
+      </Section>
+
+      {/* 矢印 */}
+      <div className="flex justify-center my-8">
+        <ArrowDown className="text-gray-400" size={40} />
+      </div>
+
+      {/* 4. レビュー段階 */}
+      <Section id="review" title="👥 レビュー段階：複数担当者が並行でレビュー" color="orange">
+        <p className="text-gray-700 mb-6">
+          このシステムの最大の特徴は、<strong>複数のレビュー担当者が同時並行でレビューできる</strong>点です。従来のメール方式では、担当者Aの返信を待ってから担当者Bに依頼、という<strong>直列処理</strong>になりがちでした。このシステムでは<strong>並列処理</strong>が可能です。
+        </p>
+
+        <div className="bg-white p-5 rounded-lg shadow-sm border-2 border-orange-300 mb-6">
+          <h3 className="font-bold text-lg mb-4 text-gray-800 flex items-center gap-2">
+            <PlayCircle className="text-orange-600" size={24} />
+            並行レビューの仕組み
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+            <div className="text-center p-3 bg-orange-50 rounded">
+              <Users className="text-orange-600 mx-auto mb-2" size={32} />
+              <p className="font-semibold text-gray-800">担当者A</p>
+              <p className="text-xs text-gray-600">同時に作業</p>
+            </div>
+            <div className="text-center p-3 bg-orange-50 rounded">
+              <Users className="text-orange-600 mx-auto mb-2" size={32} />
+              <p className="font-semibold text-gray-800">担当者B</p>
+              <p className="text-xs text-gray-600">同時に作業</p>
+            </div>
+            <div className="text-center p-3 bg-orange-50 rounded">
+              <Users className="text-orange-600 mx-auto mb-2" size={32} />
+              <p className="font-semibold text-gray-800">担当者C</p>
+              <p className="text-xs text-gray-600">同時に作業</p>
+            </div>
+          </div>
+          <div className="text-center">
+            <ArrowDown className="text-orange-400 mx-auto" size={32} />
+          </div>
+          <div className="text-center mt-3 p-3 bg-green-50 rounded">
+            <CheckCircle className="text-green-600 mx-auto mb-2" size={32} />
+            <p className="font-semibold text-gray-800">全員の作業が完了</p>
+            <p className="text-xs text-gray-600">時間の大幅短縮</p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-500">
+            <FlowStep
+              icon={LinkIcon}
+              title="ステップ1：Teamsのリンクからアクセス"
+              description="Teamsに投稿されたリンクをクリックして、PublicationReviewRecordsのリスト画面を開きます。"
+              color="orange"
+            />
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-500">
+            <FlowStep
+              icon={FolderOpen}
+              title="ステップ2：原紙PDFを確認"
+              description="PublicationReviewRecordsに記録された原紙PDFリンクから、Q-Recordsのファイルを開いてレビュー対象を確認します。"
+              color="orange"
+            />
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-500">
+            <FlowStep
+              icon={FileText}
+              title="ステップ3：レビュー実施"
+              description="紙に印刷してレビュー、またはPDFに直接書き込む形式でレビューを実施します。レビュー方法は担当者の好みに応じて柔軟に選択できます。"
+              color="orange"
+            />
+            <div className="ml-16 mt-3 p-3 bg-gray-50 rounded text-sm text-gray-700">
+              <strong>柔軟性の確保：</strong>
+              <p>デジタルツールに不慣れな担当者も、従来通り紙でレビューできます。重要なのは「どうレビューするか」ではなく「レビューしたことが記録されること」です。</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-500">
+            <FlowStep
+              icon={MessageSquare}
+              title="ステップ4：指摘事項をチャットに投稿"
+              description="レビューで見つかった指摘事項があれば、Teamsチャットに投稿します。指摘がない場合はこのステップをスキップします。"
+              color="orange"
+            />
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-500">
+            <FlowStep
+              icon={ThumbsUp}
+              title="ステップ5：完了を通知"
+              description="Teamsチャットで👍リアクションをつけることで、レビュー完了を通知します。これにより営業担当者は誰が完了したかを一目で把握できます。"
+              color="orange"
+            />
+            <div className="ml-16 mt-3 p-3 bg-gray-50 rounded text-sm text-gray-700">
+              <strong>シンプルなUI設計：</strong>
+              <p>「完了報告」のハードルを極限まで下げることで、担当者の負担を減らし、報告漏れを防ぎます。リアクション1クリックで完了です。</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 bg-orange-50 border border-orange-300 p-4 rounded-lg">
+          <p className="text-gray-800 font-semibold mb-2">🔄 非同期コラボレーション</p>
+          <p className="text-gray-700 text-sm">
+            各担当者は<strong>自分のペース</strong>でレビューでき、他の担当者の完了を待つ必要がありません。これが「並行レビュー」の本質であり、従来のメール方式と比べて<strong>レビュー完了までの時間を大幅に短縮</strong>できます。
+          </p>
+        </div>
+      </Section>
+
+      {/* 矢印 */}
+      <div className="flex justify-center my-8">
+        <ArrowDown className="text-gray-400" size={40} />
+      </div>
+
+      {/* 5. 集約段階 */}
+      <Section id="aggregation" title="📊 集約段階：進捗を判断して次へ進む" color="green">
+        <p className="text-gray-700 mb-6">
+          営業担当者は、Teams画面で各担当者の👍リアクションを確認し、<strong>3つの判断パターン</strong>に基づいてレビューの完了判断を行います。
+        </p>
+
+        <div className="space-y-4 mb-6">
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-red-500">
+            <div className="flex items-start gap-4 mb-3">
+              <div className="bg-red-100 text-red-600 p-3 rounded-full flex-shrink-0">
+                <XCircle size={24} />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-800">パターン1：NG項目あり</h3>
+                <p className="text-gray-600">レビューで重大な指摘事項が見つかった場合</p>
+              </div>
+            </div>
+            <div className="ml-16 p-3 bg-red-50 rounded text-sm text-gray-700">
+              <p className="font-semibold mb-1">対応：</p>
+              <p>指摘事項を確認し、原紙を修正。修正後、再度レビュープロセスを開始します。</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-green-500">
+            <div className="flex items-start gap-4 mb-3">
+              <div className="bg-green-100 text-green-600 p-3 rounded-full flex-shrink-0">
+                <CheckCircle size={24} />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-800">パターン2：指摘事項なし</h3>
+                <p className="text-gray-600">全担当者から👍があり、指摘事項の投稿がない場合</p>
+              </div>
+            </div>
+            <div className="ml-16 p-3 bg-green-50 rounded text-sm text-gray-700">
+              <p className="font-semibold mb-1">対応：</p>
+              <p>レビュー完了とみなし、発行準備に進みます。</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-yellow-500">
+            <div className="flex items-start gap-4 mb-3">
+              <div className="bg-yellow-100 text-yellow-600 p-3 rounded-full flex-shrink-0">
+                <Clock size={24} />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-800">パターン3：期限経過（タイムアウト）</h3>
+                <p className="text-gray-600">3日間経過しても一部の担当者から反応がない場合</p>
+              </div>
+            </div>
+            <div className="ml-16 p-3 bg-yellow-50 rounded text-sm text-gray-700">
+              <p className="font-semibold mb-1">対応：</p>
+              <p>レビュー完了とみなし、発行準備に進みます。（暗黙の承認とみなす運用ルール）</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg border-2 border-green-400 shadow-sm mb-6">
+          <h3 className="font-bold text-lg mb-4 text-gray-800 flex items-center gap-2">
+            <CheckSquare className="text-green-600" size={24} />
+            ステータス管理の流れ
+          </h3>
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded font-semibold text-sm">準備中</div>
+              <ChevronRight className="text-gray-400" size={20} />
+              <p className="text-gray-700 text-sm">PublicationReviewRecordsに登録直後</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="bg-orange-100 text-orange-700 px-3 py-1 rounded font-semibold text-sm">レビュー中</div>
+              <ChevronRight className="text-gray-400" size={20} />
+              <p className="text-gray-700 text-sm">Teams通知後、レビュー担当者が作業中</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded font-semibold text-sm">集約中</div>
+              <ChevronRight className="text-gray-400" size={20} />
+              <p className="text-gray-700 text-sm">営業担当者が進捗確認中</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="bg-green-100 text-green-700 px-3 py-1 rounded font-semibold text-sm">完了</div>
+              <ChevronRight className="text-gray-400" size={20} />
+              <p className="text-gray-700 text-sm">発行準備完了</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-green-50 border border-green-300 p-4 rounded-lg">
+          <p className="text-gray-800 font-semibold mb-2">🎯 ステートマシンの概念</p>
+          <p className="text-gray-700 text-sm">
+            このステータス管理は「<strong>ステートマシン</strong>」という設計パターンを採用しています。レビューは必ず定義された状態のいずれかに属し、決められた条件でのみ次の状態に遷移します。これにより、「今どの段階か分からない」という混乱を防ぎます。
+          </p>
+        </div>
+      </Section>
+
+      {/* 矢印 */}
+      <div className="flex justify-center my-8">
+        <ArrowDown className="text-gray-400" size={40} />
+      </div>
+
+      {/* 6. データフロー図 */}
+      <Section id="dataflow" title="🔄 データの流れ：情報はどう動くか" color="blue">
+        <p className="text-gray-700 mb-6">
+          ここまでの説明を統合し、<strong>データがシステム間をどう流れるか</strong>を図解します。
+        </p>
+
+        <div className="bg-white p-6 rounded-lg border-2 border-blue-400 shadow-lg">
+          <div className="space-y-6">
+            {/* Step 1 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div className="flex-1 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="font-semibold text-gray-800">営業担当者が原紙PDFをアップロード</p>
+                  <p className="text-sm text-gray-600 mt-1">→ Q-Recordsに保存、固有URLが生成される</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-blue-400" size={32} />
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div className="flex-1 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="font-semibold text-gray-800">PublicationReviewRecordsに新規アイテム作成</p>
+                  <p className="text-sm text-gray-600 mt-1">→ カタログ名、期限、Q-RecordsのURLを記録</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-blue-400" size={32} />
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div className="flex-1 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="font-semibold text-gray-800">Teamsにリンクを投稿、担当者にメンション</p>
+                  <p className="text-sm text-gray-600 mt-1">→ PublicationReviewRecordsのアイテムURLを共有</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-orange-400" size={32} />
+            </div>
+
+            {/* Step 4 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">4</div>
+                <div className="flex-1 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <p className="font-semibold text-gray-800">レビュー担当者がTeamsリンクをクリック</p>
+                  <p className="text-sm text-gray-600 mt-1">→ PublicationReviewRecordsのリストを開く</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-orange-400" size={32} />
+            </div>
+
+            {/* Step 5 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">5</div>
+                <div className="flex-1 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <p className="font-semibold text-gray-800">原紙PDFリンクからQ-Recordsのファイルを開く</p>
+                  <p className="text-sm text-gray-600 mt-1">→ レビュー対象を確認</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-orange-400" size={32} />
+            </div>
+
+            {/* Step 6 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">6</div>
+                <div className="flex-1 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <p className="font-semibold text-gray-800">レビュー実施、指摘事項があればTeamsに投稿</p>
+                  <p className="text-sm text-gray-600 mt-1">→ チャットに指摘内容を記録</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-orange-400" size={32} />
+            </div>
+
+            {/* Step 7 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-orange-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">7</div>
+                <div className="flex-1 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <p className="font-semibold text-gray-800">Teamsチャットで👍リアクション</p>
+                  <p className="text-sm text-gray-600 mt-1">→ レビュー完了を営業担当者に通知</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-green-400" size={32} />
+            </div>
+
+            {/* Step 8 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">8</div>
+                <div className="flex-1 p-4 bg-green-50 rounded-lg border border-green-200">
+                  <p className="font-semibold text-gray-800">営業担当者がTeamsで進捗確認</p>
+                  <p className="text-sm text-gray-600 mt-1">→ リアクション数と指摘内容をチェック</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <ArrowDown className="text-green-400" size={32} />
+            </div>
+
+            {/* Step 9 */}
+            <div className="relative">
+              <div className="flex items-center gap-4">
+                <div className="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">9</div>
+                <div className="flex-1 p-4 bg-green-50 rounded-lg border border-green-200">
+                  <p className="font-semibold text-gray-800">PublicationReviewRecordsのステータスを「完了」に変更</p>
+                  <p className="text-sm text-gray-600 mt-1">→ 発行準備完了を記録</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+          <p className="text-sm text-gray-700">
+            <strong>💡 重要な設計思想：データの一方向フロー</strong>
+          </p>
+          <p className="text-sm text-gray-700 mt-2">
+            このフローでは、<strong>データは一方向に流れる</strong>ことが原則です。各システムが「読み取り専用」または「書き込み専用」の役割を明確に分担することで、以下を実現しています：
+          </p>
+          <ul className="text-sm text-gray-700 mt-2 ml-4 space-y-1">
+            <li>• <strong>データの不整合防止</strong>：複数箇所で同じデータを編集しない</li>
+            <li>• <strong>追跡可能性</strong>：データの変更履歴を追いやすい</li>
+            <li>• <strong>デバッグの容易さ</strong>：問題の原因を特定しやすい</li>
+          </ul>
+          <p className="text-sm text-gray-700 mt-2">
+            この考え方は「<strong>イベント駆動アーキテクチャ</strong>」や「<strong>React の単方向データフロー</strong>」にも通じる、モダンなシステム設計の基本原則です。
+          </p>
+        </div>
+      </Section>
+
+      {/* 矢印 */}
+      <div className="flex justify-center my-8">
+        <ArrowDown className="text-gray-400" size={40} />
+      </div>
+
+      {/* 7. メリットと注意点 */}
+      <Section id="benefits" title="✅ メリットと注意点：この仕組みの価値と制約" color="green">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          {/* メリット */}
+          <div className="bg-white p-6 rounded-lg shadow-sm border-2 border-green-400">
+            <h3 className="font-bold text-xl mb-4 text-gray-800 flex items-center gap-2">
+              <CheckCircle className="text-green-600" size={28} />
+              メリット
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-green-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">進捗の可視化</p>
+                  <p className="text-sm text-gray-600">Teamsのリアクションで誰が完了したか一目瞭然</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-green-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">並行レビューで時間短縮</p>
+                  <p className="text-sm text-gray-600">複数担当者が同時に作業可能</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-green-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">情報の一元管理</p>
+                  <p className="text-sm text-gray-600">PublicationReviewRecordsが「真実の情報源」</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-green-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">レビュー漏れの防止</p>
+                  <p className="text-sm text-gray-600">メンション通知で見落としを減少</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckSquare className="text-green-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">集約作業の自動化</p>
+                  <p className="text-sm text-gray-600">指摘事項がチャットに集約され、手動集計不要</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 注意点 */}
+          <div className="bg-white p-6 rounded-lg shadow-sm border-2 border-yellow-400">
+            <h3 className="font-bold text-xl mb-4 text-gray-800 flex items-center gap-2">
+              <AlertTriangle className="text-yellow-600" size={28} />
+              注意点・制約
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="text-yellow-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">システムアクセス権の管理</p>
+                  <p className="text-sm text-gray-600">Q-Records、PublicationReviewRecords、Teamsの全てへのアクセス権が必要</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="text-yellow-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">タイムアウト運用のリスク</p>
+                  <p className="text-sm text-gray-600">3日間で自動承認するルールは、重大な問題を見落とす可能性</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="text-yellow-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">Teams依存</p>
+                  <p className="text-sm text-gray-600">Teams通知を見逃すとレビューが滞る</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="text-yellow-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">初期設定の手間</p>
+                  <p className="text-sm text-gray-600">PublicationReviewRecordsへの入力は手動で正確性が求められる</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="text-yellow-600 flex-shrink-0 mt-1" size={18} />
+                <div>
+                  <p className="font-semibold text-gray-800">レビュー品質の担保</p>
+                  <p className="text-sm text-gray-600">リアクションは完了を示すだけで、レビュー品質は別途担保が必要</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg border-2 border-gray-300">
+          <h3 className="font-bold text-lg mb-3 text-gray-800">🎯 この仕組みの本質と限界</h3>
+          <p className="text-gray-700 mb-3">
+            このカタログレビュー運用フローは、<strong>「中央集約型データ管理」×「非同期コラボレーション」×「プッシュ通知」</strong>の3つの技術的要素を組み合わせることで、従来のメール方式の限界を克服しています。
+          </p>
+          <p className="text-gray-700 mb-3">
+            重要なのは、<strong>各システムが専門性を持って役割分担</strong>していることです。ファイル管理、進捗管理、コミュニケーションという3つの異なる機能を1つのシステムに詰め込むのではなく、それぞれに最適化されたツールを連携させることで、<strong>柔軟性と保守性を両立</strong>しています。
+          </p>
+
+          <div className="mt-4 pt-4 border-t border-gray-300">
+            <h4 className="font-bold text-gray-800 mb-2">⚠️ この運用が適さないケース</h4>
+            <ul className="text-sm text-gray-700 space-y-1 ml-4">
+              <li>• <strong>緊急性の高いレビュー</strong>：3日間のタイムアウトは緊急時に不適切</li>
+              <li>• <strong>高度な専門性が必要</strong>：専門家同士のディスカッションが必要な場合</li>
+              <li>• <strong>少人数チーム</strong>：担当者が2〜3名なら、従来のメール方式の方がシンプル</li>
+              <li>• <strong>頻繁な改訂</strong>：レビュー→修正→再レビューのサイクルが多い場合は別の方式が効率的</li>
+            </ul>
+          </div>
+
+          <p className="text-sm text-gray-600 mt-4">
+            <strong>批判的視点：</strong>この仕組みは「レビュー完了の可視化」には優れていますが、「レビューの品質」は担保しません。👍リアクションは完了を示すだけで、実際にどれだけ丁寧にレビューしたかは分かりません。組織文化として「形骸化」しないよう、定期的な運用見直しが必要です。
+          </p>
+        </div>
+      </Section>
+
+      {/* フッター */}
+      <footer className="mt-12 pt-8 border-t-2 border-gray-200">
+        <h3 className="font-bold text-lg mb-4 text-gray-800">📚 参考情報・関連リンク</h3>
+        <div className="space-y-2 text-sm text-gray-600">
+          <p>• <a href="https://www.microsoft.com/ja-jp/microsoft-365/microsoft-teams/group-chat-software" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Microsoft Teams 公式サイト</a></p>
+          <p>• <a href="https://support.microsoft.com/ja-jp/office/sharepoint-%E3%81%A8%E3%81%AF-97b915e6-651b-43b2-827d-fb25777f446f" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">SharePoint (リスト機能)</a> - PublicationReviewRecordsのような管理台帳に使用可能</p>
+          <p>• <a href="https://ja.wikipedia.org/wiki/%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%9E%E3%82%B7%E3%83%B3" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ステートマシン（Wikipedia）</a> - ステータス管理の設計思想</p>
+          <p className="mt-4 text-xs text-gray-500">※ Q-RecordsとPublicationReviewRecordsは企業独自システムのため、公式ドキュメントはありません</p>
+        </div>
+
+        <div className="mt-8 text-center text-sm text-gray-500">
+          <p>この図解は非エンジニア向けに技術的仕組みを平易に解説したものです</p>
+          <p className="mt-1">作成日：2026年1月6日</p>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default CatalogReviewFlow;

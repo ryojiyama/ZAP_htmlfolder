@@ -1,0 +1,766 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISO 9001:2026 への移行 ― 何が変わり、いつ移行するか</title>
+<style>
+:root{
+  --ink:#0E1F2B;
+  --petrol:#1F4E5F;
+  --petrol-d:#153845;
+  --ochre:#B8862F;
+  --ochre-l:#E8C77A;
+  --crimson:#A3242B;
+  --paper:#E9EDF0;
+  --card:#FFFFFF;
+  --rule:#C3CFD7;
+  --muted:#54697A;
+  --font-display:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+  --font-body:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Meiryo",system-ui,sans-serif;
+  --font-num:"Roboto Mono","SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--font-body);font-size:17px;line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:
+    linear-gradient(180deg,rgba(14,31,43,.94),rgba(21,56,69,.94)),
+    repeating-linear-gradient(90deg,#1F4E5F 0 1px,transparent 1px 46px);
+  color:#fff;padding:76px 0 58px;border-bottom:5px solid var(--ochre);
+}
+.eyebrow{
+  font-family:var(--font-num);font-size:13px;letter-spacing:.22em;
+  color:var(--ochre-l);text-transform:uppercase;margin:0 0 20px;
+}
+.hero h1{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(32px,5.2vw,58px);line-height:1.3;margin:0 0 12px;letter-spacing:.02em;
+}
+.hero h1 em{font-style:normal;color:var(--ochre-l)}
+.hero .sub{font-size:clamp(16px,2vw,20px);color:#BFD2DA;margin:0 0 40px;max-width:46em}
+.hero-meta{font-family:var(--font-num);font-size:12.5px;color:#8FA9B4;letter-spacing:.08em;margin-top:30px}
+
+.dates{display:flex;flex-wrap:wrap;gap:14px}
+.dcard{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);
+  border-radius:3px;padding:18px 24px;min-width:220px;flex:1 1 220px;
+}
+.dcard.mark{border-color:var(--ochre);background:rgba(184,134,47,.16)}
+.dcard .lab{font-size:13px;color:#BFD2DA;letter-spacing:.06em;line-height:1.5}
+.dcard .val{font-family:var(--font-num);font-size:34px;font-weight:700;line-height:1.15;margin-top:6px;letter-spacing:.01em}
+.dcard.mark .val{color:var(--ochre-l)}
+.dcard .rest{font-family:var(--font-num);font-size:12px;color:#8FA9B4;letter-spacing:.06em;margin-top:2px}
+
+/* ---------- NAV ---------- */
+.navbar{position:sticky;top:0;z-index:60;background:rgba(14,31,43,.97);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.14)}
+.navbar .wrap{display:flex;align-items:center;gap:10px;overflow-x:auto;padding-top:9px;padding-bottom:9px;scrollbar-width:thin}
+.navbar a{
+  flex:0 0 auto;color:#B8CBD4;text-decoration:none;font-size:13.5px;
+  padding:6px 12px;border-radius:2px;border:1px solid transparent;white-space:nowrap;
+}
+.navbar a:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.navbar a.active{color:var(--ink);background:var(--ochre-l);font-weight:700}
+.navbar a .n{font-family:var(--font-num);font-size:11px;opacity:.7;margin-right:5px}
+
+/* ---------- EXPAND ALL ---------- */
+.expand-all{max-width:1120px;margin:26px auto 6px;padding:0 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn{
+  font-family:var(--font-body);font-size:14.5px;font-weight:700;cursor:pointer;
+  background:var(--petrol);color:#fff;border:none;border-radius:2px;padding:12px 24px;letter-spacing:.04em;
+}
+.btn:hover{background:var(--petrol-d)}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
+.hint{font-size:13.5px;color:var(--muted)}
+
+/* ---------- SECTION ---------- */
+main{padding:16px 0 90px}
+.sec{background:var(--card);border:1px solid var(--rule);border-radius:3px;margin:18px 0;overflow:hidden}
+.sec-head{
+  width:100%;display:flex;align-items:flex-start;gap:18px;text-align:left;
+  background:none;border:none;cursor:pointer;padding:24px 26px;font-family:inherit;
+  border-left:5px solid var(--rule);transition:border-color .2s,background .2s;
+}
+.sec-head:hover{background:#F5F8FA}
+.sec.open>.sec-head{border-left-color:var(--ochre);background:#F5F8FA}
+.sec-num{font-family:var(--font-num);font-size:15px;font-weight:700;color:var(--ochre);padding-top:7px;letter-spacing:.05em}
+.sec-title{flex:1}
+.sec-title h2{font-family:var(--font-display);font-size:clamp(22px,3vw,30px);font-weight:600;margin:0;line-height:1.4;letter-spacing:.02em}
+.sec-title p{margin:6px 0 0;font-size:14.5px;color:var(--muted);line-height:1.6}
+.chev{width:16px;height:16px;border-right:2.5px solid var(--petrol);border-bottom:2.5px solid var(--petrol);transform:rotate(45deg);margin-top:12px;transition:transform .25s;flex:0 0 auto}
+.sec.open .chev{transform:rotate(-135deg)}
+.sec-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.sec.open .sec-body{grid-template-rows:1fr}
+.sec-inner{overflow:hidden;min-height:0}
+.sec-pad{padding:6px 26px 34px}
+
+/* ---------- TEXT BITS ---------- */
+.lead{font-size:clamp(18px,2.3vw,22px);line-height:1.75;font-family:var(--font-display);font-weight:600;color:var(--petrol-d);margin:0 0 22px;border-left:4px solid var(--ochre);padding-left:18px}
+h3.blk{font-size:17px;font-weight:700;margin:34px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--rule);letter-spacing:.03em}
+h3.blk:first-child{margin-top:8px}
+p{margin:0 0 14px}
+.note{font-size:13.5px;color:var(--muted);line-height:1.7}
+.kw{color:var(--petrol);font-weight:700;border-bottom:2px solid var(--ochre-l);padding-bottom:1px}
+
+/* ---------- AGENDA ---------- */
+.agenda{list-style:none;margin:0;padding:0;counter-reset:ag}
+.agenda li{counter-increment:ag;display:flex;gap:18px;align-items:baseline;padding:14px 4px;border-bottom:1px dashed var(--rule)}
+.agenda li::before{content:counter(ag,decimal-leading-zero);font-family:var(--font-num);font-size:14px;font-weight:700;color:var(--ochre);flex:0 0 34px}
+.agenda b{font-size:17px}
+.agenda span{color:var(--muted);font-size:14px;margin-left:auto;text-align:right;flex:0 0 auto}
+
+/* ---------- TIMELINE ---------- */
+.tl{margin:26px 0 10px}
+.tl-scale{position:relative;height:250px;margin:0 10px}
+.tl-rail{position:absolute;left:0;right:0;top:150px;height:3px;background:var(--petrol)}
+.tl-rail::after{content:"";position:absolute;right:-1px;top:-5px;border-left:12px solid var(--petrol);border-top:6.5px solid transparent;border-bottom:6.5px solid transparent}
+.tl-year{position:absolute;top:153px;transform:translateX(-50%);text-align:center}
+.tl-year i{display:block;width:1px;height:11px;background:var(--petrol);margin:0 auto}
+.tl-year b{font-family:var(--font-num);font-size:13px;color:var(--muted);font-weight:500;letter-spacing:.04em}
+.tl-node{position:absolute;top:0;bottom:0;width:0}
+.tl-dot{position:absolute;top:144px;left:-8px;width:16px;height:16px;border-radius:50%;background:#fff;border:3.5px solid var(--petrol);cursor:pointer;transition:transform .18s;z-index:3}
+.tl-node:hover .tl-dot,.tl-node.sel .tl-dot{transform:scale(1.35)}
+.tl-node.sel .tl-dot{background:var(--ochre);border-color:var(--ochre)}
+.tl-node.mark .tl-dot{border-color:var(--ochre)}
+.tl-stem{position:absolute;left:-.5px;width:1.5px;background:var(--rule)}
+.tl-lab{position:absolute;width:132px;left:-66px;text-align:center;cursor:pointer}
+.tl-lab .d{font-family:var(--font-num);font-size:12.5px;font-weight:700;color:var(--ochre);letter-spacing:.03em}
+.tl-lab .t{font-size:13px;line-height:1.45;font-weight:700;margin-top:2px}
+.lvA .tl-stem{top:118px;height:28px}   .lvA .tl-lab{top:66px}
+.lvB .tl-stem{top:88px;height:58px}    .lvB .tl-lab{top:36px}
+.lvC .tl-stem{top:58px;height:88px}    .lvC .tl-lab{top:6px}
+.lvD .tl-stem{top:160px;height:26px}   .lvD .tl-lab{top:188px}
+.tl-now{position:absolute;top:44px;bottom:44px;width:2px;background:var(--petrol);opacity:.55;left:-1px;z-index:2}
+.tl-now::before{
+  content:"現在地";position:absolute;top:-26px;left:50%;transform:translateX(-50%);
+  background:var(--petrol);color:#fff;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:2px;white-space:nowrap;letter-spacing:.08em
+}
+.tl-mnote{display:none;margin:14px 0 0;border-left:3px solid var(--petrol);padding:2px 0 2px 10px;font-weight:700;color:var(--petrol)}
+.tl-detail{background:#F5F8FA;border:1px solid var(--rule);border-left:5px solid var(--ochre);border-radius:2px;padding:20px 24px;margin-top:14px;min-height:96px}
+.tl-detail .dh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.tl-detail .dd{font-family:var(--font-num);font-size:15px;font-weight:700;color:var(--ochre)}
+.tl-detail .dt{font-size:19px;font-weight:700;font-family:var(--font-display)}
+.tl-detail p{margin:0;font-size:15px;line-height:1.75}
+.tl-detail .src{font-size:12.5px;color:var(--muted);margin-top:8px}
+
+/* ---------- CARDS ---------- */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:#F7F9FA;border:1px solid var(--rule);border-radius:2px;padding:20px 22px}
+.card h4{margin:0 0 8px;font-size:16px;font-weight:700}
+.card p{margin:0;font-size:14.5px;line-height:1.7;color:#25404F}
+.card .tag{display:inline-block;font-family:var(--font-num);font-size:11.5px;letter-spacing:.1em;color:#fff;background:var(--petrol);padding:2px 9px;border-radius:2px;margin-bottom:10px}
+.card.hi{background:#FCF6E9;border-color:var(--ochre);border-width:2px}
+.card.hi .tag{background:var(--ochre);color:var(--ink)}
+
+/* audit schedule */
+.audit{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+.audit .a{padding:22px 18px;border-right:1px solid var(--rule);background:#F7F9FA;position:relative}
+.audit .a:last-child{border-right:none}
+.audit .a .yr{font-family:var(--font-num);font-size:27px;font-weight:700;color:var(--petrol);line-height:1.1}
+.audit .a .mo{font-family:var(--font-num);font-size:13px;color:var(--muted);letter-spacing:.06em}
+.audit .a .k{margin-top:12px;font-size:15px;font-weight:700;line-height:1.5}
+.audit .a .s{margin-top:8px;font-size:13px;color:var(--muted);line-height:1.6}
+.audit .a.key{background:var(--petrol);color:#fff}
+.audit .a.key .yr{color:var(--ochre-l)}
+.audit .a.key .mo,.audit .a.key .s{color:#C3D6DE}
+.audit .a.key::after{content:"移行審査";position:absolute;top:0;right:0;background:var(--ochre);color:var(--ink);font-size:11.5px;font-weight:700;padding:3px 10px;letter-spacing:.08em}
+.audit .a .ver{display:inline-block;margin-top:12px;font-family:var(--font-num);font-size:11.5px;letter-spacing:.06em;border:1px solid currentColor;padding:1px 8px;border-radius:2px;opacity:.75}
+
+/* ---------- TABS ---------- */
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer;background:#E4EAEE;color:var(--muted);border:1px solid var(--rule);border-bottom:none;border-radius:2px 2px 0 0;padding:11px 20px}
+.tab.on{background:var(--petrol);color:#fff;border-color:var(--petrol)}
+.tabpanes{border:1px solid var(--rule);border-radius:0 2px 2px 2px;padding:24px;background:#F7F9FA}
+.pane{display:none}
+.pane.on{display:block}
+.verdict{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.08em;padding:3px 12px;border-radius:2px;margin-bottom:12px}
+.verdict.sub{background:#E1E8EC;color:var(--muted)}
+.verdict.yes{background:#F3E4C4;color:#7A5714}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.pc div h5{margin:0 0 8px;font-size:14px;letter-spacing:.06em;color:var(--muted)}
+.pc ul{margin:0;padding-left:20px;font-size:14.5px;line-height:1.75}
+
+/* ---------- TABLE ---------- */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px}
+table{border-collapse:collapse;width:100%;min-width:720px;background:#fff;font-size:14.5px}
+thead th{background:var(--petrol);color:#fff;text-align:left;padding:12px 14px;font-weight:700;font-size:14px;letter-spacing:.04em}
+tbody td{padding:12px 14px;border-bottom:1px solid #E4EAEE;vertical-align:top;line-height:1.7}
+tbody tr:hover{background:#F5F8FA}
+tbody td:first-child{font-family:var(--font-num);font-weight:700;color:var(--petrol);white-space:nowrap;width:74px}
+tbody td:nth-child(2){font-weight:700;width:200px}
+tbody strong{color:var(--petrol-d)}
+
+/* ---------- CALLOUT ---------- */
+.callout{border:1px solid var(--rule);border-left:5px solid var(--petrol);background:#F7F9FA;padding:18px 22px;border-radius:2px;margin:16px 0}
+.callout.ochre{border-left-color:var(--ochre);background:#FCF6E9}
+.callout h4{margin:0 0 8px;font-size:15.5px;font-weight:700}
+.callout p:last-child{margin-bottom:0}
+.callout ul{margin:8px 0 0;padding-left:20px;font-size:15px;line-height:1.8}
+
+/* ---------- QUESTION ---------- */
+.q{background:var(--petrol);color:#fff;border-radius:3px;padding:26px 28px;margin:22px 0}
+.q .lab{font-family:var(--font-num);font-size:12px;letter-spacing:.18em;color:var(--ochre-l);margin-bottom:10px}
+.q p{font-family:var(--font-display);font-size:clamp(18px,2.6vw,23px);line-height:1.6;margin:0;font-weight:600}
+
+/* ---------- TAKEAWAY ---------- */
+.take{display:grid;gap:14px}
+.take .t{display:flex;gap:20px;align-items:flex-start;background:#F7F9FA;border:1px solid var(--rule);border-radius:2px;padding:20px 24px}
+.take .t .n{font-family:var(--font-num);font-size:32px;font-weight:700;color:var(--ochre-l);line-height:1;flex:0 0 auto}
+.take .t b{display:block;font-size:18px;margin-bottom:5px;font-family:var(--font-display)}
+.take .t span{font-size:14.5px;color:#25404F;line-height:1.75}
+
+/* ---------- REFS ---------- */
+.refs{list-style:none;margin:0;padding:0}
+.refs li{border-bottom:1px dashed var(--rule);padding:13px 2px}
+.refs a{color:var(--petrol);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--ochre-l)}
+.refs a:hover{color:var(--ochre)}
+.refs em{display:block;font-style:normal;font-size:13.5px;color:var(--muted);margin-top:3px}
+
+footer{background:var(--ink);color:#8FA9B4;padding:34px 0;font-size:13px;line-height:1.8}
+footer b{color:#fff}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:900px){
+  .g3{grid-template-columns:repeat(2,1fr)}
+  .audit{grid-template-columns:repeat(2,1fr)}
+  .audit .a{border-bottom:1px solid var(--rule)}
+  .audit .a:nth-child(2n){border-right:none}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .g2,.g3,.pc{grid-template-columns:1fr}
+  .sec-pad{padding:6px 18px 28px}
+  .sec-head{padding:20px 18px}
+  .tl-scale{height:auto;margin:0;padding-left:22px;border-left:3px solid var(--petrol)}
+  .tl-rail,.tl-year,.tl-stem,.tl-now{display:none}
+  .tl-node{position:relative;left:auto!important;top:auto;bottom:auto;width:auto;padding:10px 0}
+  .tl-dot{position:absolute;left:-31px;top:16px}
+  .tl-lab{position:static;width:auto;left:auto;text-align:left}
+  .tl-lab .t{font-size:15px}
+  .tl-node.sel{background:#F5F8FA;border-radius:2px}
+  .tl-mnote{display:block}
+}
+@media (max-width:480px){
+  .audit{grid-template-columns:1fr}
+  .audit .a{border-right:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">ISO 9001 : 2015 &rarr; 2026 &nbsp;|&nbsp; TRANSITION BRIEFING</p>
+    <h1>10年ぶりの改訂。<br>ただし、<em>作り直しではありません</em>。</h1>
+    <p class="sub">箇条4〜10の構成は変わりません。追加されるのは、すでに実施していることを「決める・分析する・示す」形に整える要求が中心です。当社は通常の審査サイクルの中で移行します。</p>
+    <div class="dates">
+      <div class="dcard">
+        <div class="lab">新規格の発行（見込み）</div>
+        <div class="val">2026.09</div>
+        <div class="rest" id="r-pub">—</div>
+      </div>
+      <div class="dcard mark">
+        <div class="lab">当社の移行審査</div>
+        <div class="val">2028.05</div>
+        <div class="rest" id="r-audit">—</div>
+      </div>
+      <div class="dcard">
+        <div class="lab">移行完了期限（見込み）</div>
+        <div class="val">2029.09</div>
+        <div class="rest" id="r-limit">—</div>
+      </div>
+    </div>
+    <p class="hero-meta" id="today">—</p>
+  </div>
+</header>
+
+<nav class="navbar" aria-label="セクション">
+  <div class="wrap">
+    <a href="#s1"><span class="n">01</span>本日の流れ</a>
+    <a href="#s2"><span class="n">02</span>全体スケジュール</a>
+    <a href="#s3"><span class="n">03</span>当社の審査予定</a>
+    <a href="#s4"><span class="n">04</span>移行のタイミング</a>
+    <a href="#s5"><span class="n">05</span>主要な変更点</a>
+    <a href="#s6"><span class="n">06</span>表現・用語の変更</a>
+    <a href="#s7"><span class="n">07</span>留意点</a>
+    <a href="#s8"><span class="n">08</span>まとめ</a>
+    <a href="#s9"><span class="n">09</span>参考情報</a>
+  </div>
+</nav>
+
+<div class="expand-all">
+  <button class="btn" onclick="toggleAll()">全セクションを展開/折りたたみ</button>
+  <span class="hint">各セクションの見出しをクリックすると個別に開閉できます。</span>
+</div>
+
+<main class="wrap">
+
+<!-- 01 AGENDA -->
+<section class="sec open" id="s1">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="true">
+    <span class="sec-num">01</span>
+    <span class="sec-title"><h2>本日の流れ</h2><p>日程の見通しを立て、変更点の全体像を共有します。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <ol class="agenda">
+      <li><b>規格改訂の全体スケジュール</b><span>本日の中心</span></li>
+      <li><b>当社の審査予定と、移行審査を置く位置</b><span>本日の中心</span></li>
+      <li><b>移行のタイミング ― 3つの選択肢の比較</b><span>方針確認</span></li>
+      <li><b>主要な変更点一覧</b><span>内容</span></li>
+      <li><b>表現・用語の変更</b><span>内容</span></li>
+      <li><b>留意点</b><span>補足</span></li>
+      <li><b>まとめと参考情報</b><span>クロージング</span></li>
+    </ol>
+    <div class="callout ochre">
+      <h4>本日のゴール</h4>
+      <p>変更点をすべて記憶していただく必要はありません。<span class="kw">「いつ移行審査を受けるのか」と「どこが変わるのか」の全体像</span>を共有することがゴールです。個別の条項への対応は、この後の実務の中で順次ご相談します。</p>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 02 TIMELINE -->
+<section class="sec" id="s2">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">02</span>
+    <span class="sec-title"><h2>規格改訂の全体スケジュール</h2><p>点をクリックすると、その時点で何が起きるかを表示します。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <p class="lead">改訂作業は最終段階。内容はすでにほぼ確定し、発行を待つ状態です。</p>
+
+    <div class="tl">
+      <div class="tl-scale" id="tlscale">
+        <div class="tl-rail"></div>
+        <div class="tl-year" style="left:0%"><i></i><b>2025</b></div>
+        <div class="tl-year" style="left:18.2%"><i></i><b>2026</b></div>
+        <div class="tl-year" style="left:36.4%"><i></i><b>2027</b></div>
+        <div class="tl-year" style="left:54.5%"><i></i><b>2028</b></div>
+        <div class="tl-year" style="left:72.7%"><i></i><b>2029</b></div>
+        <div class="tl-year" style="left:90.9%"><i></i><b>2030</b></div>
+
+        <div class="tl-now" style="left:28.8%"></div>
+
+        <div class="tl-node lvA" style="left:10.6%" data-k="dis" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2025.08</span></span></div>
+        <div class="tl-node lvC" style="left:24.2%" data-k="fdis" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2026.05.14</span></span></div>
+        <div class="tl-node lvA" style="left:30.3%" data-k="pub" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2026.09</span></span></div>
+        <div class="tl-node lvD" style="left:34.8%" data-k="jis" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2026.12</span></span></div>
+        <div class="tl-node lvB" style="left:36.4%" data-k="start" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2027</span></span></div>
+        <div class="tl-node lvD mark" style="left:60.6%" data-k="ours" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2028.05</span></span></div>
+        <div class="tl-node lvA" style="left:84.8%" data-k="limit" onclick="pickNode(this)"><span class="tl-dot"></span><span class="tl-stem"></span><span class="tl-lab"><span class="d">2029.09</span></span></div>
+      </div>
+      <p class="note tl-mnote">現在地：2026年8月 ― FDIS発行済み、規格の正式発行を待つ段階</p>
+      <div class="tl-detail" id="tldetail">
+        <div class="dh"><span class="dd">—</span><span class="dt">点を選んでください</span></div>
+        <p>タイムライン上の丸印をクリックすると、その時点の意味と当社への関わりを表示します。</p>
+      </div>
+    </div>
+
+    <h3 class="blk">押さえておく3つの数字</h3>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">約3年</span>
+        <h4>移行期間</h4>
+        <p>規格発行（2026年9月見込み）から移行完了期限までの期間。国際認定フォーラム（IAF）および各認証機関の発表に基づく運用です。</p>
+      </div>
+      <div class="card">
+        <span class="tag">約3か月</span>
+        <h4>ISO発行 → JIS版発行</h4>
+        <p>日本国内ではJIS Q 9001を基準に運用している組織が多く、<span class="kw">社内文書の見直しはJIS版の発行後</span>に始めるのが現実的です。</p>
+      </div>
+      <div class="card">
+        <span class="tag">0箇条</span>
+        <h4>構成の変更</h4>
+        <p>箇条4〜10という規格の骨格は<span class="kw">変わりません</span>。既存のマネジメントシステムの上に、追加の要求を重ねる形になります。</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>前提の確認</h4>
+      <p class="note">規格発行日・移行審査の開始時期・移行期限は、いずれも認定機関および認証機関の公式発表により最終確定します。本資料の日付は2026年8月時点で公表されている情報に基づく想定です。なお、社内で共有していた資料に「2024年7月にFDIS承認」との記載がありましたが、<b>DIS発行が2025年8月、FDIS発行が2026年5月14日</b>が正しい情報です。</p>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 03 OUR SCHEDULE -->
+<section class="sec" id="s3">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">03</span>
+    <span class="sec-title"><h2>当社の審査予定</h2><p>すでに決まっている審査予定に、移行審査を重ねます。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <p class="lead">移行のために特別な審査を追加する必要はありません。2028年5月の定期審査と同時に受けます。</p>
+
+    <div class="audit">
+      <div class="a">
+        <div class="yr">2027</div><div class="mo">MAY</div>
+        <div class="k">更新審査</div>
+        <div class="s">認証の3年サイクルを更新。この時点は現行版で受審します。</div>
+        <span class="ver">ISO 9001:2015</span>
+      </div>
+      <div class="a key">
+        <div class="yr">2028</div><div class="mo">MAY</div>
+        <div class="k">定期審査 ＋ 移行審査</div>
+        <div class="s">新規格への適合をあわせて確認します。ここで移行が完了します。</div>
+        <span class="ver">ISO 9001:2026</span>
+      </div>
+      <div class="a">
+        <div class="yr">2029</div><div class="mo">MAY</div>
+        <div class="k">定期審査</div>
+        <div class="s">新規格での運用状況を確認します。</div>
+        <span class="ver">ISO 9001:2026</span>
+      </div>
+      <div class="a">
+        <div class="yr">2030</div><div class="mo">MAY</div>
+        <div class="k">更新審査</div>
+        <div class="s">新規格ベースでの通常サイクルに復帰します。</div>
+        <span class="ver">ISO 9001:2026</span>
+      </div>
+    </div>
+
+    <div class="callout ochre">
+      <h4>認証機関（DNV）からの推奨</h4>
+      <p>移行審査は単独で受けることもできますが、<span class="kw">更新審査や定期審査といった通常の審査機会と同時に受審すること</span>が推奨されています。審査工数・費用・現場の負担を抑えられるためです。当社もこの方針に沿い、2028年5月の定期審査と統合します。</p>
+    </div>
+
+    <h3 class="blk">2027年5月の更新審査の位置づけ</h3>
+    <div class="grid g2">
+      <div class="card">
+        <h4>現行版（2015年版）で受審</h4>
+        <p>この時点では移行の対応は求められません。通常どおりの更新審査です。</p>
+      </div>
+      <div class="card">
+        <h4>翌年の移行に向けた相談の場</h4>
+        <p>新規格対応の検討状況を審査員に伝えておくと、翌年の移行審査で見られる論点を事前に把握でき、進め方の助言も得られます。</p>
+      </div>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 04 WHEN -->
+<section class="sec" id="s4">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">04</span>
+    <span class="sec-title"><h2>移行のタイミング ― 3つの選択肢の比較</h2><p>タブを切り替えて、それぞれの特徴を確認します。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <p class="lead">受審のタイミングは3通り考えられます。当社は真ん中を選びます。</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab on" role="tab" onclick="pickTab(this,'pA')">案A ｜ 2027年5月</button>
+      <button class="tab" role="tab" onclick="pickTab(this,'pB')">案B ｜ 2028年5月</button>
+      <button class="tab" role="tab" onclick="pickTab(this,'pC')">案C ｜ 2029年5月</button>
+    </div>
+    <div class="tabpanes">
+      <div class="pane on" id="pA">
+        <span class="verdict sub">時期が早い</span>
+        <p><b>更新審査と同時に移行する最速案。</b>認証書が早く新版になり、対外的な訴求は最も強くなります。</p>
+        <div class="pc">
+          <div><h5>利点</h5><ul><li>最も早く新版の認証を取得できる</li><li>更新審査と統合でき審査工数が最小</li></ul></div>
+          <div><h5>見送る理由</h5><ul><li>JIS版発行（2026年12月見込み）から約5か月しかない</li><li>新規格に沿った運用実績を積む期間がとれない</li><li>そもそも証機関側で移行審査が可能かが不明</li></ul></div>
+        </div>
+      </div>
+      <div class="pane" id="pB">
+        <span class="verdict yes">これを採用</span>
+        <p><b>定期審査と同時に移行する標準案。</b>準備期間と余裕のバランスが最も自然な選択です。</p>
+        <div class="pc">
+          <div><h5>利点</h5><ul><li>JIS版発行から約1年半あり、運用実績を積んだうえで受審できる</li><li>定期審査と統合でき追加工数を抑えられる</li><li>期限まで約16か月の余裕が残る</li><li>2027年5月の更新審査を事前相談の場として使える</li></ul></div>
+          <div><h5>前提</h5><ul><li>2027年後半には文書の見直しに着手していること</li><li>2028年春の内部監査・マネジメントレビューを新規格ベースで実施すること</li></ul></div>
+        </div>
+      </div>
+      <div class="pane" id="pC">
+        <span class="verdict sub">余裕が小さい</span>
+        <p><b>期限直前に移行する最遅案。</b>準備期間は最長ですが、期限までの余白がほとんど残りません。</p>
+        <div class="pc">
+          <div><h5>利点</h5><ul><li>準備期間が最も長い</li><li>他社事例や解説書が出そろってから着手できる</li></ul></div>
+          <div><h5>見送る理由</h5><ul><li>期限（2029年9月）まで約4か月しか残らない</li><li>移行が集中する時期にあたり、審査日程の調整余地が小さい</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout ochre">
+      <h4>方針</h4>
+      <p>当社は<span class="kw">案B ― 2028年5月の定期審査と同時に移行審査を受審</span>します。認証機関の推奨とも一致する、標準的な進め方です。</p>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 05 CHANGES TABLE -->
+<section class="sec" id="s5">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">05</span>
+    <span class="sec-title"><h2>主要な変更点一覧</h2><p>2015年版から2026年版への主な変更点。運用の見直しが想定される項目が中心です。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>箇条</th><th>項目</th><th>主な変更内容・追加事項</th></tr></thead>
+        <tbody>
+          <tr><td>4.1</td><td>組織及びその状況の理解</td><td>外部の課題を抽出する切り口の例として「政治の状況」等が追加（※注記での追加）</td></tr>
+          <tr><td>4.2</td><td>利害関係者のニーズと期待</td><td>利害関係者の要求事項のうち、<strong>「自社のQMSを通じて取り組むもの（適用するもの）」を決定すること</strong>が明示的な要求として追加。</td></tr>
+          <tr><td>5.1.1</td><td>リーダーシップとコミットメント</td><td><strong>【重要】「品質文化及び倫理的行動」をトップが促進すること</strong>が新規要求として追加。トップが支援する対象が管理層だけでなく「その他の関連する役割」にも拡大。</td></tr>
+          <tr><td>5.3</td><td>組織の役割、責任及び権限</td><td>責任と権限が「組織的に理解される」という文言が削除（表面的な理解にとどまる解釈を避けるため）。</td></tr>
+          <tr><td>6.1.2</td><td>リスクへの取組み</td><td>リスクを特定するだけでなく、<strong>「決定し、分析し、評価する」</strong>プロセスが明示的に求められる。</td></tr>
+          <tr><td>6.1.3</td><td>機会への取組み</td><td>リスクとは別の<strong>独立した細目箇条となり</strong>、機会についても「決定、分析、評価」することが求められる。</td></tr>
+          <tr><td>6.3</td><td>変更の計画</td><td>考慮すべき事項が4つから7つ程度に増加（QMSの完全性への影響、情報の利用可能性、変更のコミュニケーション、変更結果のレビュー・監視方法など）。</td></tr>
+          <tr><td>7.1.4</td><td>プロセスの運用環境</td><td>注記に「一部の要因は組織の品質文化及び倫理的行動によって影響を受ける可能性がある」と追加。</td></tr>
+          <tr><td>7.1.6</td><td>組織の知識</td><td>明確化した知識が、実際の現場で<strong>「適用される」</strong>ことが要求事項として追加。</td></tr>
+          <tr><td>7.3</td><td>認識</td><td>トップが促進する「品質文化や倫理的行動」について、従業員も認識を持つよう働きかけることが追加（5.1.1と連動）。</td></tr>
+          <tr><td>8.2.2.1</td><td>顧客とのコミュニケーション</td><td>製品やサービスの提供中断時など、<strong>不測の事態への対応に関する情報の提供</strong>（連絡体制など）が条件付きで明示。</td></tr>
+          <tr><td>8.2.3.2</td><td>製品等に関する要求事項のレビュー</td><td>新たな要求事項だけでなく、<strong>「変更された情報」</strong>を利用可能にすることが追加。</td></tr>
+          <tr><td>8.3</td><td>製品及びサービスの設計・開発</td><td>開発に関与させる対象がユーザーから「密接に関連する利害関係者」へ拡大。アウトプットに安全な使用等の「特性に関する情報」を含めることが明確化。</td></tr>
+          <tr><td>8.4</td><td>外部提供プロセスの管理</td><td>外注工程だけでなく、<strong>「外部から提供される製品やサービス（調達品など）」</strong>も管理対象として明示。</td></tr>
+          <tr><td>9.1.2</td><td>顧客満足</td><td>顧客満足の監視方法の例（注記）に「苦情」や「ソーシャルメディア」からの情報が追加。</td></tr>
+          <tr><td>9.2.2</td><td>内部監査プログラム</td><td>内部監査プログラムにおいて、監査の<strong>「目的」</strong>を定めることが明記。</td></tr>
+          <tr><td>9.3</td><td>マネジメントレビュー</td><td>インプット項目に<strong>「利害関係者のニーズ・期待の変化」</strong>が追加。「アウトプット」という表現は「結果」に変更。</td></tr>
+          <tr><td>10.1</td><td>継続的改善</td><td>2015年版の「10.1」と「10.3」が統合され、一つの箇条に整理（要求事項自体の変更はなし）。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:12px">※ 各項目の詳細は口頭で補足します。内容はFDIS段階の情報に基づくため、正式発行版で表現が調整される可能性があります。</p>
+  </div></div></div>
+</section>
+
+<!-- 06 WORDING -->
+<section class="sec" id="s6">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">06</span>
+    <span class="sec-title"><h2>全般的な表現・用語の変更</h2><p>文書化した情報の言い回し、用語定義の復活、その他の留意点。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+
+    <h3 class="blk">文書化した情報に関する表現の変更</h3>
+    <div class="callout">
+      <p>2015年版で使われていた言い回しが以下のように見直されました（組織側で無理に用語を統一し直す必要はありません）。</p>
+      <ul>
+        <li><b>旧</b>：「文書化した情報を維持する」（マニュアル等） → <b>新</b>：単に<strong>「〜を維持する」</strong>等に変更</li>
+        <li><b>旧</b>：「文書化した情報を保持する」（検査記録等） → <b>新</b>：<strong>「〜の証拠として文書を入手可能な状態にする」</strong>等に変更</li>
+      </ul>
+    </div>
+
+    <h3 class="blk">用語の定義（箇条3）の復活と明確化</h3>
+    <div class="callout">
+      <p>2015年版では箇条3に直接的な用語定義がありませんでしたが、2026年版では明示されるようになりました。</p>
+      <ul>
+        <li><b>「組織」の定義</b>：認証の適用範囲が会社全体ではなく一部（特定の工場など）に限定されている場合、規格上の「組織」とはその適用範囲内の部分のみを指すことが明確化されました。</li>
+        <li><b>「プロセス」の定義</b>：インプットを「使用する」だけでなく、「変換して結果を生み出す」というニュアンスが追加され、サービス業やオフィス業務等への適用イメージが広がりやすくなりました。</li>
+      </ul>
+    </div>
+
+    <h3 class="blk">その他の留意点</h3>
+    <div class="callout">
+      <ul>
+        <li><b>気候変動への対応</b>：2024年2月に追補版として追加された「気候変動の考慮」に関する要求事項は、2026年版でも引き続き維持されます。</li>
+        <li><b>附属書A（手引き）の拡充</b>：箇条4〜10の解釈を支援する附属書Aの内容が、2015年版と比較して大幅に手厚くなりました（要求事項ではありませんが、理解のための有用なガイドとなります）。</li>
+      </ul>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 07 NOTES -->
+<section class="sec" id="s7">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">07</span>
+    <span class="sec-title"><h2>留意点</h2><p>過度に構える必要はありませんが、押さえておきたい点が3つあります。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <p class="lead">今回の改訂は、既存の仕組みの延長線上で対応できる範囲に収まります。</p>
+
+    <div class="callout ochre">
+      <h4>負担が大きくない理由</h4>
+      <ul>
+        <li>規格全体の構成（箇条4〜10）は変わらず、<span class="kw">仕組みを一から作り直す改訂ではありません</span>。</li>
+        <li>変更の多くは、すでに実施していることを「決める・分析する・示す」形に整えるものです。</li>
+        <li>表現の見直し（文書化した情報など）に合わせて、社内文書の用語を機械的に統一し直す必要はありません。</li>
+        <li>10.1は条項の統合であり、要求事項そのものは変わっていません。</li>
+      </ul>
+    </div>
+
+    <h3 class="blk">押さえておきたい3点</h3>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">POINT 1</span>
+        <h4>日程はまだ確定していない</h4>
+        <p>規格発行日、移行審査の開始時期、移行期限はいずれも見込みです。公式発表を随時確認し、必要に応じて予定を調整します。</p>
+      </div>
+      <div class="card hi">
+        <span class="tag">POINT 2</span>
+        <h4>「品質文化・倫理的行動」は考えどころ</h4>
+        <p>今回の目玉である5.1.1の新規要求は、手順書を1本足せば済むものではありません。<span class="kw">トップの発信・教育・評価のどこで示すか</span>を早めに整理しておくと、後の作業がスムーズです。</p>
+      </div>
+      <div class="card">
+        <span class="tag">POINT 3</span>
+        <h4>組織の知識</h4>
+        <p>知識が実際に「適応される」ことが要求事項として追加されています。</p>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="lab">QUESTION FOR YOU</div>
+      <p>「御社の品質文化を説明してください」と審査員に聞かれたとき、いま何を示せるでしょうか。</p>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 08 SUMMARY -->
+<section class="sec" id="s8">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">08</span>
+    <span class="sec-title"><h2>まとめ ― 持ち帰っていただく4点</h2><p>本日の要点と、次のアクション。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <div class="take">
+      <div class="t"><span class="n">01</span><span><b>構成は変わらない</b><span>箇条4〜10の骨格はそのまま。既存のマネジメントシステムを土台に、追加の要求を重ねる改訂です。</span></span></div>
+      <div class="t"><span class="n">02</span><span><b>移行審査は2028年5月</b><span>定期審査と同時受審。認証機関からも通常の審査機会との同時受審が推奨されています。</span></span></div>
+      <div class="t"><span class="n">03</span><span><b>本格的な着手はJIS版発行後</b><span>2026年12月見込み。それまでは情報収集と変更点の把握を進めます。</span></span></div>
+      <div class="t"><span class="n">04</span><span><b>最大の論点は「品質文化及び倫理的行動」</b><span>文書化しにくい要求です。何をもって示すかを、早い段階で方針として決めておきます。</span></span></div>
+    </div>
+
+    <h3 class="blk">当面のアクション</h3>
+    <div class="grid g3">
+      <div class="card"><span class="tag">ACTION 1</span><h4>規格票を確保する</h4><p>発行後すぐISO版を入手し、JIS版発行時に差し替える段取りを組みます。</p></div>
+      <div class="card"><span class="tag">ACTION 2</span><h4>認証機関に確認する</h4><p>移行審査の受付開始時期、必要工数、追加費用を早めに問い合わせます。</p></div>
+      <div class="card"><span class="tag">ACTION 3</span><h4>変更点を読み合わせる</h4><p>本資料の変更点一覧をもとに、現行の仕組みとの差異を条項ごとに確認していきます。</p></div>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- 09 REFS -->
+<section class="sec" id="s9">
+  <button class="sec-head" onclick="toggleSec(this)" aria-expanded="false">
+    <span class="sec-num">09</span>
+    <span class="sec-title"><h2>参考情報</h2><p>一次情報の確認先。日程は必ず公式発表で照合してください。</p></span>
+    <span class="chev"></span>
+  </button>
+  <div class="sec-body"><div class="sec-inner"><div class="sec-pad">
+    <ul class="refs">
+      <li><a href="https://www.iso.org/iso-9001-quality-management.html" target="_blank" rel="noopener">ISO ｜ ISO 9001 品質マネジメント（公式）</a><em>規格の開発状況・発行スケジュールの一次情報。</em></li>
+      <li><a href="https://committee.iso.org/home/tc176sc2" target="_blank" rel="noopener">ISO/TC 176/SC 2 ｜ 品質システム分科委員会</a><em>改訂を担当する委員会。審議状況と移行に関する公式ガイダンスが掲載されます。</em></li>
+      <li><a href="https://iaf.nu/" target="_blank" rel="noopener">IAF ｜ 国際認定フォーラム</a><em>移行期間の長さと移行ルールを国際的に決定する組織。</em></li>
+      <li><a href="https://www.jab.or.jp/" target="_blank" rel="noopener">公益財団法人 日本適合性認定協会（JAB）</a><em>国内の認定機関。移行に関する国内運用の通知が出ます。</em></li>
+      <li><a href="https://www.jsa.or.jp/" target="_blank" rel="noopener">一般財団法人 日本規格協会（JSA）</a><em>JIS Q 9001:2026 の発行元・販売元。</em></li>
+    </ul>
+    <div class="callout">
+      <h4>本資料の情報基準日</h4>
+      <p class="note">2026年8月8日時点で公表されている情報に基づいています。規格発行日・移行期限・移行審査の開始時期はいずれも見込みであり、確定情報は<b>認証機関（DNV）からの通知</b>を優先してください。当社の審査予定（2027年5月／2028年5月／2029年5月／2030年5月）は社内の受審計画に基づくものです。</p>
+    </div>
+  </div></div></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>ISO 9001:2026 移行説明資料</b>　｜　情報基準日：2026年8月8日　｜　社内用<br>
+    本資料は口頭説明を前提とした要点整理です。詳細な解釈は規格票および附属書A、ならびに認証機関の指示に従ってください。
+  </div>
+</footer>
+
+<script>
+/* ---------- date strip ---------- */
+(function(){
+  var now=new Date();
+  var f=function(id,target){
+    var d=Math.ceil((new Date(target)-now)/86400000);
+    var el=document.getElementById(id);
+    if(el) el.textContent=(d>0?'あと約 '+Math.round(d/30.4)+' か月':'—');
+  };
+  f('r-pub','2026-09-15T00:00:00');
+  f('r-audit','2028-05-01T00:00:00');
+  f('r-limit','2029-09-30T00:00:00');
+  var t=document.getElementById('today');
+  if(t) t.textContent='本日 '+now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日時点　/　日程はいずれも現時点の想定';
+})();
+
+/* ---------- sections ---------- */
+function toggleSec(btn){
+  var sec=btn.parentElement;
+  var open=sec.classList.toggle('open');
+  btn.setAttribute('aria-expanded',open?'true':'false');
+}
+function toggleAll(){
+  var secs=document.querySelectorAll('.sec');
+  var anyClosed=false;
+  secs.forEach(function(s){ if(!s.classList.contains('open')) anyClosed=true; });
+  secs.forEach(function(s){
+    s.classList.toggle('open',anyClosed);
+    s.querySelector('.sec-head').setAttribute('aria-expanded',anyClosed?'true':'false');
+  });
+}
+
+/* ---------- tabs ---------- */
+function pickTab(btn,id){
+  var box=btn.closest('.sec-pad');
+  box.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  box.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on');});
+  btn.classList.add('on');
+  document.getElementById(id).classList.add('on');
+}
+
+/* ---------- timeline ---------- */
+var TLDATA={
+  dis:{d:'2025年8月27日',t:'DIS（国際規格案）発行',
+    p:'改訂案が各国に回付され、意見照会が行われた段階。この時点で新しい要求事項の骨格が公になりました。',
+    s:'当社との関わり：情報収集の開始時期。実務対応はまだ不要。'},
+  fdis:{d:'2026年5月14日',t:'FDIS（最終国際規格案）発行',
+    p:'最終案の段階。ここから内容が大きく変わることは原則ありません。実務対応の準備を始めてよい段階です。',
+    s:'当社との関わり：変更点の把握と社内共有（＝本日の説明会）。'},
+  pub:{d:'2026年9月（見込み）',t:'ISO 9001:2026 正式発行',
+    p:'新規格が正式に発行され、移行期間がスタートします。既存の認証は移行期限まで有効に続きます。',
+    s:'当社との関わり：ISO版規格票を入手し、内容の確認を始めます。'},
+  jis:{d:'2026年12月（見込み）',t:'JIS Q 9001:2026（日本語版）発行',
+    p:'日本語版の発行。実務ではJISを基準に運用している組織が多く、社内文書の見直しはここから始めるのが現実的です。',
+    s:'当社との関わり：実質的な作業のスタートライン。'},
+  start:{d:'2027年 以降',t:'移行審査の受付開始（見込み）',
+    p:'認定機関の手続きや審査員の力量認定を経て、認証機関が移行審査を提供できるようになります。開始時期は認証機関ごとに異なります。',
+    s:'当社との関わり：受付開始時期と必要工数・費用を認証機関に確認します。'},
+  ours:{d:'2028年5月',t:'当社の移行審査（定期審査と同時）',
+    p:'定期審査にあわせて新規格への適合を確認してもらいます。通常の審査機会と統合するため、審査工数と現場の負担を抑えられます。',
+    s:'当社との関わり：この受審をもって移行が完了します。'},
+  limit:{d:'2029年9月（見込み）',t:'移行完了期限',
+    p:'規格発行から約3年間が移行期間です。この期限までに移行審査を終えていれば問題ありません。',
+    s:'当社との関わり：2028年5月に受審するため、約16か月の余裕をもって迎えられます。'}
+};
+function pickNode(el){
+  document.querySelectorAll('.tl-node').forEach(function(n){n.classList.remove('sel');});
+  el.classList.add('sel');
+  var k=TLDATA[el.dataset.k];
+  document.getElementById('tldetail').innerHTML=
+    '<div class="dh"><span class="dd">'+k.d+'</span><span class="dt">'+k.t+'</span></div>'+
+    '<p>'+k.p+'</p><p class="src">'+k.s+'</p>';
+}
+
+/* ---------- nav active ---------- */
+(function(){
+  var links=document.querySelectorAll('.navbar a');
+  var secs=document.querySelectorAll('.sec');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY+120,cur=null;
+    secs.forEach(function(s){ if(s.offsetTop<=y) cur=s.id; });
+    links.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+cur); });
+  },{passive:true});
+  links.forEach(function(a){
+    a.addEventListener('click',function(){
+      var s=document.querySelector(a.getAttribute('href'));
+      if(s&&!s.classList.contains('open')){
+        s.classList.add('open');
+        s.querySelector('.sec-head').setAttribute('aria-expanded','true');
+      }
+    });
+  });
+})();
+</script>

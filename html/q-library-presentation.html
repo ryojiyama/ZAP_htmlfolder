@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q-Library 利用案内 | 品質保証本部</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0055A5;
+    --primary-light: #E8F0FA;
+    --accent: #0096D6;
+    --danger: #D93025;
+    --danger-light: #FDF0EF;
+    --success: #1A7F37;
+    --success-light: #EDFBF0;
+    --warning: #E8820C;
+    --warning-light: #FEF6EC;
+    --neutral-900: #1A1F2E;
+    --neutral-700: #3D4660;
+    --neutral-500: #6B7494;
+    --neutral-300: #C4CAD8;
+    --neutral-100: #F4F6FA;
+    --white: #FFFFFF;
+    --section-radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--neutral-100);
+    color: var(--neutral-900);
+    line-height: 1.7;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    background: var(--primary);
+    color: white;
+    padding: 12px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,85,165,0.3);
+  }
+  .site-header .org { font-size: 12px; opacity: 0.8; letter-spacing: 0.05em; }
+  .site-header .title-sm { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; }
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: #5BC4F5;
+    width: 0%;
+    transition: width 0.2s;
+    z-index: 200;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0055A5 0%, #0096D6 100%);
+    color: white;
+    padding: 80px 40px 70px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    top: -200px; right: -100px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -150px; left: -80px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero h1 span {
+    color: #5BC4F5;
+  }
+  .hero .subtitle {
+    font-size: 16px;
+    opacity: 0.85;
+    max-width: 520px;
+    margin: 0 auto 28px;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ===== EXPAND ALL ===== */
+  .expand-all {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-bottom: 1px solid var(--neutral-300);
+    position: sticky;
+    top: 49px;
+    z-index: 90;
+  }
+  .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 9px 24px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.03em;
+  }
+  .btn:hover { background: #0041A0; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  /* ===== AGENDA ===== */
+  .agenda-bar {
+    background: white;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--neutral-300);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .agenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--neutral-700);
+    border: 1.5px solid var(--neutral-300);
+  }
+  .agenda-item:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+  .agenda-item .num {
+    background: var(--neutral-100);
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .agenda-arrow { color: var(--neutral-300); font-size: 14px; }
+
+  /* ===== MAIN CONTENT ===== */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ===== SECTION ===== */
+  .section {
+    background: white;
+    border-radius: var(--section-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .section:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+  .section-header {
+    padding: 20px 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .section-header:hover { background: var(--neutral-100); }
+
+  .section-num {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+    flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .section-title-wrap { flex: 1; }
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--neutral-900);
+    line-height: 1.3;
+  }
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--neutral-500);
+    margin-top: 2px;
+  }
+
+  .section-time {
+    font-size: 11px;
+    color: var(--neutral-500);
+    background: var(--neutral-100);
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .toggle-icon {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--neutral-100);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--neutral-500);
+    font-size: 14px;
+    transition: transform 0.25s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .section.open .toggle-icon { transform: rotate(180deg); background: var(--primary-light); color: var(--primary); }
+
+  .section-body {
+    padding: 0 28px 28px;
+    display: none;
+    border-top: 1px solid var(--neutral-100);
+    animation: fadeIn 0.25s ease;
+  }
+  .section.open .section-body { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+  /* ===== CONTENT COMPONENTS ===== */
+
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--neutral-500);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 24px 0 12px;
+  }
+
+  .lead {
+    font-size: 16px;
+    color: var(--neutral-700);
+    margin-top: 20px;
+    line-height: 1.8;
+  }
+
+  /* Before/After Grid */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin-top: 20px;
+    align-items: start;
+  }
+  .ba-col {
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .ba-col.before {
+    background: #FEF6EC;
+    border: 1.5px solid #F5C078;
+  }
+  .ba-col.after {
+    background: var(--success-light);
+    border: 1.5px solid #7DD8A4;
+  }
+  .ba-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .ba-col.before .ba-label { color: var(--warning); }
+  .ba-col.after .ba-label { color: var(--success); }
+  .ba-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding-top: 60px;
+    color: var(--primary);
+    font-size: 22px;
+  }
+
+  /* Problem/Merit List */
+  .issue-list, .merit-list, .step-list, .note-list {
+    list-style: none;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .issue-list li, .merit-list li, .note-list li {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+  }
+  .issue-list li {
+    background: var(--danger-light);
+    border-left: 3px solid var(--danger);
+    color: #5A1A14;
+  }
+  .issue-list li .icon { color: var(--danger); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+  .merit-list li {
+    background: var(--success-light);
+    border-left: 3px solid var(--success);
+    color: #0C3D1A;
+  }
+  .merit-list li .icon { color: var(--success); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+  .note-list li {
+    background: var(--warning-light);
+    border-left: 3px solid var(--warning);
+    color: #4A2800;
+  }
+  .note-list li .icon { color: var(--warning); font-weight: 900; flex-shrink: 0; margin-top: 2px; }
+
+  /* Two-column grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  /* Demerit list */
+  .demerit-box {
+    background: var(--neutral-100);
+    border-radius: 10px;
+    padding: 16px 20px;
+    border: 1.5px solid var(--neutral-300);
+    margin-top: 16px;
+  }
+  .demerit-box .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--neutral-500);
+    margin-bottom: 10px;
+  }
+  .demerit-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .demerit-list li {
+    font-size: 13px;
+    color: var(--neutral-700);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .demerit-list li::before { content: '—'; color: var(--neutral-400); flex-shrink: 0; }
+
+  /* Steps */
+  .steps {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .step-card {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .step-circle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: var(--neutral-300);
+    min-height: 20px;
+    margin: 4px 0;
+  }
+  .step-card:last-child .step-line { display: none; }
+  .step-content {
+    padding: 6px 0 20px;
+    flex: 1;
+  }
+  .step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--neutral-900);
+    margin-bottom: 4px;
+  }
+  .step-detail {
+    font-size: 13px;
+    color: var(--neutral-700);
+    line-height: 1.7;
+  }
+  .step-tip {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 3px 9px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* Operation Tabs */
+  .tab-wrap { margin-top: 20px; }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--neutral-200);
+    margin-bottom: 0;
+  }
+  .tab-btn {
+    padding: 9px 18px;
+    font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--neutral-500);
+    border-radius: 8px 8px 0 0;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    letter-spacing: 0.03em;
+  }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--primary-light); }
+  .tab-btn:hover:not(.active) { background: var(--neutral-100); color: var(--neutral-700); }
+  .tab-panel { display: none; padding: 20px 0 0; }
+  .tab-panel.active { display: block; animation: fadeIn 0.2s ease; }
+
+  /* Highlight Box */
+  .highlight-box {
+    background: linear-gradient(135deg, #E8F0FA, #D0E4F7);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-top: 20px;
+    border-left: 4px solid var(--primary);
+  }
+  .highlight-box .hl-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .highlight-box p {
+    font-size: 14px;
+    color: var(--neutral-700);
+    line-height: 1.7;
+  }
+
+  /* Danger Box */
+  .danger-box {
+    background: linear-gradient(135deg, #FDF0EF, #FAE0DE);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-top: 20px;
+    border-left: 4px solid var(--danger);
+  }
+  .danger-box .d-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Flow diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    background: var(--primary-light);
+    border: 1.5px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    text-align: center;
+    min-width: 100px;
+    line-height: 1.4;
+  }
+  .flow-arrow {
+    color: var(--neutral-400);
+    font-size: 18px;
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+  /* ISO diagram */
+  .iso-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 20px;
+    align-items: flex-start;
+    max-width: 480px;
+  }
+  .iso-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .iso-node {
+    flex: 1;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .iso-node.iso-1 { background: #E8F0FA; border: 2px solid #0096D6; color: #0055A5; }
+  .iso-node.iso-2 { background: #EEF4FB; border: 2px solid #5A9ED6; color: #0041A0; }
+  .iso-node.iso-3 { background: var(--success-light); border: 2px solid #7DD8A4; color: var(--success); }
+  .iso-down { font-size: 18px; color: var(--neutral-400); padding: 4px 0; margin-left: 24px; }
+  .iso-equal {
+    background: linear-gradient(135deg, #0055A5, #0096D6);
+    color: white;
+    border-radius: 10px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 16px;
+    width: 100%;
+    line-height: 1.6;
+  }
+
+  /* Summary cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .summary-card {
+    background: var(--neutral-100);
+    border-radius: 12px;
+    padding: 18px 16px;
+    border-top: 3px solid var(--primary);
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .summary-card:hover { transform: translateY(-3px); }
+  .summary-card .s-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--primary);
+  }
+  .summary-card .s-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--neutral-900);
+    margin-bottom: 6px;
+  }
+  .summary-card .s-desc {
+    font-size: 12px;
+    color: var(--neutral-500);
+    line-height: 1.6;
+  }
+
+  /* Chat example */
+  .chat-example {
+    background: var(--neutral-100);
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--neutral-700);
+    border-left: 3px solid var(--accent);
+  }
+  .chat-example .label { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .chat-example .msg { font-style: italic; }
+
+  /* Footer */
+  .footer {
+    background: var(--neutral-900);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 28px 40px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer a { color: rgba(255,255,255,0.8); }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--neutral-100); margin: 16px 0; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .ba-grid { grid-template-columns: 1fr; }
+    .ba-arrow { display: none; }
+    .two-col { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; align-items: flex-start; }
+    .flow-arrow { transform: rotate(90deg); }
+    .hero { padding: 50px 20px; }
+    .main { padding: 24px 12px 60px; }
+    .section-header { padding: 16px 18px; }
+    .section-body { padding: 0 18px 22px; }
+    .agenda-bar { padding: 14px 16px; }
+    .tabs { overflow-x: auto; }
+  }
+
+  /* SVG Icons */
+  .ico { width: 16px; height: 16px; display: inline-block; vertical-align: middle; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Header -->
+<header class="site-header">
+  <div>
+    <div class="org">品質保証本部 主催</div>
+    <div class="title-sm">文書管理説明会 — 製造部向け</div>
+  </div>
+  <div style="font-size:12px;opacity:0.7;">説明15分 ＋ 質疑15分</div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">Q-Library 利用案内</div>
+  <h1>文書は<span>1か所</span>で<br>管理する時代へ</h1>
+  <p class="subtitle">バラバラな文書管理から脱却し、<br>チーム全員が正しい手順書を使える仕組みをつくります</p>
+  <div class="hero-meta">
+    <span>
+      <svg class="ico" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/><path d="M8 4.5v4l2.5 1.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      説明時間：約10〜15分
+    </span>
+    <span>
+      <svg class="ico" fill="none" viewBox="0 0 16 16"><path d="M3 3h10v10H3z" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" rx="1"/><path d="M6 7h4M6 9.5h2" stroke="rgba(255,255,255,0.7)" stroke-width="1.2" stroke-linecap="round"/></svg>
+      対象：生産本部 全員
+    </span>
+    <span>
+      <svg class="ico" fill="none" viewBox="0 0 16 16"><path d="M8 2C5.24 2 3 4.24 3 7c0 3.5 5 9 5 9s5-5.5 5-9c0-2.76-2.24-5-5-5z" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/><circle cx="8" cy="7" r="2" stroke="rgba(255,255,255,0.7)" stroke-width="1.4"/></svg>
+      主催：品質保証本部
+    </span>
+  </div>
+</section>
+
+<!-- Expand All -->
+<div class="expand-all">
+  <button class="btn" onclick="toggleAll()">全セクションを展開 / 折りたたみ</button>
+</div>
+
+<!-- Agenda -->
+<nav class="agenda-bar">
+  <div class="agenda-item" onclick="scrollTo('s1')"><div class="num">1</div>なぜ変わるか</div>
+  <div class="agenda-arrow">›</div>
+  <div class="agenda-item" onclick="scrollTo('s2')"><div class="num">2</div>何が変わるか</div>
+  <div class="agenda-arrow">›</div>
+  <div class="agenda-item" onclick="scrollTo('s3')"><div class="num">3</div>基本操作</div>
+  <div class="agenda-arrow">›</div>
+  <div class="agenda-item" onclick="scrollTo('s4')"><div class="num">4</div>禁止事項</div>
+  <div class="agenda-arrow">›</div>
+  <div class="agenda-item" onclick="scrollTo('s5')"><div class="num">5</div>注意点</div>
+  <div class="agenda-arrow">›</div>
+  <div class="agenda-item" onclick="scrollTo('s6')"><div class="num">6</div>背景・まとめ</div>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- S1: なぜ変わるか -->
+  <div class="section open" id="s1">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-num">1</div>
+      <div class="section-title-wrap">
+        <div class="section-title">なぜ今、変わる必要があるのか</div>
+        <div class="section-subtitle">これまでの管理方法に潜んでいた問題</div>
+      </div>
+      <div class="section-time">約2分</div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-body">
+      <p class="lead">文書の保存場所が<strong>共有サーバーと個人PCに分散</strong>していた状態では、次のような問題が繰り返し起きていました。</p>
+
+      <h3>実際に起きていた問題</h3>
+      <ul class="issue-list">
+        <li><span class="icon">✕</span><div><strong>書類の散逸</strong>　「あの手順書どこにある？」「誰が持っているかわからない」という状態</div></li>
+        <li><span class="icon">✕</span><div><strong>バージョン管理の漏れ</strong>　改訂されたはずの文書が更新されず、古い手順で作業が続いていた</div></li>
+        <li><span class="icon">✕</span><div><strong>引き継ぎの不備</strong>　担当者が変わったとき、文書の存在ごと引き継がれないことがあった</div></li>
+        <li><span class="icon">✕</span><div><strong>個人依存</strong>　「あの人のPCにしか入っていない」という状態が発生していた</div></li>
+      </ul>
+
+      <div class="highlight-box">
+        <div class="hl-title">今回の対策</div>
+        <p>Microsoft <strong>SharePoint のドキュメントライブラリ（Q-Library）</strong>を活用し、すべての文書を1か所で管理します。上記の問題をまとめて解消することが目的です。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2: 何が変わるか -->
+  <div class="section open" id="s2">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-num">2</div>
+      <div class="section-title-wrap">
+        <div class="section-title">Q-Library に変わって何が変わるか</div>
+        <div class="section-subtitle">Before / After で理解する変化のポイント</div>
+      </div>
+      <div class="section-time">約2分</div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-body">
+
+      <div class="ba-grid">
+        <div class="ba-col before">
+          <div class="ba-label">BEFORE — これまで</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:13px;color:#5A3A00;">文書が複数の場所に散在</li>
+            <li style="font-size:13px;color:#5A3A00;">「どれが最新版か」判断が難しい</li>
+            <li style="font-size:13px;color:#5A3A00;">引き継ぎ時に文書が消えるリスク</li>
+            <li style="font-size:13px;color:#5A3A00;">監査対応に時間がかかる</li>
+          </ul>
+        </div>
+        <div class="ba-arrow">→</div>
+        <div class="ba-col after">
+          <div class="ba-label">AFTER — Q-Library</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+            <li style="font-size:13px;color:#0C3D1A;">最新版が常に1か所にある</li>
+            <li style="font-size:13px;color:#0C3D1A;">「正しい版か」の確認が一瞬でできる</li>
+            <li style="font-size:13px;color:#0C3D1A;">担当者が変わっても文書が残る</li>
+            <li style="font-size:13px;color:#0C3D1A;">監査で「最新版はどこ？」にすぐ答えられる</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="demerit-box" style="margin-top:20px;">
+        <div class="label">注意点（デメリット）</div>
+        <ul class="demerit-list">
+          <li>最初は操作に慣れるまで少し時間がかかる</li>
+          <li>自分で文書を直接編集できなくなる（担当者への依頼が必要）</li>
+          <li>ネットワーク接続が必要（オフラインでは開けない）</li>
+          <li>閲覧できる範囲に制限がある場合がある</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S3: 基本操作 -->
+  <div class="section open" id="s3">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-num">3</div>
+      <div class="section-title-wrap">
+        <div class="section-title">基本的な使い方</div>
+        <div class="section-subtitle">3つのシナリオで覚える操作フロー</div>
+      </div>
+      <div class="section-time">約5分</div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-body">
+
+      <div class="tab-wrap">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this, 'tab-search')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:4px;"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            文書を探す
+          </button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-print')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:4px;"><rect x="3" y="3" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M5 6.5h6M5 9h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            印刷して使う
+          </button>
+          <button class="tab-btn" onclick="switchTab(this, 'tab-edit')">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;margin-right:4px;"><path d="M10.5 2.5l3 3L5 14H2v-3L10.5 2.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            変更を依頼する
+          </button>
+        </div>
+
+        <!-- Tab: 文書を探す -->
+        <div id="tab-search" class="tab-panel active">
+          <div class="steps">
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">1</div><div class="step-line"></div></div>
+              <div class="step-content">
+                <div class="step-title">Q-Library にアクセスする</div>
+                <div class="step-detail">ブックマーク登録したリンクから開く（URLはこの説明会後に共有します）</div>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">2</div><div class="step-line"></div></div>
+              <div class="step-content">
+                <div class="step-title">サイト列または検索バーで探す</div>
+                <div class="step-detail">サイト列で絞り込む方法と、キーワード検索の2通りで探せます</div>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">3</div></div>
+              <div class="step-content">
+                <div class="step-title">ファイル名・管理番号を確認してから使う</div>
+                <div class="step-detail">必ずこの2点を確認してから作業に使用してください</div>
+                <div class="step-tip">ポイント：ファイル名・管理番号の確認が最重要</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: 印刷して使う -->
+        <div id="tab-print" class="tab-panel">
+          <div class="steps">
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">1</div><div class="step-line"></div></div>
+              <div class="step-content">
+                <div class="step-title">Q-Library から該当ファイルを開く</div>
+                <div class="step-detail">必ずQ-Libraryの最新版を開くことが前提です。手元の古いコピーは使用しない</div>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">2</div><div class="step-line"></div></div>
+              <div class="step-content">
+                <div class="step-title">識別番号が表示されていることを確認する</div>
+                <div class="step-detail">ライブラリの列に識別番号が記載されていることをチェック</div>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">3</div></div>
+              <div class="step-content">
+                <div class="step-title">印刷後も識別番号が印字されていることを確認(未実装)</div>
+                <div class="step-detail">プリントアウトした紙にも識別番号が残っていることを確認してから使用してください</div>
+                <div class="step-tip">ポイント：識別番号＝管理されている証</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: 変更を依頼する -->
+        <div id="tab-edit" class="tab-panel">
+          <div class="steps">
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">1</div><div class="step-line"></div></div>
+              <div class="step-content">
+                <div class="step-title">文書管理責任者にチャットで連絡する</div>
+                <div class="step-detail">Teams等のチャットで連絡してください。直接ファイルは編集できません</div>
+                <div class="chat-example">
+                  <div class="label">連絡の例文</div>
+                  <div class="msg">「〇〇作業標準書を変更したいです。」</div>
+                </div>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">2</div><div class="step-line"></div></div>
+              <div class="step-content">
+                <div class="step-title">文書管理責任者が変更・承認プロセスを進める</div>
+                <div class="step-detail">内容の確認・承認は品質保証本部が担当します。あなたは内容を伝えるだけでOK</div>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-left"><div class="step-circle">3</div></div>
+              <div class="step-content">
+                <div class="step-title">承認完了後、Q-Library に最新版が反映される</div>
+                <div class="step-detail">反映後、自動的に全員が新しいバージョンを参照できるようになります</div>
+                <div class="step-tip">ポイント：文書管理責任者が登録することで品質が保たれる</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S4: ローカル保存禁止 -->
+  <div class="section open" id="s4">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-num">4</div>
+      <div class="section-title-wrap">
+        <div class="section-title">ローカルに文書を置かない</div>
+        <div class="section-subtitle">個人PC・共有サーバーへの保存禁止とその理由</div>
+      </div>
+      <div class="section-time">約3分</div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-body">
+
+      <div class="danger-box">
+        <div class="d-title">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 2L14.5 13.5H1.5L8 2z" stroke="#D93025" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6.5v3" stroke="#D93025" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11.5" r="0.75" fill="#D93025"/></svg>
+          禁止事項
+        </div>
+        <p style="font-size:14px;font-weight:600;color:#5A1A14;">個人のPC・デスクトップ・共有サーバーに文書を保存して使い続けることは禁止です。</p>
+      </div>
+
+      <h3>なぜいけないのか</h3>
+      <ul class="issue-list">
+        <li><span class="icon">✕</span><div><strong>古い手順で作業してしまう</strong>　手順が改訂されても気づかず、旧版のまま作業が続く</div></li>
+        <li><span class="icon">✕</span><div><strong>PC紛失・故障時のリスク</strong>　文書が消えたり、外部に情報が漏れる可能性がある</div></li>
+        <li><span class="icon">✕</span><div><strong>監査での指摘</strong>　「管理されていない文書を使っている」と指摘を受ける可能性がある</div></li>
+      </ul>
+
+      <h3>お願いすること</h3>
+      <ul class="merit-list">
+        <li><span class="icon">✓</span><div>ローカルや共有サーバー上の古いファイルを削除してください</div></li>
+        <li><span class="icon">✓</span><div>Q-Library へのリンクをブックマーク登録してください</div></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- S5: その他の注意点 -->
+  <div class="section open" id="s5">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-num">5</div>
+      <div class="section-title-wrap">
+        <div class="section-title">その他の注意点</div>
+        <div class="section-subtitle">情報セキュリティと日常運用上のルール</div>
+      </div>
+      <div class="section-time">約1分</div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-body">
+
+      <ul class="note-list" style="margin-top:16px;">
+        <li><span class="icon">!</span><div><strong>社外への持ち出し禁止</strong>　個人のクラウド（Google ドライブ・LINE等）に保存しない</div></li>
+        <li><span class="icon">!</span><div><strong>閲覧できないファイルがある場合</strong>は自己判断せず、文書管理責任者に確認する</div></li>
+        <li><span class="icon">!</span><div><strong>「これで合っているか不安」なとき</strong>は自己判断せず、まず確認する</div></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- S6: 背景・まとめ -->
+  <div class="section open" id="s6">
+    <div class="section-header" onclick="toggle(this)">
+      <div class="section-num">6</div>
+      <div class="section-title-wrap">
+        <div class="section-title">背景とまとめ — ISO9001との関係</div>
+        <div class="section-subtitle">難しいことを覚える必要はありません</div>
+      </div>
+      <div class="section-time">参考</div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="section-body">
+
+      <p class="lead">Q-Library は「手順書のルールに従って作った」のではなく、<strong>逆の順番</strong>で設計されています。</p>
+
+      <div class="iso-flow">
+        <div class="iso-row">
+          <div class="iso-node iso-1">ISO 9001 の要求事項を確認</div>
+        </div>
+        <div class="iso-down">↓</div>
+        <div class="iso-row">
+          <div class="iso-node iso-2">Q-Library の仕組みを設計</div>
+        </div>
+        <div class="iso-down">↓</div>
+        <div class="iso-row">
+          <div class="iso-node iso-3">後から手順書としてまとめた</div>
+        </div>
+        <div class="iso-equal">
+          「Q-Library を正しく使う」＝「手順書のルールを守っている」<br>
+          <span style="font-size:12px;opacity:0.85;font-weight:400;">手順書の細かい内容を覚える必要はありません</span>
+        </div>
+      </div>
+
+      <hr class="divider" style="margin-top:28px;">
+
+      <h3>本日のまとめ</h3>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="s-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7L12 2z" stroke="#0055A5" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="s-title">最新版を使う</div>
+          <div class="s-desc">Q-Library の文書が常に正しい最新版です</div>
+        </div>
+        <div class="summary-card">
+          <div class="s-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0055A5" stroke-width="1.8"/><path d="M9 12l2.5 2.5L15 9" stroke="#0055A5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="s-title">識別番号を確認</div>
+          <div class="s-desc">印刷物も含め必ず識別番号を確認する</div>
+        </div>
+        <div class="summary-card">
+          <div class="s-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M19 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z" stroke="#0055A5" stroke-width="1.8"/><path d="M16 3H8v4h8V3z" stroke="#0055A5" stroke-width="1.8"/></svg>
+          </div>
+          <div class="s-title">ローカル保存NG</div>
+          <div class="s-desc">個人PC・共有サーバーへの文書保存は禁止</div>
+        </div>
+        <div class="summary-card">
+          <div class="s-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="#0055A5" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="s-title">不明な点は確認</div>
+          <div class="s-desc">迷ったら文書管理責任者にチャットで確認</div>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top:24px;">
+        <div class="hl-title">参考情報</div>
+        <p>詳細なルールは <strong>Q-Library 内の「文書管理手順書」</strong>を参照してください。本説明会の内容はこの手順書に基づきます。</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div style="color:rgba(255,255,255,0.9);font-size:13px;font-weight:600;margin-bottom:6px;">文書管理説明会　製造部向け Q-Library 利用案内</div>
+  <div>主催：品質保証本部　｜　対象：生産本部　｜　詳細は Q-Library 内の「文書管理手順書」を参照</div>
+  <div style="margin-top:6px;font-size:11px;">本資料の内容は口頭説明を前提としています。詳細は文書管理責任者にお問い合わせください。</div>
+</footer>
+
+<script>
+  // Toggle section
+  function toggle(header) {
+    const section = header.parentElement;
+    section.classList.toggle('open');
+  }
+
+  // Toggle all
+  let allOpen = true;
+  function toggleAll() {
+    allOpen = !allOpen;
+    document.querySelectorAll('.section').forEach(s => {
+      if (allOpen) s.classList.add('open');
+      else s.classList.remove('open');
+    });
+  }
+
+  // Scroll to section
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('open');
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Tab switch
+  function switchTab(btn, panelId) {
+    const tabWrap = btn.closest('.tab-wrap');
+    tabWrap.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    tabWrap.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+  });
+</script>
+</body>
+</html>

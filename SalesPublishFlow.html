@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カタログレビュー運用フロー</title>
+    <!-- アイコンライブラリのみ読み込み -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(to bottom, #f9fafb, #ffffff);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding: 2rem;
+            }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #4b5563;
+        }
+
+        .read-time {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+        }
+
+        .section-gray {
+            background-color: #f9fafb;
+            border-left-color: #9ca3af;
+        }
+
+        .section-blue {
+            background-color: #eff6ff;
+            border-left-color: #3b82f6;
+        }
+
+        .section-orange {
+            background-color: #fff7ed;
+            border-left-color: #f97316;
+        }
+
+        .section-green {
+            background-color: #f0fdf4;
+            border-left-color: #10b981;
+        }
+
+        .card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .card-border {
+            border: 2px solid;
+        }
+
+        .card-border-blue {
+            border-color: #3b82f6;
+        }
+
+        .card-border-2 {
+            border-width: 2px;
+        }
+
+        .card-border-orange {
+            border-color: #f97316;
+        }
+
+        .card-border-green {
+            border-color: #10b981;
+        }
+
+        .card-left-border {
+            border-left: 4px solid;
+        }
+
+        .card-left-blue {
+            border-left-color: #3b82f6;
+        }
+
+        .card-left-orange {
+            border-left-color: #f97316;
+        }
+
+        .card-left-green {
+            border-left-color: #10b981;
+        }
+
+        .card-left-red {
+            border-left-color: #ef4444;
+        }
+
+        .card-left-yellow {
+            border-left-color: #eab308;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-start {
+            align-items: flex-start;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-3 {
+            gap: 0.75rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .gap-6 {
+            gap: 1.5rem;
+        }
+
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+
+        .ml-3 { margin-left: 0.75rem; }
+        .ml-16 { margin-left: 4rem; }
+
+        .my-8 {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .p-3 { padding: 0.75rem; }
+        .p-4 { padding: 1rem; }
+        .p-6 { padding: 1.5rem; }
+
+        .rounded { border-radius: 0.25rem; }
+        .rounded-lg { border-radius: 0.5rem; }
+
+        .text-sm { font-size: 0.875rem; }
+        .text-xs { font-size: 0.75rem; }
+        .font-bold { font-weight: bold; }
+        .font-semibold { font-weight: 600; }
+        .text-center { text-align: center; }
+
+        .text-gray-500 { color: #6b7280; }
+        .text-gray-600 { color: #4b5563; }
+        .text-gray-700 { color: #374151; }
+        .text-gray-800 { color: #1f2937; }
+        .text-blue-600 { color: #2563eb; }
+        .text-red-500 { color: #ef4444; }
+        .text-orange-600 { color: #ea580c; }
+        .text-green-600 { color: #16a34a; }
+        .text-yellow-600 { color: #ca8a04; }
+
+        .bg-gray-50 { background-color: #f9fafb; }
+        .bg-blue-50 { background-color: #eff6ff; }
+        .bg-blue-100 { background-color: #dbeafe; }
+        .bg-orange-50 { background-color: #fff7ed; }
+        .bg-green-50 { background-color: #f0fdf4; }
+        .bg-red-50 { background-color: #fef2f2; }
+        .bg-yellow-50 { background-color: #fefce8; }
+
+        .bg-gradient {
+            background: linear-gradient(to right, #eff6ff, #f0fdf4);
+        }
+
+        .border { border: 1px solid #e5e7eb; }
+        .border-blue-200 { border-color: #bfdbfe; }
+        .border-blue-300 { border-color: #93c5fd; }
+        .border-orange-300 { border-color: #fdba74; }
+        .border-green-300 { border-color: #86efac; }
+        .border-gray-300 { border-color: #d1d5db; }
+        .border-t-2 { border-top: 2px solid #e5e7eb; }
+
+        .icon-wrapper {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+
+        .icon-wrapper-lg {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+
+        .icon-blue { background-color: #dbeafe; color: #2563eb; }
+        .icon-orange { background-color: #ffedd5; color: #ea580c; }
+        .icon-green { background-color: #dcfce7; color: #16a34a; }
+        .icon-red { background-color: #fee2e2; color: #dc2626; }
+        .icon-yellow { background-color: #fef9c3; color: #ca8a04; }
+
+        .grid { display: grid; }
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+
+        @media (min-width: 640px) {
+            .sm-grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 768px) {
+            .md-grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .arrow-icon { margin: 0 auto; color: #9ca3af; }
+        .arrow-orange { color: #fb923c; }
+
+        .info-box {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+        }
+        .info-box-blue {
+            background-color: #eff6ff;
+            border-left-color: #3b82f6;
+        }
+
+        .flex-shrink-0 { flex-shrink: 0; }
+
+        /* Lucideアイコンのサイズ調整用 */
+        .lucide {
+            width: 20px;
+            height: 20px;
+        }
+        .icon-wrapper-lg .lucide {
+            width: 24px;
+            height: 24px;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        ul { list-style: none; }
+        .space-y-1 > * + * { margin-top: 0.25rem; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <header>
+            <h1>カタログレビュー運用フロー</h1>
+            <p class="subtitle">複雑な承認プロセスをシンプルに、見える化する仕組み</p>
+            <div class="read-time">📖 読了時間：約5分</div>
+        </header>
+
+        <!-- 1. 導入 -->
+        <section class="section section-gray">
+            <h2>❌ 従来の課題：メールベースの限界</h2>
+            <div class="card mb-4">
+                <h3 class="flex items-center gap-2 mb-3">
+                    <i data-lucide="mail" class="text-gray-500"></i>
+                    メール添付方式の問題点
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="x-circle" class="text-red-500 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-800">進捗が見えない</p>
+                            <p class="text-sm text-gray-600">誰がレビューしたか、誰が未完了かが分からない</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="x-circle" class="text-red-500 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-800">個別返信の手間</p>
+                            <p class="text-sm text-gray-600">レビュー担当者ごとに別々のメールスレッドが発生</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="x-circle" class="text-red-500 flex-shrink-0 mt-1"></i>
+                        <div>
+                            <p class="font-semibold text-gray-800">集約作業の負担</p>
+                            <p class="text-sm text-gray-600">複数のメールから指摘事項を手作業でまとめる必要がある</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-box info-box-blue">
+                <p class="text-gray-800 font-semibold mb-2">💡 解決のカギ</p>
+                <p class="text-gray-700">
+                    <strong>中央管理システム</strong>で全レビューを一元化し、<strong>リアルタイム通知</strong>で進捗を可視化する仕組みが必要
+                </p>
+            </div>
+        </section>
+
+        <!-- 矢印 -->
+        <div class="my-8 flex justify-center">
+            <i data-lucide="arrow-down" class="arrow-icon" style="width: 40px; height: 40px;"></i>
+        </div>
+
+        <!-- 2. 全体像 -->
+        <section class="section section-blue">
+            <h2>🔗 全体像：3つのシステムが連携して動く</h2>
+            <p class="text-gray-700 mb-6">
+                この運用フローは、<strong>3つの専門システム</strong>が役割分担しながら連携することで、効率的なレビュープロセスを実現しています。
+            </p>
+
+            <div class="space-y-4 mb-6">
+                <div class="card card-border card-border-blue">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i data-lucide="database" class="text-blue-600" style="width: 28px; height: 28px;"></i>
+                        <h3>Q-Records</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">原紙PDFを保管する「金庫」の役割。ファイルに固有のリンクを生成し、全員が同じファイルにアクセスできるようにします。</p>
+                </div>
+                <div class="card card-border card-border-blue">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i data-lucide="file-text" class="text-blue-600" style="width: 28px; height: 28px;"></i>
+                        <h3>PublicationReviewRecords</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">レビュー管理の「台帳」の役割。カタログ名、期限、担当者、ステータスを一元管理します。</p>
+                </div>
+                <div class="card card-border card-border-blue">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i data-lucide="message-circle" class="text-blue-600" style="width: 28px; height: 28px;"></i>
+                        <h3>Microsoft Teams</h3>
+                    </div>
+                    <p class="text-sm text-gray-600">コミュニケーションの「掲示板」の役割。リンク共有、進捗通知、リアクション機能を提供します。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 準備段階 -->
+        <div class="my-8 flex justify-center">
+            <i data-lucide="arrow-down" class="arrow-icon" style="width: 40px; height: 40px;"></i>
+        </div>
+
+        <section class="section section-blue">
+            <h2>🚀 準備段階：営業担当者が情報を登録</h2>
+            <div class="space-y-4">
+                <div class="card card-left-border card-left-blue">
+                    <div class="flex items-start gap-4 mb-3">
+                        <div class="icon-wrapper-lg icon-blue">
+                            <i data-lucide="upload"></i>
+                        </div>
+                        <div>
+                            <h3>ステップ1：原紙PDFをアップロード</h3>
+                            <p class="text-gray-600">Q-Recordsに原紙PDFをアップロードし、アクセスURLを取得します。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-left-border card-left-blue">
+                    <div class="flex items-start gap-4 mb-3">
+                        <div class="icon-wrapper-lg icon-blue">
+                            <i data-lucide="file-text"></i>
+                        </div>
+                        <div>
+                            <h3>ステップ2：PublicationReviewRecordsに登録</h3>
+                            <p class="text-gray-600">管理台帳に新規アイテムを作成し、期限やリンクを紐付けます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. レビュー段階 -->
+        <div class="my-8 flex justify-center">
+            <i data-lucide="arrow-down" class="arrow-icon" style="width: 40px; height: 40px;"></i>
+        </div>
+
+        <section class="section section-orange">
+            <h2>👥 レビュー段階：並行レビューの実施</h2>
+            <div class="card card-border-2 card-border-orange mb-6">
+                <h3 class="flex items-center gap-2 mb-4">
+                    <i data-lucide="users" class="text-orange-600"></i>
+                    並行処理によるスピードアップ
+                </h3>
+                <div class="grid grid-cols-1 sm-grid-cols-3 gap-3 mb-4">
+                    <div class="text-center p-3 bg-orange-50 rounded">
+                        <i data-lucide="user" class="text-orange-600 mb-2" style="margin: 0 auto;"></i>
+                        <p class="font-semibold text-gray-800">担当者A</p>
+                    </div>
+                    <div class="text-center p-3 bg-orange-50 rounded">
+                        <i data-lucide="user" class="text-orange-600 mb-2" style="margin: 0 auto;"></i>
+                        <p class="font-semibold text-gray-800">担当者B</p>
+                    </div>
+                    <div class="text-center p-3 bg-orange-50 rounded">
+                        <i data-lucide="user" class="text-orange-600 mb-2" style="margin: 0 auto;"></i>
+                        <p class="font-semibold text-gray-800">担当者C</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-700 text-center">各担当者は自分のタイミングでレビューし、完了後にTeamsで👍を付けます。</p>
+            </div>
+        </section>
+
+        <!-- 5. 完了判断 -->
+        <div class="my-8 flex justify-center">
+            <i data-lucide="arrow-down" class="arrow-icon" style="width: 40px; height: 40px;"></i>
+        </div>
+
+        <section class="section section-green">
+            <h2>📊 集約段階：3つの判断パターン</h2>
+            <div class="space-y-4">
+                <div class="card card-left-border card-left-red">
+                    <div class="flex items-start gap-4">
+                        <div class="icon-wrapper-lg icon-red"><i data-lucide="x-circle"></i></div>
+                        <div>
+                            <h3 class="text-red-500">パターン1：NG（修正あり）</h3>
+                            <p class="text-sm text-gray-600">指摘に基づき修正し、再レビューへ。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-left-border card-left-green">
+                    <div class="flex items-start gap-4">
+                        <div class="icon-wrapper-lg icon-green"><i data-lucide="check-circle"></i></div>
+                        <div>
+                            <h3 class="text-green-600">パターン2：OK（全員完了）</h3>
+                            <p class="text-sm text-gray-600">指摘なしを確認し、次工程へ。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-left-border card-left-yellow">
+                    <div class="flex items-start gap-4">
+                        <div class="icon-wrapper-lg icon-yellow"><i data-lucide="clock"></i></div>
+                        <div>
+                            <h3 class="text-yellow-600">パターン3：タイムアウト</h3>
+                            <p class="text-sm text-gray-600">3日間無反応なら、承認とみなし発行準備へ。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- フッター -->
+        <footer>
+            <div class="p-6 bg-gradient rounded-lg border border-gray-300">
+                <h3 class="font-bold mb-3 text-gray-800">🎯 この仕組みの本質</h3>
+                <p class="text-gray-700 text-sm">
+                    ファイル管理、進捗管理、コミュニケーションの窓口を分けることで、情報の混濁を防ぎ、保守性の高い運用を実現しています。
+                </p>
+            </div>
+            <div class="mt-8 text-center text-sm text-gray-500">
+                <p>作成日：2026年1月6日</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Lucideアイコンを初期化
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
+対象者はあらかじめ言ったように文中の営業担当者です。
+追跡

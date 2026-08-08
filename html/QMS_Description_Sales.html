@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>営業部向け QMS & Q-Library 説明会</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #1b2d55;
+    --navy-mid:    #2b4080;
+    --navy-light:  #3a55a0;
+    --amber:       #d48f10;
+    --amber-light: #f0b940;
+    --amber-pale:  #fdf4e3;
+    --white:       #ffffff;
+    --bg:          #f3f5fa;
+    --g100:        #eef0f6;
+    --g200:        #dde1ee;
+    --g400:        #9099b2;
+    --g600:        #525c78;
+    --g800:        #252d42;
+    --red:         #b83228;
+    --red-pale:    #faf0ef;
+    --green:       #1c7a4a;
+    --green-pale:  #eaf4ef;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--g800);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  /* ── PROGRESS ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--g200); z-index: 200;
+  }
+  #progress-fill {
+    height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--amber), var(--amber-light));
+    transition: width .25s;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: 232px;
+    background: var(--navy); z-index: 100;
+    display: flex; flex-direction: column; overflow-y: auto;
+    padding-bottom: 16px;
+  }
+
+  .sb-brand {
+    padding: 28px 24px 22px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .sb-kicker {
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--amber-light); font-weight: 700; display: block; margin-bottom: 5px;
+  }
+  .sb-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13.5px; color: var(--white); line-height: 1.55; font-weight: 700;
+  }
+
+  .sb-nav { padding: 12px 0; flex: 1; }
+  .sb-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 24px; font-size: 12.5px;
+    color: rgba(255,255,255,.6); text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background .18s, color .18s, border-color .18s;
+  }
+  .sb-link:hover { background: rgba(255,255,255,.06); color: var(--white); }
+  .sb-link.active {
+    background: rgba(212,143,16,.13);
+    color: var(--amber-light);
+    border-left-color: var(--amber);
+  }
+  .sb-num {
+    font-size: 10px; font-weight: 700; color: var(--amber);
+    min-width: 18px;
+  }
+
+  .sb-footer {
+    padding: 14px 20px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .btn-toggle-all {
+    width: 100%; padding: 9px 12px;
+    background: rgba(212,143,16,.14);
+    color: var(--amber-light);
+    border: 1px solid rgba(212,143,16,.3);
+    border-radius: 6px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11.5px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-toggle-all:hover { background: rgba(212,143,16,.26); color: var(--white); }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: 232px;
+    padding: 52px 60px 80px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(140deg, var(--navy) 0%, var(--navy-mid) 55%, var(--navy-light) 100%);
+    border-radius: 16px;
+    padding: 60px 56px 52px;
+    margin-bottom: 40px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute;
+    top: -80px; right: -80px;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: rgba(212,143,16,.07);
+  }
+  .hero::after {
+    content: ''; position: absolute;
+    bottom: -50px; left: 38%;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: rgba(255,255,255,.03);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--amber); color: var(--navy);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 4px 13px; border-radius: 3px;
+    margin-bottom: 18px; position: relative;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 34px; color: var(--white);
+    line-height: 1.45; margin-bottom: 14px; position: relative;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,.65); font-size: 14.5px;
+    margin-bottom: 30px; position: relative;
+  }
+  .hero-meta { display: flex; gap: 28px; position: relative; }
+  .hero-chip {
+    display: flex; align-items: center; gap: 7px;
+    color: rgba(255,255,255,.75); font-size: 12.5px;
+  }
+  .hero-chip svg { width: 16px; height: 16px; fill: var(--amber-light); flex-shrink: 0; }
+
+  /* ── AGENDA ── */
+  .agenda-grid {
+    display: grid; grid-template-columns: repeat(2,1fr); gap: 10px;
+    margin-top: 18px;
+  }
+  .ag-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--white); border: 1.5px solid var(--g200);
+    border-radius: 8px; padding: 11px 15px;
+    cursor: pointer; transition: border-color .18s, background .18s;
+    text-decoration: none;
+  }
+  .ag-item:hover { border-color: var(--amber); background: var(--amber-pale); }
+  .ag-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--navy-mid); color: var(--white);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ag-label { font-size: 13px; color: var(--g600); font-weight: 500; }
+
+  /* ── SECTION CARD ── */
+  .sec-card {
+    background: var(--white);
+    border: 1px solid var(--g200);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+    transition: box-shadow .2s;
+  }
+  .sec-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+
+  .sec-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px; cursor: pointer;
+    background: var(--white); border-bottom: 1px solid transparent;
+    transition: background .18s, border-color .18s;
+    user-select: none;
+  }
+  .sec-head:hover { background: var(--bg); }
+  .sec-head.open { border-bottom-color: var(--g200); }
+
+  .sec-head-l { display: flex; align-items: center; gap: 14px; }
+  .sec-tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    background: rgba(212,143,16,.12); color: var(--amber);
+    padding: 3px 9px; border-radius: 3px; white-space: nowrap;
+  }
+  .sec-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 17px; color: var(--navy); font-weight: 700;
+  }
+  .sec-caret {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid var(--g200);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--g400);
+    transition: all .25s; flex-shrink: 0;
+  }
+  .sec-head.open .sec-caret {
+    background: var(--navy); border-color: var(--navy);
+    color: var(--white); transform: rotate(180deg);
+  }
+
+  .sec-body {
+    padding: 28px 32px;
+    display: none; animation: fadeSlide .22s ease;
+  }
+  .sec-body.open { display: block; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── KEY MESSAGE ── */
+  .km {
+    background: linear-gradient(130deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 10px; padding: 18px 22px;
+    display: flex; align-items: flex-start; gap: 13px;
+    margin-bottom: 24px;
+  }
+  .km-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .km-text { color: var(--white); font-size: 14.5px; font-weight: 500; line-height: 1.65; }
+  .km-text strong { color: var(--amber-light); }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 18px 0; }
+
+  /* ── CONCEPT BOX ── */
+  .concept-box {
+    border-radius: 8px; padding: 18px 20px;
+    border: 1.5px solid var(--g200);
+  }
+  .concept-box.navy { background: #f0f3fa; border-color: var(--navy-mid); }
+  .concept-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .concept-label.navy { color: var(--navy-mid); }
+  .concept-heading { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 7px; }
+  .concept-body { font-size: 13px; color: var(--g600); line-height: 1.65; }
+
+  /* ── DATA TABLE ── */
+  .dt { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13.5px; }
+  .dt th {
+    background: var(--navy); color: var(--white);
+    padding: 11px 16px; text-align: left; font-weight: 600; font-size: 12.5px;
+  }
+  .dt th:first-child { border-radius: 5px 0 0 0; }
+  .dt th:last-child  { border-radius: 0 5px 0 0; }
+  .dt td {
+    padding: 11px 16px; border-bottom: 1px solid var(--g200);
+    vertical-align: top; line-height: 1.6;
+  }
+  .dt tr:nth-child(even) td { background: var(--bg); }
+  .dt tr:last-child td { border-bottom: none; }
+  .dt td:first-child { font-weight: 600; color: var(--navy-mid); }
+  .dt .bad  { color: var(--red); }
+  .dt .good { color: var(--green); }
+
+  /* ── KPI CARDS ── */
+  .kpi-card {
+    border-radius: 10px; padding: 18px 16px; text-align: center;
+  }
+  .kpi-card.up   { background: var(--green-pale); border: 1.5px solid #a8d5bc; }
+  .kpi-card.down { background: var(--red-pale);   border: 1.5px solid #e8c0bb; }
+  .kpi-arrow { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .kpi-card.up   .kpi-arrow { color: var(--green); }
+  .kpi-card.down .kpi-arrow { color: var(--red); }
+  .kpi-label { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+  .kpi-desc  { font-size: 11.5px; color: var(--g600); line-height: 1.55; }
+
+  /* ── MERIT BADGES ── */
+  .merit-card {
+    background: var(--green-pale); border: 1.5px solid #a8d5bc;
+    border-radius: 9px; padding: 16px; text-align: center;
+  }
+  .merit-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--green); color: var(--white);
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 8px;
+  }
+  .merit-title { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 5px; }
+  .merit-desc  { font-size: 11.5px; color: var(--g600); line-height: 1.5; }
+
+  /* ── CASE STUDY ── */
+  .case-card {
+    border-radius: 10px; border: 1.5px solid var(--red);
+    background: var(--red-pale); padding: 20px;
+  }
+  .case-title {
+    font-size: 13.5px; font-weight: 700; color: var(--red);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .case-title::before {
+    content: ''; display: inline-block;
+    width: 4px; height: 16px; border-radius: 2px;
+    background: var(--red); flex-shrink: 0;
+  }
+  .case-row { font-size: 13px; color: var(--g800); margin-bottom: 6px; line-height: 1.6; }
+  .case-row strong { color: var(--navy); }
+  .case-result {
+    margin-top: 10px; background: var(--white);
+    border-radius: 6px; padding: 8px 12px;
+    font-size: 12.5px; color: var(--red); font-weight: 600;
+  }
+
+  /* ── RISK ROW ── */
+  .risk-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 13px 16px; border-radius: 8px; margin-bottom: 9px;
+  }
+  .risk-row.hi  { background: #faf0ef; border-left: 4px solid var(--red); }
+  .risk-row.mid { background: var(--amber-pale); border-left: 4px solid var(--amber); }
+  .risk-tag {
+    font-size: 11.5px; font-weight: 700; min-width: 80px; padding-top: 1px;
+  }
+  .risk-row.hi  .risk-tag { color: var(--red); }
+  .risk-row.mid .risk-tag { color: #a06800; }
+  .risk-desc { font-size: 13.5px; color: var(--g800); line-height: 1.6; }
+
+  /* ── VIOLATION LIST ── */
+  .viol-list { list-style: none; margin: 14px 0; }
+  .viol-list li {
+    padding: 9px 14px 9px 38px; position: relative;
+    border-left: 3px solid var(--amber); background: var(--amber-pale);
+    margin-bottom: 7px; font-size: 13.5px; border-radius: 0 7px 7px 0;
+  }
+  .viol-list li::before {
+    content: '⚠'; position: absolute; left: 12px; top: 10px;
+    color: var(--amber); font-size: 13px;
+  }
+
+  /* ── ACTION CARDS ── */
+  .action-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 18px 0; }
+  .action-card {
+    border-radius: 12px; padding: 22px 18px; text-align: center;
+    border: 2px solid var(--navy-mid); background: var(--white);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .action-card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(27,45,85,.1); }
+  .action-num {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--navy); color: var(--amber-light);
+    font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .action-do {
+    font-size: 14px; font-weight: 700; color: var(--navy);
+    margin-bottom: 10px; line-height: 1.5;
+  }
+  .action-dont {
+    font-size: 11.5px; color: var(--red);
+    background: #faf0ef; border-radius: 4px;
+    padding: 5px 9px;
+  }
+  .action-dont::before { content: '✕  '; }
+
+  /* ── FLOW STEPS ── */
+  .flow-steps { display: flex; flex-direction: column; margin: 18px 0; }
+  .flow-step { display: flex; align-items: flex-start; gap: 14px; }
+  .flow-step-l {
+    display: flex; flex-direction: column; align-items: center;
+    width: 44px; flex-shrink: 0;
+  }
+  .flow-dot {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--navy); color: var(--amber-light);
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1;
+  }
+  .flow-line {
+    width: 2px; flex: 1; background: var(--g200); min-height: 22px;
+  }
+  .flow-step:last-child .flow-line { display: none; }
+  .flow-body {
+    flex: 1; background: var(--bg); border: 1px solid var(--g200);
+    border-radius: 8px; padding: 12px 16px; margin-bottom: 8px;
+    font-size: 13.5px; color: var(--g800); line-height: 1.6;
+  }
+  .flow-body strong { color: var(--navy); font-size: 14px; display: block; margin-bottom: 3px; }
+
+  /* ── BEFORE/AFTER TABLE ROW ── */
+  .ba-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px; }
+  .ba-table th {
+    background: var(--navy); color: var(--white);
+    padding: 10px 16px; text-align: left; font-size: 12.5px; font-weight: 600;
+  }
+  .ba-table th:first-child { border-radius: 5px 0 0 0; }
+  .ba-table th:last-child  { border-radius: 0 5px 0 0; }
+  .ba-table td {
+    padding: 10px 16px; border-bottom: 1px solid var(--g200);
+    vertical-align: middle; line-height: 1.55;
+  }
+  .ba-table tr:nth-child(even) td { background: var(--bg); }
+  .ba-table tr:last-child td { border-bottom: none; }
+  .ba-table td:first-child { font-weight: 600; color: var(--navy-mid); }
+  .ba-table .before { color: var(--red); }
+  .ba-table .after  { color: var(--green); font-weight: 500; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 4px solid var(--amber); background: var(--amber-pale);
+    padding: 13px 18px; border-radius: 0 8px 8px 0;
+    margin: 16px 0; font-size: 13.5px; color: var(--g800); line-height: 1.7;
+  }
+  .callout strong { color: var(--navy); }
+
+  /* ── SUMMARY TABLE ── */
+  .sum-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13.5px; }
+  .sum-table th {
+    background: var(--navy); color: var(--white);
+    padding: 11px 20px; text-align: left; font-size: 12.5px; font-weight: 600;
+  }
+  .sum-table td {
+    padding: 13px 20px; border-bottom: 1px solid var(--g200);
+    vertical-align: top; line-height: 1.6;
+  }
+  .sum-table tr:nth-child(even) td { background: var(--bg); }
+  .sum-table tr:last-child td { border-bottom: none; }
+  .sum-table td:first-child { font-weight: 700; color: var(--navy-mid); width: 34%; }
+
+  /* ── NEXT STEPS ── */
+  .next-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  .next-card {
+    background: var(--navy); border-radius: 10px;
+    padding: 20px 22px; display: flex; align-items: center; gap: 14px;
+  }
+  .next-n {
+    font-size: 30px; font-weight: 700; color: var(--amber);
+    font-family: 'Noto Serif JP', serif; flex-shrink: 0;
+  }
+  .next-body { font-size: 13.5px; color: var(--white); line-height: 1.6; }
+  .next-body strong { color: var(--amber-light); font-size: 14px; display: block; margin-bottom: 3px; }
+
+  /* ── REFS ── */
+  .refs {
+    background: var(--g100); border: 1px solid var(--g200);
+    border-radius: 8px; padding: 18px 22px; margin-top: 20px;
+    font-size: 12.5px; color: var(--g600);
+  }
+  .refs h4 { font-size: 12.5px; color: var(--navy); font-weight: 700; margin-bottom: 8px; }
+  .refs a { color: var(--navy-mid); }
+
+  /* ── EXPAND/ALL toggle ── */
+  .expand-all {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-left: 232px; padding: 20px 60px;
+    border-top: 1px solid var(--g200); background: var(--white);
+    font-size: 11.5px; color: var(--g400);
+    display: flex; justify-content: space-between;
+  }
+
+  /* ── SECTION LABEL ── */
+  .sub-label {
+    font-size: 12.5px; font-weight: 700; color: var(--navy);
+    margin: 20px 0 10px; letter-spacing: .02em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .sidebar { display: none; }
+    main, footer { margin-left: 0; padding: 24px 18px; }
+    .two-col, .three-col, .action-cards { grid-template-columns: 1fr; }
+    .next-steps, .agenda-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <span class="sb-kicker">営業部向け説明会</span>
+    <span class="sb-title">QMS &amp; Q-Library<br>説明資料</span>
+  </div>
+  <div class="sb-nav">
+    <a class="sb-link active" href="#agenda"><span class="sb-num">—</span>アジェンダ</a>
+    <a class="sb-link" href="#s1"><span class="sb-num">01</span>QMSと品質マニュアルの概要</a>
+    <a class="sb-link" href="#s2"><span class="sb-num">02</span>QMSと営業部との関係</a>
+    <a class="sb-link" href="#s3"><span class="sb-num">03</span>やらないとどうなるか？</a>
+    <a class="sb-link" href="#s4"><span class="sb-num">04</span>Q-Library の紹介</a>
+    <a class="sb-link" href="#s5"><span class="sb-num">—</span>まとめと次のステップ</a>
+  </div>
+  <div class="expand-all">
+    <button class="btn-toggle-all" onclick="toggleAll()">全セクションを展開/折りたたみ</button>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-tag">営業部向け説明会</span>
+    <h1>QMS と Q-Library、<br>これだけ知れば大丈夫</h1>
+    <p class="hero-sub">ISOは難しくない。日常業務を「品質管理」に組み込みましょう。</p>
+    <div class="hero-meta">
+      <div class="hero-chip">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.5 5H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+        所要時間：約20分
+      </div>
+      <div class="hero-chip">
+        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        対象：営業部門
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENDA -->
+  <div class="sec-card" id="agenda">
+    <div class="sec-head open" onclick="toggle(this)">
+      <div class="sec-head-l">
+        <span class="sec-tag">AGENDA</span>
+        <span class="sec-title">本日の議題</span>
+      </div>
+      <div class="sec-caret">▲</div>
+    </div>
+    <div class="sec-body open">
+      <div class="agenda-grid">
+        <a class="ag-item" href="#s1"><span class="ag-num">1</span><span class="ag-label">QMSと品質マニュアルの概要</span></a>
+        <a class="ag-item" href="#s2"><span class="ag-num">2</span><span class="ag-label">QMSと営業部との関係</span></a>
+        <a class="ag-item" href="#s3"><span class="ag-num">3</span><span class="ag-label">文書管理をやらないとどうなるか？</span></a>
+        <a class="ag-item" href="#s4"><span class="ag-num">4</span><span class="ag-label">新しい文書管理「Q-Library」の紹介</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────── -->
+  <!-- SEC 01: QMSと品質マニュアルの概要 -->
+  <!-- ───────────────────────────────── -->
+  <div class="sec-card" id="s1">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-head-l">
+        <span class="sec-tag">SEC 01</span>
+        <span class="sec-title">QMSと品質マニュアルの概要</span>
+      </div>
+      <div class="sec-caret">▼</div>
+    </div>
+    <div class="sec-body">
+
+      <div class="km">
+        <span class="km-icon">💡</span>
+        <span class="km-text">ISOは「特別なルール」ではない。<strong>「当たり前のことを当たり前にやる仕組み」</strong>——皆さんの日常業務が、すでにそれです。</span>
+      </div>
+
+      <!-- ISO の誤解 vs 本質 -->
+      <div class="two-col">
+        <div class="concept-box" style="background:#faf0ef;border-color:var(--red);">
+          <div class="concept-label" style="color:var(--red);">× よくある誤解</div>
+          <div class="concept-heading" style="color:var(--red);">特別で面倒なルール</div>
+          <div class="concept-body">「国際標準」と聞くと難しそう、自分には関係ない……</div>
+        </div>
+        <div class="concept-box navy">
+          <div class="concept-label navy">〇 本質</div>
+          <div class="concept-heading">当たり前のことを<br>当たり前にやる仕組み</div>
+          <div class="concept-body">皆さんが普段やっている営業活動の中に、ISOはすでに存在しています。</div>
+        </div>
+      </div>
+
+      <!-- 文書の役割分担 -->
+      <div class="sub-label">文書の役割分担</div>
+      <div class="two-col">
+        <div class="concept-box navy">
+          <div class="concept-label navy">品質マニュアル</div>
+          <div class="concept-heading">会社の「設計図」</div>
+          <div class="concept-body">お客様への<strong>公約</strong>。「御社の管理体制は？」と聞かれたら、これを提示します。</div>
+        </div>
+        <div class="concept-box navy">
+          <div class="concept-label navy">手順書・作業標準書</div>
+          <div class="concept-heading">現場の「取扱説明書」</div>
+          <div class="concept-body">公約を<strong>裏付ける根拠</strong>。現場の具体的な作業方法を定義します。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────── -->
+  <!-- SEC 02: 営業部との関係  -->
+  <!-- ────────────────────── -->
+  <div class="sec-card" id="s2">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-head-l">
+        <span class="sec-tag">SEC 02</span>
+        <span class="sec-title">QMSと営業部との関係</span>
+      </div>
+      <div class="sec-caret">▼</div>
+    </div>
+    <div class="sec-body">
+
+      <div class="km">
+        <span class="km-icon">📈</span>
+        <span class="km-text">品質管理は「守り」だけでなく、<strong>受注率・顧客継続率を上げる「攻め」のツール</strong>です。</span>
+      </div>
+
+      <!-- Before/After 比較表 -->
+      <div class="sub-label">QMS整備 Before → After</div>
+      <table class="dt">
+        <thead><tr><th>場面</th><th>QMS整備「前」</th><th>QMS整備「後」</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>新規提案時</td>
+            <td class="bad">「管理体制は？」→ 答えに詰まる</td>
+            <td class="good">「Q-Libraryで即確認できます」と自信を持って回答</td>
+          </tr>
+          <tr>
+            <td>クレーム発生時</td>
+            <td class="bad">原因特定に数日かかり、信頼を失う</td>
+            <td class="good">記録から即答でき、誠実さをアピールできる</td>
+          </tr>
+          <tr>
+            <td>競合との差別化</td>
+            <td class="bad">価格競争になりやすい</td>
+            <td class="good">「品質保証体制」を付加価値として訴求できる</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- KPI -->
+      <div class="sub-label">KPIへの影響イメージ</div>
+      <div class="three-col">
+        <div class="kpi-card up">
+          <div class="kpi-arrow">↑</div>
+          <div class="kpi-label">受注率 UP</div>
+          <div class="kpi-desc">品質管理体制を根拠に「選ばれる理由」が増える</div>
+        </div>
+        <div class="kpi-card up">
+          <div class="kpi-arrow">↑</div>
+          <div class="kpi-label">顧客継続率 UP</div>
+          <div class="kpi-desc">トラブル時の対応速度が上がり、信頼を維持できる</div>
+        </div>
+        <div class="kpi-card down">
+          <div class="kpi-arrow">↓</div>
+          <div class="kpi-label">クレーム対応コスト DOWN</div>
+          <div class="kpi-desc">原因特定が早まり、謝罪・再訪問の工数が減る</div>
+        </div>
+      </div>
+
+      <!-- 営業への3メリット -->
+      <div class="sub-label">営業へのメリット</div>
+      <div class="three-col">
+        <div class="merit-card">
+          <div class="merit-num">①</div>
+          <div class="merit-title">クレーム対応の迅速化</div>
+          <div class="merit-desc">「記録があるのですぐ分かります」と即答できる</div>
+        </div>
+        <div class="merit-card">
+          <div class="merit-num">②</div>
+          <div class="merit-title">トラブル防止</div>
+          <div class="merit-desc">ルール順守が「言った・言わない」トラブルを防ぐ</div>
+        </div>
+        <div class="merit-card">
+          <div class="merit-num">③</div>
+          <div class="merit-title">提案力の向上</div>
+          <div class="merit-desc">品質管理体制をお客様へのアピール材料にできる</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────────────────────── -->
+  <!-- SEC 03: やらないとどうなる -->
+  <!-- ───────────────────────── -->
+  <div class="sec-card" id="s3">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-head-l">
+        <span class="sec-tag">SEC 03</span>
+        <span class="sec-title">文書管理をやらないとどうなるか？</span>
+      </div>
+      <div class="sec-caret">▼</div>
+    </div>
+    <div class="sec-body">
+
+      <div class="km">
+        <span class="km-icon">⚠</span>
+        <span class="km-text">違反は<strong>悪意がなくても起きる</strong>。「いつものやり方」の積み重ねが、在庫全廃棄・全品回収に繋がりかねない。これは過去に実際に起きたことです。</span>
+      </div>
+
+      <!-- クレーム事例 -->
+      <div class="sub-label">過去の実際のクレーム事例</div>
+      <div class="two-col">
+        <div class="case-card">
+          <div class="case-title">事例1：1290保護めがねのクレーム</div>
+          <div class="case-row"><strong>何が起きたか：</strong>防曇加工が変形し、表面に異常が発生</div>
+          <div class="case-row"><strong>お客様の要求：</strong>「いつ製造された製品か特定してほしい」</div>
+          <div class="case-row"><strong>問題：</strong>JIS外品のため出荷・生産ロット記録がなく「いつ作ったか分からない」状態に</div>
+          <div class="case-result">在庫を含む全製品廃棄の可能性が浮上。最終的に大規模廃棄は回避できたが、原因究明・調整に多大な時間とコストを要した</div>
+        </div>
+        <div class="case-card">
+          <div class="case-title">事例2：作業ベルト OEM 品のクレーム</div>
+          <div class="case-row"><strong>何が起きたか：</strong>ベルト通しに不具合が発生</div>
+          <div class="case-row"><strong>調査の必要：</strong>「いつから問題が起きているのか」の特定が必要</div>
+          <div class="case-row"><strong>問題：</strong>OEM 品で作業標準書なし・変更時の記録なし</div>
+          <div class="case-result">影響範囲が特定できず、最悪「全商品回収」の可能性。最終的に対象ロットを強引に絞り込む形で対応した</div>
+        </div>
+      </div>
+
+      <!-- リスク分類 -->
+      <div class="sub-label">違反が起きたとき、何が問題になるか</div>
+      <div class="risk-row hi">
+        <span class="risk-tag">お客様リスク</span>
+        <span class="risk-desc">クレーム時に原因を即答できず、信頼を失う。最悪、<strong>取引停止</strong>になる可能性</span>
+      </div>
+      <div class="risk-row hi">
+        <span class="risk-tag">会社リスク</span>
+        <span class="risk-desc">ISO審査で不適合となり、<strong>認証が取り消される</strong>可能性</span>
+      </div>
+      <div class="risk-row mid">
+        <span class="risk-tag">個人リスク</span>
+        <span class="risk-desc">後から「なぜ記録がないのか」という説明に追われ、<strong>自分の仕事が増える</strong></span>
+      </div>
+
+      <!-- よくある違反 -->
+      <div class="sub-label">よくある違反のパターン（悪意はなくても起きる）</div>
+      <ul class="viol-list">
+        <li>古い様式をローカルに保存したまま使い続ける</li>
+        <li>「急いでいたから」と記録を省略する</li>
+        <li>「たぶん大丈夫」と自己判断で社外に書類を送る</li>
+      </ul>
+
+      <div class="callout">
+        ルールは「守るのが面倒なもの」ではなく、<strong>「守らないと後で自分が大変になるもの」</strong>です。
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─────────────────────── -->
+  <!-- SEC 04: Q-Library の紹介 -->
+  <!-- ─────────────────────── -->
+  <div class="sec-card" id="s4">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-head-l">
+        <span class="sec-tag">SEC 04</span>
+        <span class="sec-title">新しい文書管理「Q-Library」の紹介</span>
+      </div>
+      <div class="sec-caret">▼</div>
+    </div>
+    <div class="sec-body">
+
+      <div class="km">
+        <span class="km-icon">📂</span>
+        <span class="km-text">Q-Library は<strong>「常に最新版を1か所で管理」</strong>する仕組みです。文書の散逸・誤使用リスクを大幅に低減します。<br><small style="opacity:.8;font-size:12px;">※ Microsoft SharePoint のドキュメントライブラリ上に構築。社内ネットワークからアクセス可能。</small></span>
+      </div>
+
+      <!-- Before/After -->
+      <div class="sub-label">導入による変化（Before → After）</div>
+      <table class="ba-table">
+        <thead><tr><th>項目</th><th>Before（従来）</th><th>After（Q-Library）</th></tr></thead>
+        <tbody>
+          <tr><td>保管場所</td><td class="before">複数の場所に散在</td><td class="after">常に1か所に集約</td></tr>
+          <tr><td>信頼性</td><td class="before">最新版の判断が困難</td><td class="after">常に最新版のみを掲載</td></tr>
+          <tr><td>継続性</td><td class="before">紛失・消去のリスクあり</td><td class="after">組織の資産として残る</td></tr>
+          <tr><td>監査対応</td><td class="before">提示までに時間がかかる</td><td class="after">即座に回答・提示が可能</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>運用上の注意：</strong>閲覧者が直接編集することはできません。変更・修正が必要な場合は、<strong>文書管理責任者へ依頼</strong>してください。
+      </div>
+
+      <!-- 通常利用フロー -->
+      <div class="sub-label">使うときの流れ（3 ステップ）</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-l"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+          <div class="flow-body"><strong>Q-Library にアクセスする</strong>ローカルに保存したファイルは使わない</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-l"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+          <div class="flow-body"><strong>必要な様式・手順書を確認・ダウンロードする</strong>掲載されているのは常に最新版のみ</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-l"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+          <div class="flow-body"><strong>使用後は手元のコピーを残さない</strong>次回もQ-Libraryから取得することで、常に最新版を使える</div>
+        </div>
+      </div>
+
+      <!-- 変更フロー -->
+      <div class="sub-label">変更・更新が必要な場合のフロー</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-l"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+          <div class="flow-body"><strong>気づいた点・修正依頼を文書管理責任者へ連絡</strong></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-l"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+          <div class="flow-body"><strong>担当者が確認・修正・承認</strong></div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-l"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+          <div class="flow-body"><strong>Q-Library に最新版を掲載 → 全員へ自動反映</strong>自分で配布する必要なし</div>
+        </div>
+      </div>
+
+      <!-- 3つのルール -->
+      <div class="sub-label">営業に求めること、この3つだけ</div>
+      <div class="action-cards">
+        <div class="action-card">
+          <div class="action-num">①</div>
+          <div class="action-do">Q-Library から<br>最新の様式を使う</div>
+          <div class="action-dont">古いファイルをローカルから使い回す</div>
+        </div>
+        <div class="action-card">
+          <div class="action-num">②</div>
+          <div class="action-do">変更・確認はメール等で<br>記録を残す</div>
+          <div class="action-dont">口頭だけで済ませる</div>
+        </div>
+        <div class="action-card">
+          <div class="action-num">③</div>
+          <div class="action-do">迷ったら<br>担当者に確認する</div>
+          <div class="action-dont">自己判断で対応する</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>この3つを守るだけで、皆さんは文書管理手順書に基づいた文書管理を行なっていることになります。</strong>手順書を全部読む必要はありません。
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ──────────────────────── -->
+  <!-- SUMMARY: まとめ & 次のステップ -->
+  <!-- ──────────────────────── -->
+  <div class="sec-card" id="s5">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-head-l">
+        <span class="sec-tag">SUMMARY</span>
+        <span class="sec-title">まとめと次のステップ</span>
+      </div>
+      <div class="sec-caret">▼</div>
+    </div>
+    <div class="sec-body">
+
+      <div class="km">
+        <span class="km-icon">✔</span>
+        <span class="km-text">Q-Library は ISO 9001 の要求事項をベースに設計されています。<strong>この仕組みを正しく活用することが、そのままルールを守ることに直結します。</strong></span>
+      </div>
+
+      <div class="sub-label">本日のまとめ</div>
+      <table class="sum-table">
+        <thead><tr><th>ポイント</th><th>一言で言うと</th></tr></thead>
+        <tbody>
+          <tr><td>QMSと品質マニュアルとは</td><td>「当たり前のことを当たり前にやる仕組み」と、それを支える文書体系</td></tr>
+          <tr><td>QMSと営業部との関係</td><td>品質管理体制は「選ばれる理由」になる攻めのツール</td></tr>
+          <tr><td>やらないとどうなるか</td><td>悪意がなくても起きる。記録と様式が自分を守る盾になる</td></tr>
+          <tr><td>Q-Library とは</td><td>「常に最新版を1か所で管理」する仕組み。求めることはたった3つ</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">次のステップ</div>
+      <div class="next-steps">
+        <div class="next-card">
+          <div class="next-n">1</div>
+          <div class="next-body"><strong>Q-Library 基本操作の実演</strong>画面投影にて実際の操作を確認します</div>
+        </div>
+        <div class="next-card">
+          <div class="next-n">2</div>
+          <div class="next-body"><strong>質疑応答</strong>ご不明な点・現場の声はこの場で</div>
+        </div>
+      </div>
+
+      <div class="refs">
+        <h4>参考情報・関連規格</h4>
+        <p>ISO 9001:2015（品質マネジメントシステム）／ 社内品質マニュアル ／ Q-Library（Microsoft SharePoint ドキュメントライブラリ）</p>
+        <p style="margin-top:6px;">詳細・ご不明点は文書管理責任者にお問い合わせください。</p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span>営業部向け QMS &amp; Q-Library 説明会資料</span>
+  <span>社外秘 · 無断複製禁止</span>
+</footer>
+
+<script>
+  /* セクション単体の開閉 */
+  function toggle(header) {
+    header.classList.toggle('open');
+    header.nextElementSibling.classList.toggle('open');
+  }
+
+  /* 全展開 / 全折りたたみ */
+  let _allOpen = false;
+  function toggleAll() {
+    _allOpen = !_allOpen;
+    document.querySelectorAll('.sec-head').forEach(h => {
+      const body = h.nextElementSibling;
+      if (_allOpen) { h.classList.add('open'); body.classList.add('open'); }
+      else          { h.classList.remove('open'); body.classList.remove('open'); }
+    });
+  }
+
+  /* スクロール進捗バー */
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  });
+
+  /* サイドバーのアクティブ表示 */
+  const targets = document.querySelectorAll('.sec-card[id]');
+  const links   = document.querySelectorAll('.sb-link');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { threshold: 0.35 });
+  targets.forEach(t => io.observe(t));
+</script>
+</body>
+</html>
