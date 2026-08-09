@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文書の閲覧先の一本化について｜品質保証本部</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101B2E;
+  --ink2:#2A3A55;
+  --muted:#63738C;
+  --paper:#EDF0F5;
+  --surface:#FFFFFF;
+  --line:#D2D9E4;
+  --line2:#E5EAF1;
+  --teal:#0E6E62;
+  --teal-soft:#E2EFEB;
+  --teal-line:#9CC7BF;
+  --shu:#B4342C;
+  --shu-soft:#F8E9E6;
+  --display:"Shippori Mincho B1",'Hiragino Mincho ProN','Yu Mincho',serif;
+  --body:"Zen Kaku Gothic New",'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;
+  --mono:"Roboto Mono",'SFMono-Regular',Consolas,monospace;
+  --maxw:1080px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.85;
+  font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+b,strong{font-weight:700}
+
+/* ===== hero ===== */
+.hero{
+  background:var(--ink);color:#fff;position:relative;overflow:hidden;
+  padding:76px 0 64px;
+}
+.hero::after{
+  content:"";position:absolute;inset:auto 0 0 0;height:6px;
+  background:linear-gradient(90deg,var(--teal) 0 55%,var(--shu) 55% 100%);
+}
+.hero__grid{
+  position:absolute;inset:0;opacity:.13;
+  background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px);
+  background-size:100% 34px;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 40%,transparent);
+          mask-image:linear-gradient(180deg,transparent,#000 40%,transparent);
+}
+.hero .wrap{position:relative}
+.eyebrow{
+  font-family:var(--mono);font-size:13px;letter-spacing:.14em;
+  color:#9FB6C9;margin:0 0 22px;
+}
+.hero h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(34px,5.4vw,60px);line-height:1.3;letter-spacing:.01em;
+  margin:0 0 20px;
+}
+.hero h1 .u{
+  background:linear-gradient(transparent 62%,rgba(14,110,98,.85) 62%);
+  padding:0 .06em;
+}
+.hero__lead{
+  font-size:clamp(17px,2.1vw,21px);color:#C9D6E2;max-width:44em;margin:0 0 34px;
+}
+.hero__meta{
+  display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;
+  font-family:var(--mono);font-size:13px;color:#9FB6C9;
+  border-top:1px solid rgba(255,255,255,.22);padding-top:20px;max-width:640px;
+}
+.stamp{
+  position:absolute;right:0;top:8px;transform:rotate(-7deg);
+  border:2.5px solid var(--shu);color:#F2A9A2;border-radius:6px;
+  padding:12px 18px;text-align:center;line-height:1.5;
+}
+.stamp .s1{font-size:12px;font-family:var(--mono);letter-spacing:.18em;display:block;color:#E4938B}
+.stamp .s2{font-family:var(--display);font-weight:800;font-size:24px;color:#F2A9A2;display:block}
+@media(max-width:760px){.stamp{position:static;display:inline-block;transform:none;margin-bottom:26px}}
+
+/* ===== toolbar ===== */
+.toolbar{
+  position:sticky;top:0;z-index:60;background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.toolbar .wrap{display:flex;align-items:center;gap:18px;min-height:60px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.toc{display:flex;gap:4px;flex-wrap:wrap;flex:1;min-width:0}
+.toc a{
+  font-size:13px;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:999px;
+  white-space:nowrap;transition:.18s;
+}
+.toc a:hover{color:var(--ink);background:var(--paper)}
+.toc a.on{color:#fff;background:var(--ink)}
+.expand-all{margin-left:auto}
+.btn{
+  font-family:var(--body);font-size:13px;font-weight:700;color:var(--ink);
+  background:var(--surface);border:1.5px solid var(--ink);border-radius:999px;
+  padding:8px 18px;cursor:pointer;transition:.18s;white-space:nowrap;
+}
+.btn:hover{background:var(--ink);color:#fff}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
+/* ===== section ===== */
+main{padding:56px 0 40px}
+.sec{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  margin:0 0 22px;overflow:hidden;
+}
+.sec__head{
+  display:flex;align-items:flex-start;gap:18px;width:100%;text-align:left;
+  background:none;border:0;cursor:pointer;padding:26px 30px;font-family:var(--body);
+  border-left:5px solid var(--teal);
+}
+.sec--key .sec__head{border-left-color:var(--shu)}
+.sec__no{
+  font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.1em;
+  padding-top:9px;min-width:34px;
+}
+.sec__title{
+  font-family:var(--display);font-weight:800;font-size:clamp(21px,2.8vw,29px);
+  line-height:1.45;margin:0;color:var(--ink);flex:1;
+}
+.sec__sub{display:block;font-family:var(--body);font-size:14px;font-weight:500;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+.chev{
+  width:22px;height:22px;flex:none;margin-top:12px;transition:transform .25s;color:var(--muted);
+}
+.sec.is-closed .chev{transform:rotate(-90deg)}
+.sec__wrap{display:grid;grid-template-rows:1fr;transition:grid-template-rows .3s ease}
+.sec.is-closed .sec__wrap{grid-template-rows:0fr}
+.sec__inner{overflow:hidden}
+.sec__body{padding:4px 30px 34px 65px}
+@media(max-width:700px){
+  .sec__head{padding:20px}
+  .sec__body{padding:0 20px 26px}
+}
+
+/* ===== content parts ===== */
+.msg{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(19px,2.4vw,25px);line-height:1.6;margin:0 0 22px;
+  color:var(--ink);
+}
+.msg .hl{color:var(--teal)}
+.msg .hl-r{color:var(--shu)}
+p{margin:0 0 16px}
+.note{color:var(--muted);font-size:14.5px}
+
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:0 0 8px}
+.card{border:1px solid var(--line);border-radius:10px;padding:22px;background:var(--surface)}
+.card h4{font-family:var(--body);font-size:16.5px;font-weight:900;margin:0 0 8px;line-height:1.5}
+.card p{font-size:14.5px;color:var(--ink2);margin:0;line-height:1.8}
+.card--good{border-color:var(--teal-line);background:var(--teal-soft)}
+.card--good h4{color:var(--teal)}
+.card--bad{border-color:#E4B5B0;background:var(--shu-soft)}
+.card--bad h4{color:var(--shu)}
+.card__ic{display:block;margin-bottom:12px;color:var(--teal)}
+.card--bad .card__ic{color:var(--shu)}
+
+table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:15.5px}
+th,td{border-bottom:1px solid var(--line2);padding:14px 12px;text-align:left;vertical-align:top}
+thead th{
+  font-size:13px;letter-spacing:.08em;color:var(--muted);font-weight:700;
+  border-bottom:2px solid var(--ink);
+}
+tbody th{font-weight:700;width:26%;color:var(--ink2)}
+td.now{color:var(--muted)}
+td.next{color:var(--teal);font-weight:700;background:var(--teal-soft)}
+.keep{color:var(--muted);font-weight:400}
+
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  padding:3px 10px;border-radius:999px;border:1px solid currentColor;
+}
+.tag--lib{color:var(--ink2)}
+.tag--pub{color:var(--teal)}
+
+/* toggle diagram */
+.switch{display:inline-flex;background:var(--paper);border-radius:999px;padding:4px;gap:4px;margin:0 0 18px}
+.switch button{
+  font-family:var(--body);font-size:14px;font-weight:700;border:0;border-radius:999px;
+  padding:8px 22px;cursor:pointer;background:none;color:var(--muted);transition:.2s;
+}
+.switch button.on{background:var(--ink);color:#fff}
+.figure{border:1px solid var(--line);border-radius:12px;background:#FBFCFD;padding:8px}
+.figure svg{display:block;width:100%;height:auto}
+.pane{display:none}
+.pane.on{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.caption{font-size:13.5px;color:var(--muted);margin:10px 2px 0}
+
+/* faq */
+.faq{border-top:1px solid var(--line2)}
+.faq details{border-bottom:1px solid var(--line2)}
+.faq summary{
+  cursor:pointer;padding:16px 4px;font-weight:700;font-size:16px;list-style:none;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"Q";font-family:var(--display);font-weight:800;color:var(--shu);font-size:17px;line-height:1.6}
+.faq summary:hover{color:var(--teal)}
+.faq .a{padding:0 4px 20px 30px;font-size:15.5px;color:var(--ink2)}
+.faq .a p{margin:0 0 10px}
+
+/* timeline */
+.tl{position:relative;margin:8px 0 0;padding:0;list-style:none}
+.tl::before{content:"";position:absolute;left:8px;top:12px;bottom:12px;width:2px;background:var(--line)}
+.tl li{position:relative;padding:0 0 22px 40px}
+.tl li::before{
+  content:"";position:absolute;left:2px;top:9px;width:14px;height:14px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--line);
+}
+.tl li.hot::before{border-color:var(--shu);background:var(--shu)}
+.tl li.go::before{border-color:var(--teal);background:var(--teal)}
+.tl .when{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.06em}
+.tl .what{font-size:16px;font-weight:700;margin-top:2px}
+.tl li.hot .what{color:var(--shu)}
+.tl li.go .what{color:var(--teal)}
+
+/* asks */
+.ask{
+  display:flex;gap:20px;align-items:flex-start;border:2px solid var(--shu);border-radius:12px;
+  padding:24px 26px;margin:0 0 16px;background:var(--shu-soft);
+}
+.ask__n{font-family:var(--display);font-weight:800;font-size:30px;color:var(--shu);line-height:1.2}
+.ask h4{margin:0 0 6px;font-size:18px;font-weight:900;line-height:1.6}
+.ask p{margin:0;font-size:15px;color:var(--ink2)}
+
+.callout{
+  border-left:4px solid var(--ink);background:var(--paper);padding:18px 22px;border-radius:0 8px 8px 0;
+  font-size:15.5px;margin:0 0 18px;
+}
+ul.pts{margin:0 0 16px;padding-left:1.2em}
+ul.pts li{margin-bottom:9px}
+
+footer{
+  background:var(--ink);color:#B9C7D6;padding:48px 0 60px;margin-top:40px;font-size:14.5px;
+}
+footer h3{font-family:var(--display);color:#fff;font-size:19px;margin:0 0 16px}
+footer ul{margin:0;padding-left:1.2em}
+footer li{margin-bottom:8px}
+footer .fine{margin-top:26px;font-size:12.5px;color:#7C8EA3;border-top:1px solid rgba(255,255,255,.15);padding-top:18px}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+@media print{
+  .toolbar,.chev{display:none}
+  .sec{break-inside:avoid;border-color:#999}
+  .sec.is-closed .sec__wrap{grid-template-rows:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero__grid"></div>
+  <div class="wrap">
+    <div class="stamp"><span class="s1">QA / 2026.08</span><span class="s2">確認依頼</span></div>
+    <p class="eyebrow">品質保証本部　運用変更のご相談</p>
+    <h1>文書は、<span class="u">どこを見るか</span>で<br>迷わせない。</h1>
+    <p class="hero__lead">社員が文書を「どこで見るか」を Q-Published に一本化します。正本の置き場所・承認の手順・責任の所在は、一切変わりません。</p>
+    <div class="hero__meta">
+      <span>文書の閲覧先の一本化について</span>
+      <span>品質保証本部</span>
+      <span>2026年8月</span>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <nav class="toc" id="toc">
+      <a href="#s0">前提</a>
+      <a href="#s1">変更点</a>
+      <a href="#s2">理由</a>
+      <a href="#s3">効果</a>
+      <a href="#s4">備えと課題</a>
+      <a href="#s5">想定質問</a>
+      <a href="#s6">進め方</a>
+      <a href="#s7">本日の確認</a>
+    </nav>
+    <div class="expand-all">
+      <button class="btn" onclick="toggleAll()">全セクションを展開/折りたたみ</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ===== 0 ===== -->
+<section class="sec sec--key" id="s0">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">00</span>
+    <h2 class="sec__title">正本は今までどおり Q-Library です<span class="sec__sub">最初にご確認いただきたいこと</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <p class="msg">変えるのは<span class="hl">「見る場所」だけ</span>。<br>正本・承認・責任は<span class="hl-r">変わりません</span>。</p>
+    <div class="cards">
+      <div class="card">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>
+        <h4>変わらないもの</h4>
+        <p>正本の保管先（Q-Library）／作成・レビュー・承認の手順／文書の責任の所在／検索のしかた／印刷して掲示する運用</p>
+      </div>
+      <div class="card card--good">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-6 9 6v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 21v-7h6v7"/></svg>
+        <h4>変わるもの</h4>
+        <p>社員が文書を閲覧する場所を Q-Published に一本化。Q-Published に発行済みの全文書が並びます。</p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:18px">※ 本日ご相談するのは、規程や手順そのものではなく「閲覧の運用」です。</p>
+  </div></div></div>
+</section>
+
+<!-- ===== 1 ===== -->
+<section class="sec" id="s1">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">01</span>
+    <h2 class="sec__title">何を変えるのか<span class="sec__sub">書庫と、職場の棚</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <p class="msg">Q-Library は<span class="hl-r">書庫</span>。Q-Published は<span class="hl">職場の棚</span>。<br>社員が向かうのは、棚だけになります。</p>
+
+    <table>
+      <thead><tr><th></th><th>現在</th><th>変更後</th></tr></thead>
+      <tbody>
+        <tr><th>正本の保管</th><td class="now">Q-Library</td><td class="next">Q-Library<span class="keep">（変更なし）</span></td></tr>
+        <tr><th>社員の閲覧先</th><td class="now">文書によって Q-Library / Q-Published</td><td class="next">Q-Published のみ</td></tr>
+        <tr><th>Q-Published の中身</th><td class="now">一部の様式のみ</td><td class="next">発行済みの全文書</td></tr>
+      </tbody>
+    </table>
+
+    <div class="switch" role="tablist">
+      <button class="on" role="tab" onclick="setMode(0)">現在</button>
+      <button role="tab" onclick="setMode(1)">変更後</button>
+    </div>
+
+    <div class="figure">
+      <!-- ===== 現在 ===== -->
+      <div class="pane on" id="pane0">
+        <svg viewBox="0 0 900 420" role="img" aria-label="現在は社員が Q-Library と Q-Published のどちらを見るか判断している状態">
+          <g font-family="'Zen Kaku Gothic New',sans-serif">
+            <!-- 書庫 -->
+            <rect x="50" y="60" width="300" height="190" rx="10" fill="#101B2E"/>
+            <text x="70" y="94" fill="#9FB6C9" font-size="13" font-family="'Roboto Mono',monospace" letter-spacing="2">Q-LIBRARY</text>
+            <text x="70" y="126" fill="#fff" font-size="24" font-weight="700">書庫</text>
+            <g stroke="#4A5C77" stroke-width="1.5">
+              <path d="M70 152h260M70 186h260M70 220h260"/>
+            </g>
+            <g fill="#7C93AE">
+              <rect x="78" y="132" width="13" height="20" rx="2"/><rect x="95" y="136" width="13" height="16" rx="2"/><rect x="112" y="130" width="13" height="22" rx="2"/>
+              <rect x="78" y="166" width="13" height="20" rx="2"/><rect x="95" y="170" width="13" height="16" rx="2"/>
+              <rect x="78" y="200" width="13" height="20" rx="2"/><rect x="95" y="198" width="13" height="22" rx="2"/><rect x="112" y="204" width="13" height="16" rx="2"/>
+            </g>
+            <text x="200" y="240" fill="#9FB6C9" font-size="14">正本・作成中・承認前もここに</text>
+
+            <!-- 棚 -->
+            <rect x="550" y="60" width="300" height="190" rx="10" fill="#fff" stroke="#9CC7BF" stroke-width="2"/>
+            <text x="570" y="94" fill="#0E6E62" font-size="13" font-family="'Roboto Mono',monospace" letter-spacing="2">Q-PUBLISHED</text>
+            <text x="570" y="126" fill="#0E6E62" font-size="24" font-weight="700">棚</text>
+            <g stroke="#C7DED8" stroke-width="1.5"><path d="M570 152h260M570 186h260M570 220h260"/></g>
+            <g fill="#9CC7BF"><rect x="578" y="132" width="13" height="20" rx="2"/><rect x="595" y="136" width="13" height="16" rx="2"/></g>
+            <text x="700" y="240" fill="#63738C" font-size="14">一部の様式のみ</text>
+
+            <!-- 社員 -->
+            <circle cx="450" cy="342" r="16" fill="#2A3A55"/>
+            <path d="M424 386c0-15 12-26 26-26s26 11 26 26z" fill="#2A3A55"/>
+            <text x="450" y="412" text-anchor="middle" fill="#2A3A55" font-size="15" font-weight="700">社員</text>
+
+            <!-- ? -->
+            <text x="450" y="300" text-anchor="middle" fill="#B4342C" font-size="46" font-weight="700" font-family="'Shippori Mincho B1',serif">?</text>
+
+            <!-- 迷いの矢印 -->
+            <g stroke="#B4342C" stroke-width="2.5" fill="none" stroke-dasharray="8 7">
+              <path d="M420 330C350 310 250 300 200 258" marker-end="url(#ar-r)"/>
+              <path d="M480 330C550 310 650 300 700 258" marker-end="url(#ar-r)"/>
+            </g>
+            <text x="450" y="42" text-anchor="middle" fill="#B4342C" font-size="17" font-weight="700">文書ごとに「どちらを見るか」の判断が発生する</text>
+          </g>
+          <defs>
+            <marker id="ar-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#B4342C"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- ===== 変更後 ===== -->
+      <div class="pane" id="pane1">
+        <svg viewBox="0 0 900 420" role="img" aria-label="変更後は書庫から棚へ自動反映され、社員は棚だけを見る状態">
+          <g font-family="'Zen Kaku Gothic New',sans-serif">
+            <!-- 書庫 -->
+            <rect x="50" y="60" width="300" height="190" rx="10" fill="#101B2E" opacity=".55"/>
+            <text x="70" y="94" fill="#9FB6C9" font-size="13" font-family="'Roboto Mono',monospace" letter-spacing="2">Q-LIBRARY</text>
+            <text x="70" y="126" fill="#fff" font-size="24" font-weight="700">書庫</text>
+            <g stroke="#4A5C77" stroke-width="1.5" opacity=".7"><path d="M70 152h260M70 186h260M70 220h260"/></g>
+            <g fill="#7C93AE" opacity=".7">
+              <rect x="78" y="132" width="13" height="20" rx="2"/><rect x="95" y="136" width="13" height="16" rx="2"/><rect x="112" y="130" width="13" height="22" rx="2"/>
+              <rect x="78" y="166" width="13" height="20" rx="2"/><rect x="95" y="170" width="13" height="16" rx="2"/>
+              <rect x="78" y="200" width="13" height="20" rx="2"/><rect x="95" y="198" width="13" height="22" rx="2"/>
+            </g>
+            <!-- 鍵 -->
+            <g transform="translate(276,168)" stroke="#F2A9A2" stroke-width="2" fill="none">
+              <rect x="0" y="12" width="34" height="26" rx="4" fill="#101B2E"/>
+              <path d="M8 12V7a9 9 0 0 1 18 0v5"/>
+              <circle cx="17" cy="25" r="3.5" fill="#F2A9A2" stroke="none"/>
+            </g>
+            <text x="200" y="240" fill="#C9D6E2" font-size="14">出入りは文書管理の担当者のみ</text>
+
+            <!-- 自動反映の矢印 -->
+            <path d="M362 155h176" stroke="#0E6E62" stroke-width="3" fill="none" marker-end="url(#ar-g)"/>
+            <text x="450" y="132" text-anchor="middle" fill="#0E6E62" font-size="15" font-weight="700">発行すると自動で並ぶ</text>
+            <text x="450" y="184" text-anchor="middle" fill="#63738C" font-size="13">改訂＝差し替え／廃止＝取り下げ</text>
+
+            <!-- 棚 -->
+            <rect x="550" y="60" width="300" height="190" rx="10" fill="#E2EFEB" stroke="#0E6E62" stroke-width="2.5"/>
+            <text x="570" y="94" fill="#0E6E62" font-size="13" font-family="'Roboto Mono',monospace" letter-spacing="2">Q-PUBLISHED</text>
+            <text x="570" y="126" fill="#0E6E62" font-size="24" font-weight="700">棚</text>
+            <g stroke="#9CC7BF" stroke-width="1.5"><path d="M570 152h260M570 186h260M570 220h260"/></g>
+            <g fill="#0E6E62">
+              <rect x="578" y="132" width="13" height="20" rx="2"/><rect x="595" y="136" width="13" height="16" rx="2"/><rect x="612" y="130" width="13" height="22" rx="2"/><rect x="629" y="134" width="13" height="18" rx="2"/>
+              <rect x="578" y="166" width="13" height="20" rx="2"/><rect x="595" y="170" width="13" height="16" rx="2"/><rect x="612" y="164" width="13" height="22" rx="2"/>
+              <rect x="578" y="200" width="13" height="20" rx="2"/><rect x="595" y="198" width="13" height="22" rx="2"/><rect x="612" y="204" width="13" height="16" rx="2"/><rect x="629" y="200" width="13" height="20" rx="2"/>
+            </g>
+            <text x="700" y="240" fill="#0E6E62" font-size="14" font-weight="700">発行済みの全文書</text>
+
+            <!-- 社員 -->
+            <circle cx="450" cy="342" r="16" fill="#2A3A55"/>
+            <path d="M424 386c0-15 12-26 26-26s26 11 26 26z" fill="#2A3A55"/>
+            <text x="450" y="412" text-anchor="middle" fill="#2A3A55" font-size="15" font-weight="700">社員</text>
+            <path d="M480 332C560 316 650 300 700 262" stroke="#0E6E62" stroke-width="3" fill="none" marker-end="url(#ar-g)"/>
+            <text x="450" y="42" text-anchor="middle" fill="#0E6E62" font-size="17" font-weight="700">覚えることは1つ「文書は Q-Published を見る」</text>
+          </g>
+          <defs>
+            <marker id="ar-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="#0E6E62"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </div>
+    <p class="caption">棚に並ぶのは書庫から出した正式版だけ。改訂があれば自動で差し替わります。</p>
+  </div></div></div>
+</section>
+
+<!-- ===== 2 ===== -->
+<section class="sec" id="s2">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">02</span>
+    <h2 class="sec__title">なぜ変えるのか<span class="sec__sub">現場の混乱を抑えるため</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <p class="msg">一部だけを棚に置くと、<span class="hl-r">迷いが現場に残ります</span>。</p>
+    <p>当初は一部の様式だけを Q-Published に置く想定でした。しかしこの形では、現場に次の負担が残ります。</p>
+    <div class="cards">
+      <div class="card card--bad">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v6M12 21v-6"/><path d="M5 9l-2 3 2 3M19 9l2 3-2 3"/><circle cx="12" cy="12" r="2.4"/></svg>
+        <h4>1. 毎回「どちらを見るか」の判断がいる</h4>
+        <p>この文書は Q-Published か、Q-Library か。迷った人は結局両方を探すことになり、時間がかかります。</p>
+      </div>
+      <div class="card card--bad">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/><path d="M8 10.5h5"/></svg>
+        <h4>2. 同じ文書が2か所で見つかる</h4>
+        <p>検索すると両方から結果が出るため、どちらが正しいかの判断がさらに難しくなります。</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px">
+      判断を現場に委ねるほど、運用は人によってばらつきます。<strong>迷いの余地そのものを設計から取り除く</strong>、というのが今回の考え方です。
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ===== 3 ===== -->
+<section class="sec" id="s3">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">03</span>
+    <h2 class="sec__title">変更後に良くなること<span class="sec__sub">3つの効果</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <p class="msg">説明は<span class="hl">この一言</span>で済みます。<br>「文書は Q-Published を見る」</p>
+    <div class="cards">
+      <div class="card card--good">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        <h4>覚えることが1つになる</h4>
+        <p>閲覧先の判断がなくなり、教育も引き継ぎも一文で伝わります。</p>
+      </div>
+      <div class="card card--good">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <h4>承認前の文書が目に触れない</h4>
+        <p>棚に並ぶのは発行済みの文書だけ。作成中・承認前の版が現場に出ません。</p>
+      </div>
+      <div class="card card--good">
+        <svg class="card__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg>
+        <h4>常に最新版であることが保証される</h4>
+        <p>改訂すれば自動で置き換わり、廃止すれば自動で取り下げられます。</p>
+      </div>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ===== 4 ===== -->
+<section class="sec" id="s4">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">04</span>
+    <h2 class="sec__title">移行にあたっての備え<span class="sec__sub">対策と、残る課題</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <p class="msg">いきなり全社では行いません。<br><span class="hl">影響範囲を2部門に限定</span>して始めます。</p>
+    <table>
+      <thead><tr><th>対策</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><th>段階導入</th><td>製造部・品質保証本部の文書から開始し、様子を見て他部門へ広げる</td></tr>
+        <tr><th>相談窓口</th><td>切り替え直後の一定期間、品質保証本部で問い合わせを受ける</td></tr>
+      </tbody>
+    </table>
+    <p>段階導入により、仮に想定外のことが起きても影響は2部門に留まります。</p>
+
+    <div class="callout">
+      <strong>あわせてご認識いただきたい点（デメリット・論点）</strong>
+      <ul class="pts" style="margin-top:10px;margin-bottom:0">
+        <li>既存のリンクやお気に入りは使えなくなり、<strong>社内文書・メールのリンク差し替え作業</strong>が発生します。</li>
+        <li>段階導入の期間中は、<strong>部門によって閲覧先が異なる状態</strong>が一時的に生じます。</li>
+        <li>棚は自動生成のため、<strong>同期が正しく働いているかの確認</strong>が新たに必要です（定期突合で検出する仕組みを用意）。</li>
+      </ul>
+    </div>
+    <p class="note">※ これらは事前に手当てできる範囲と考えていますが、判断材料として明示しておきます。</p>
+  </div></div></div>
+</section>
+
+<!-- ===== 5 ===== -->
+<section class="sec" id="s5">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">05</span>
+    <h2 class="sec__title">現場から出そうな質問<span class="sec__sub">クリックで回答を表示</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <div class="faq">
+      <details>
+        <summary>今まで使っていたリンクやお気に入りは使えますか</summary>
+        <div class="a"><p>移行後は使えなくなります。切り替え前に新しいリンクをお知らせします。社内文書やメールに貼られたリンクも、順次差し替えが必要になります。</p></div>
+      </details>
+      <details>
+        <summary>探し方は変わりますか</summary>
+        <div class="a"><p>検索の仕方は変わりません。</p></div>
+      </details>
+      <details>
+        <summary>印刷して現場に掲示している文書はどうなりますか</summary>
+        <div class="a">
+          <p>これまでどおり印刷して使えます。印刷物には管理番号・版数・発行日と二次元コードが入っており、手元の紙が最新かどうかをその場で確認できます。</p>
+          <svg width="330" height="112" viewBox="0 0 330 112" role="img" aria-label="印刷物に入る管理番号・版数・発行日と二次元コードのイメージ">
+            <rect x="1" y="1" width="328" height="110" rx="6" fill="#fff" stroke="#D2D9E4"/>
+            <g font-family="'Roboto Mono',monospace" font-size="10.5" fill="#63738C" letter-spacing="1">
+              <text x="20" y="30">管理番号</text><text x="20" y="60">版　数</text><text x="20" y="90">発行日</text>
+            </g>
+            <g stroke="#101B2E" stroke-width="1.6"><path d="M90 26h110M90 56h60M90 86h80"/></g>
+            <g transform="translate(240,26)" fill="#101B2E">
+              <rect x="0" y="0" width="60" height="60" fill="#fff" stroke="#101B2E" stroke-width="1.4"/>
+              <rect x="7" y="7" width="16" height="16"/><rect x="37" y="7" width="16" height="16"/><rect x="7" y="37" width="16" height="16"/>
+              <rect x="30" y="30" width="6" height="6"/><rect x="44" y="30" width="6" height="6"/><rect x="30" y="44" width="6" height="6"/><rect x="44" y="44" width="6" height="6"/><rect x="37" y="51" width="6" height="6"/>
+              <rect x="12" y="12" width="6" height="6" fill="#fff"/><rect x="42" y="12" width="6" height="6" fill="#fff"/><rect x="12" y="42" width="6" height="6" fill="#fff"/>
+            </g>
+          </svg>
+        </div>
+      </details>
+      <details>
+        <summary>古い版が Q-Published に残ってしまうことはありませんか</summary>
+        <div class="a"><p>改訂・廃止は自動で反映されます。加えて、書庫と棚の内容を定期的に突き合わせ、食い違いがあれば検出する仕組みを用意します。</p></div>
+      </details>
+      <details>
+        <summary>管理の手間が増えませんか</summary>
+        <div class="a"><p>Q-Published は人が手を加えない自動生成の場所です。管理対象は増えません。むしろ Q-Library の問い合わせ対応が減ります。</p></div>
+      </details>
+    </div>
+  </div></div></div>
+</section>
+
+<!-- ===== 6 ===== -->
+<section class="sec" id="s6">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">06</span>
+    <h2 class="sec__title">今後の進め方<span class="sec__sub">8月〜9月のスケジュール</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <ul class="tl">
+      <li><div class="when">8月上旬〜中旬</div><div class="what">仕組みの構築（作業中）</div></li>
+      <li class="hot"><div class="when">8月17日</div><div class="what">完成形をご確認いただく</div></li>
+      <li><div class="when">8月下旬</div><div class="what">製造部への説明</div></li>
+      <li class="go"><div class="when">9月</div><div class="what">製造部・品質保証本部の文書で運用開始</div></li>
+      <li><div class="when">以降</div><div class="what">状況を見て他部門へ展開</div></li>
+    </ul>
+  </div></div></div>
+</section>
+
+<!-- ===== 7 ===== -->
+<section class="sec sec--key" id="s7">
+  <button class="sec__head" aria-expanded="true">
+    <span class="sec__no">07</span>
+    <h2 class="sec__title">本日ご確認いただきたいこと<span class="sec__sub">2点</span></h2>
+    <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="sec__wrap"><div class="sec__inner"><div class="sec__body">
+    <div class="ask">
+      <div class="ask__n">1</div>
+      <div><h4>閲覧先を Q-Published に一本化する方針について</h4><p>正本・承認・責任の所在は変わりません。閲覧運用の変更としてご承認いただけるか。</p></div>
+    </div>
+    <div class="ask">
+      <div class="ask__n">2</div>
+      <div><h4>製造部への説明を、いつ・どの場で・誰が行うか</h4><p>部門長会議で扱うのか、製造部内でこちらから説明するのか、ご意向をうかがえればと思います。</p></div>
+    </div>
+    <div class="callout" style="border-left-color:var(--shu)">
+      現場の混乱を抑えるうえで、<strong>説明の場の設定が最も重要</strong>と考えています。仕組みそのものより、伝え方で結果が変わる部分です。
+    </div>
+  </div></div></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h3>参考情報</h3>
+    <ul>
+      <li>元資料：「文書の閲覧先の一本化について」品質保証本部／2026年8月</li>
+      <li>Q-Library（正本の保管先・文書管理担当者向け）／ Q-Published（社員の閲覧先）<br><span style="color:#7C8EA3;font-size:13px">新しいリンクは切り替え前に別途ご案内します。</span></li>
+      <li>問い合わせ窓口：品質保証本部（切り替え直後の一定期間、集中受付）</li>
+    </ul>
+    <p class="fine">本資料は口頭説明を前提とした要点資料です。記載のない詳細は説明時に補足します。<br>※「移行にあたっての備え」内の論点は、判断材料として整理したものです。</p>
+  </div>
+</footer>
+
+<script>
+/* ---- セクション開閉 ---- */
+var secs = Array.prototype.slice.call(document.querySelectorAll('.sec'));
+secs.forEach(function(sec){
+  sec.querySelector('.sec__head').addEventListener('click', function(){
+    var closed = sec.classList.toggle('is-closed');
+    this.setAttribute('aria-expanded', String(!closed));
+  });
+});
+function toggleAll(){
+  var anyOpen = secs.some(function(s){ return !s.classList.contains('is-closed'); });
+  secs.forEach(function(s){
+    s.classList.toggle('is-closed', anyOpen);
+    s.querySelector('.sec__head').setAttribute('aria-expanded', String(!anyOpen));
+  });
+}
+/* ---- 図解の切替 ---- */
+function setMode(i){
+  document.getElementById('pane0').classList.toggle('on', i===0);
+  document.getElementById('pane1').classList.toggle('on', i===1);
+  var btns = document.querySelectorAll('.switch button');
+  btns.forEach(function(b,idx){ b.classList.toggle('on', idx===i); });
+}
+/* ---- 現在位置 ---- */
+var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    }
+  });
+}, {rootMargin:'-80px 0px -65% 0px'});
+secs.forEach(function(s){ obs.observe(s); });
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>重大度（Severity）判定基準表</title>
+<style>
+:root{
+  --ink:#16202A; --ink2:#46555F; --ink3:#6C7B85;
+  --rule:#C8D2D8; --paper:#FFF; --bg:#E8ECEF;
+  --navy:#0F3B5C; --navy-tint:#E7EEF4;
+  --hi:#C4161C; --hi-bg:#FBEAEA;
+  --mid:#D96A00; --mid-bg:#FDF0E0;
+  --low:#00734A; --low-bg:#E5F1EB;
+  --blue:#005BAC; --blue-bg:#E4EEF7;
+  --flag:#FFF0A8;
+  --f-display:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","MS PMincho",serif;
+  --f-body:"Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Noto Sans JP",Meiryo,sans-serif;
+  --f-mono:"SFMono-Regular",Consolas,"Roboto Mono",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;padding:28px 16px 56px;background:var(--bg);color:var(--ink);
+  font-family:var(--f-body);font-size:15px;line-height:1.8;
+  font-feature-settings:"palt" 1;
+}
+.sheet{max-width:1040px;margin:0 auto;background:var(--paper);
+  padding:40px 46px 44px;box-shadow:0 1px 3px rgba(22,32,42,.14)}
+
+h1{font-family:var(--f-display);font-weight:600;font-size:26px;
+  letter-spacing:.02em;margin:0 0 10px}
+.howto{
+  border-left:4px solid var(--navy);background:var(--navy-tint);
+  padding:12px 18px;margin:0 0 18px;font-size:14.5px;
+}
+.howto b{color:var(--navy)}
+.meta{
+  display:flex;flex-wrap:wrap;gap:0 26px;font-family:var(--f-mono);
+  font-size:11.5px;color:var(--ink3);
+  border-top:2px solid var(--navy);border-bottom:1px solid var(--rule);
+  padding:8px 0;margin-bottom:18px;
+}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12.5px;
+  color:var(--ink2);margin:0 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.swatch{display:inline-block;width:9px;height:9px}
+.sw-h{background:var(--hi)}.sw-m{background:var(--mid)}.sw-l{background:var(--low)}
+
+.tw{overflow-x:auto;border:1px solid var(--rule);margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{border:1px solid var(--rule);padding:12px 14px;vertical-align:top;text-align:left}
+thead th{background:var(--navy-tint);color:var(--navy);font-weight:600;white-space:nowrap}
+tbody th{background:#F4F7F8;font-weight:600;white-space:nowrap;width:112px}
+.col-h{background:var(--hi-bg)!important;color:var(--hi)!important}
+.col-m{background:var(--mid-bg)!important;color:var(--mid)!important}
+.col-l{background:var(--low-bg)!important;color:var(--low)!important}
+td.c-h{border-left:3px solid var(--hi)}
+td.c-m{border-left:3px solid var(--mid)}
+td.c-l{border-left:3px solid var(--low)}
+td ul{margin:0;padding-left:1.1em}
+td li{margin:5px 0}
+td li::marker{color:var(--ink3)}
+.eg{display:block;font-size:12.5px;color:var(--ink2);margin-top:2px}
+.none{color:var(--ink3);font-size:13px;display:block}
+.note{font-size:12.5px;color:var(--ink2);margin:8px 0 0;
+  padding-left:1.1em;text-indent:-1.1em}
+.flag{background:var(--flag);padding:0 3px;font-weight:600}
+.badge{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;
+  border:1px solid var(--blue);color:var(--blue);background:var(--blue-bg);
+  padding:1px 6px;margin-right:5px;white-space:nowrap}
+
+.memo{margin-top:26px;border:1px solid var(--rule);padding:14px 18px}
+.memo h2{font-family:var(--f-display);font-size:15px;font-weight:600;margin:0 0 10px}
+.memo-lines{height:112px;background:repeating-linear-gradient(
+  to bottom,transparent,transparent 27px,var(--rule) 27px,var(--rule) 28px)}
+
+footer{margin-top:34px;padding-top:12px;border-top:2px solid var(--navy);
+  font-family:var(--f-mono);font-size:11px;color:var(--ink3);
+  display:flex;flex-wrap:wrap;gap:6px 24px}
+
+@media (max-width:820px){
+  body{padding:14px 0 36px}
+  .sheet{padding:24px 16px 30px}
+  h1{font-size:21px}
+}
+@media print{
+  @page{size:A4 portrait;margin:13mm 11mm}
+  body{background:#fff;padding:0;font-size:10.5pt;line-height:1.65}
+  .sheet{box-shadow:none;padding:0;max-width:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table{min-width:0;font-size:9.5pt}
+  th,td{padding:7px 8px}
+  tr,.memo{break-inside:avoid}
+  .tw{overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>重大度（Severity）判定基準表</h1>
+
+  <div class="meta">
+    <span>draft 0.3</span>
+    <span>2026-08-09</span>
+    <span>審議中 ／ 次回継続</span>
+  </div>
+
+  <p class="howto"><b>使い方</b>　①〜⑤の5つの軸を、それぞれ別々に見ます。各軸で当てはまる区分を1つずつ選び、<b>5つのうちいちばん高いもの</b>をその案件の重大度とします。迷ったときは高いほうを選びます。</p>
+
+  <div class="legend">
+    <span><span class="swatch sw-h"></span>高</span>
+    <span><span class="swatch sw-m"></span>中</span>
+    <span><span class="swatch sw-l"></span>低</span>
+    <span><span class="badge">修正</span>前回の表から変えたところ</span>
+    <span><span class="flag">【要決定】</span>数値がまだ決まっていないところ</span>
+  </div>
+
+  <div class="tw">
+  <table>
+    <thead>
+      <tr>
+        <th>軸</th>
+        <th class="col-h"><span class="swatch sw-h"></span> 高</th>
+        <th class="col-m"><span class="swatch sw-m"></span> 中</th>
+        <th class="col-l"><span class="swatch sw-l"></span> 低</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <th>① 安全性</th>
+        <td class="c-h"><ul>
+          <li>けが人が出た（受傷・死亡）</li>
+          <li>要求性能が出ていない
+            <span class="eg">例：保護帽の帽体割れ／墜落制止用器具のランヤード破断／防毒マスクの吸収缶漏れ</span></li>
+        </ul></td>
+        <td class="c-m"><ul>
+          <li>ヒヤリハット。あぶなかったが、けが人は出なかった</li>
+          <li>守る性能そのものには関係しないが、使うのに困る不具合
+            <span class="eg">例：表示ラベルの不備／付属品の欠品／締結部のゆるみ</span></li>
+        </ul></td>
+        <td class="c-l"><ul>
+          <li>安全には関係しない
+            <span class="eg">例：外観の傷／梱包不良／数量違い／誤出荷</span></li>
+        </ul></td>
+      </tr>
+
+      <tr>
+        <th>② 法規・認証</th>
+        <td class="c-h"><ul>
+          <li>型式検定に合格した製品なのに、構造規格に合っていない疑いがある</li>
+          <li>重大製品事故にあたる疑いがある</li>
+          <li>リコール・回収をすることになるかもしれない
+            <span class="eg"><span class="badge">修正</span>すでに市場に出た品を回収する必要があるときも、ここに入れる</span></li>
+          <li>監督官庁や消費者庁から問い合わせが来た</li>
+          <li>選択や使用に関わる誤表示</li>
+        </ul></td>
+        <td class="c-m"><ul>
+          <li>認証の表示や取扱説明書が間違っている
+            <span class="eg">例：SGマーク／型式検定合格標章の表示不備</span></li>
+          <li>顧客から報告書を出すよう求められている</li>
+        </ul></td>
+        <td class="c-l"><ul>
+          <li>どれにも当てはまらない</li>
+        </ul></td>
+      </tr>
+
+      <tr>
+        <th>③ 波及範囲</th>
+        <td class="c-h">
+          <span class="badge">修正</span>
+          <span class="none">なし。この軸だけでは「中」までとする</span>
+        </td>
+        <td class="c-m"><ul>
+          <li>同じロット全体、または複数のロットに広がっている疑いがある</li>
+          <li>同じロットの中で、いくつも不具合が出ている</li>
+          <li>「同一品再発」または「類似案件再発」</li>
+        </ul>
+        <p class="note">※ 市場に出た品の回収が必要なときは、②の「リコール・回収」に当てはまるので、②で高になる</p></td>
+        <td class="c-l"><ul>
+          <li>1個だけの不具合。ほかに広がっていない</li>
+        </ul></td>
+      </tr>
+
+      <tr>
+        <th>④ 顧客・市場</th>
+        <td class="c-h">
+          <span class="badge">修正</span>
+          <span class="none">なし。この軸だけでは「中」までとする</span>
+        </td>
+        <td class="c-m"><ul>
+          <li>官公庁や公共工事に納めた品</li>
+          <li>顧客が使用停止または出荷停止をした</li>
+          <li>顧客に報告書を出す必要がある</li>
+          <li>継続的な取引先から、品質を直すよう求められている</li>
+        </ul>
+        <p class="note">※ 顧客が使用停止・出荷停止をした案件は、①や②でも高になることが多い。その場合はいちばん高いものを採るので、全体は高になる</p></td>
+        <td class="c-l"><ul>
+          <li>報告書はいらない</li>
+        </ul></td>
+      </tr>
+
+      <tr>
+        <th>⑤ 経済影響</th>
+        <td class="c-h">
+          <span class="badge">修正</span>
+          <span class="none">なし。金額や数量だけでは高にしない</span>
+        </td>
+        <td class="c-m"><ul>
+          <li>被害金額が <span class="flag">10万円以上【要決定】</span></li>
+          <li>または数量が <span class="flag">50個以上【要決定】</span></li>
+        </ul></td>
+        <td class="c-l"><ul>
+          <li>上の金額・数量より少ない</li>
+        </ul></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+
+  <p class="note">※ 修正の趣旨：「高」を決められる軸を①安全性と②法規・認証の2つに絞りました。③④⑤は、その軸だけでは「中」までとします。</p>
+
+  <div class="memo">
+    <h2>次回までの持ち帰り</h2>
+    <div class="memo-lines"></div>
+  </div>
+
+  <footer>
+    <span>重大度判定基準表　draft 0.3</span>
+    <span>次回：本表の確定</span>
+  </footer>
+
+</div>
+</body>
+</html>
