@@ -1,0 +1,35 @@
+# === OS 固有ファイル ===
+.DS_Store
+Thumbs.db
+
+# === エディタ / 開発環境 ===
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+
+# === Node / TypeScript 関連（SPFxやWebPart開発） ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ビルド生成物
+dist/
+build/
+lib/
+temp/
+*.tsbuildinfo
+
+# === 環境変数・シークレット情報 ===
+.env
+.env.local
+.env.*.local
+
+# === 一時ファイル・ログ ===
+*.log
+*.tmp
+*.bak
