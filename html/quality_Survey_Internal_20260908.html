@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>品質アンケート 結果のご報告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFE800;
+    --gray:#B2BFC3;
+    --gray-soft:#E8EDEE;
+    --black:#000000;
+    --white:#FFFFFF;
+    --display:"Dela Gothic One","Hiragino Kaku Gothic StdN","Noto Sans CJK JP","Noto Sans JP",sans-serif;
+    --body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","BIZ UDPGothic","Noto Sans CJK JP","Noto Sans JP",sans-serif;
+    --wrap:1080px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--white);color:var(--black);
+    font-family:var(--body);font-weight:500;font-size:17px;line-height:1.85;
+    font-feature-settings:"palt";
+  }
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+  h1,h2,h3{font-family:var(--display);font-weight:900;font-synthesis:none;margin:0;line-height:1.3;letter-spacing:.02em}
+  h1,h2,h3,p,li{word-break:auto-phrase}
+  p{margin:0}
+
+  /* ---------- header ---------- */
+  .tape{height:10px;background:repeating-linear-gradient(-45deg,var(--yellow) 0 14px,var(--black) 14px 28px)}
+  .site-head .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:14px;padding-bottom:14px;font-weight:700;font-size:14px}
+  .site-head .dept{color:#3d4649}
+
+  /* ---------- helmet icon ---------- */
+  .hat{display:block;width:100%;height:auto;overflow:visible}
+  .hat use{stroke:var(--black);stroke-width:1.5;stroke-linejoin:round}
+  .hat.on use{fill:var(--yellow)}
+  .hat.off use{fill:var(--gray)}
+  .hat.empty use{fill:var(--white)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 72px}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(34px,5vw,62px);line-height:1.25}
+  .hero h1 .line{display:inline-block;white-space:nowrap}
+  .hero h1 .num{display:inline-block;background:var(--yellow);padding:0 .14em;margin-right:.04em;border:3px solid var(--black);border-radius:.18em;transform:rotate(-3deg);box-shadow:4px 4px 0 var(--black)}
+  .hero .lead{margin-top:28px;font-size:18px;max-width:30em}
+  .hero .lead strong{font-weight:900}
+  .crowd{background:var(--gray-soft);border-radius:28px;padding:28px 26px 22px}
+  .crowd-grid{display:grid;grid-template-columns:repeat(16,1fr);gap:5px 4px}
+  .crowd-legend{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;margin-top:18px;font-size:14px;font-weight:700}
+  .crowd-legend span{display:inline-flex;align-items:center;gap:7px}
+  .crowd-legend svg{width:20px}
+  .crowd-legend .rate{margin-left:auto;font-family:var(--display);font-weight:900;font-synthesis:none;font-size:22px}
+  .crowd-legend .rate small{font-family:var(--body);font-weight:700;font-size:13px;margin-right:6px}
+  .crowd-note{margin-top:4px;font-size:13px;color:#3d4649}
+
+  /* the one moment of motion: helmets fill in on load */
+  @media (prefers-reduced-motion:no-preference){
+    .crowd-grid .hat.on use{animation:fillIn .45s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i) * 11ms + 250ms)}
+    .crowd-grid .hat.on{animation:bump .45s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i) * 11ms + 250ms)}
+  }
+  @keyframes fillIn{from{fill:var(--white)}to{fill:var(--yellow)}}
+  @keyframes bump{0%{transform:translateY(0)}40%{transform:translateY(-4px)}100%{transform:translateY(0)}}
+
+  /* ---------- section base ---------- */
+  section.block{padding:88px 0}
+  .block h2{font-size:clamp(30px,4.2vw,46px)}
+  .block .intro{margin-top:14px;font-size:18px;max-width:34em}
+
+  /* ---------- good points: stickers ---------- */
+  .stickers{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:40px 28px}
+  .stickers li{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .sticker{
+    width:156px;aspect-ratio:1;border-radius:50%;
+    border:3px solid var(--black);box-shadow:5px 5px 0 var(--black);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:900;font-synthesis:none;font-size:50px;line-height:1;
+    transform:rotate(var(--r,0deg));
+  }
+  .sticker small{font-size:.44em;margin-left:.06em}
+  .s-yellow{background:var(--yellow)}
+  .s-white{background:var(--white)}
+  .s-gray{background:var(--gray)}
+  .stickers p{margin-top:22px;font-weight:700;font-size:16px;line-height:1.65;max-width:11.5em}
+  .stickers p .sub{display:block;font-weight:500;font-size:13.5px;color:#3d4649;margin-top:4px}
+
+  /* ---------- issues ---------- */
+  .issues{background:var(--gray-soft)}
+  .issue-list{list-style:none;margin:48px 0 0;padding:0;display:grid;gap:20px}
+  .issue{
+    background:var(--white);border:3px solid var(--black);border-radius:22px;
+    padding:28px 32px;display:grid;grid-template-columns:160px 1fr 300px;gap:28px;align-items:center;
+  }
+  .issue .pct{font-family:var(--display);font-weight:900;font-synthesis:none;font-size:72px;line-height:1}
+  .issue .pct small{font-size:.42em;margin-left:.05em}
+  .issue h3{font-family:var(--body);font-weight:900;font-size:20px;line-height:1.55}
+  .issue .extra{margin-top:8px;font-size:15px;color:#3d4649}
+  .issue .extra strong{color:var(--black);font-weight:900}
+  .ten{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+  .ten-cap{margin-top:8px;font-size:14px;font-weight:700;text-align:right}
+
+  /* ---------- next ---------- */
+  .next-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:48px;align-items:start}
+  .next h3{font-size:24px}
+  .plans{list-style:none;margin:24px 0 0;padding:0}
+  .plans li{position:relative;padding:16px 0 16px 46px;border-top:2px solid var(--black);font-weight:700;line-height:1.65}
+  .plans li:last-child{border-bottom:2px solid var(--black)}
+  .plans li::before{
+    content:"";position:absolute;left:4px;top:19px;width:24px;height:24px;border-radius:50%;
+    background:var(--yellow);border:2.5px solid var(--black);
+  }
+  .plans .why{display:block;font-weight:500;font-size:14px;color:#3d4649}
+  .plans-note{margin-top:14px;font-size:13px;color:#3d4649}
+
+  .explain{background:var(--gray-soft);border-radius:28px;padding:34px 32px}
+  .explain .q{font-family:var(--display);font-weight:900;font-synthesis:none;font-size:24px;line-height:1.4}
+  .explain .scope{margin-top:16px;font-size:16px}
+  .explain .scope strong{font-weight:900;background:linear-gradient(transparent 58%,var(--yellow) 58%)}
+  .explain .scope .sub{display:block;margin-top:6px;font-size:14px;color:#3d4649}
+  .pdca{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pdca li{background:var(--white);border:2.5px solid var(--black);border-radius:18px;padding:14px 14px 14px 62px;position:relative;min-height:88px}
+  .pdca li.check{background:var(--yellow)}
+  .pdca .letter{
+    position:absolute;left:12px;top:14px;width:40px;height:40px;border-radius:50%;
+    background:var(--black);color:var(--white);font-family:var(--display);font-weight:900;font-synthesis:none;font-size:20px;
+    display:flex;align-items:center;justify-content:center;line-height:1;
+  }
+  .pdca b{display:block;font-weight:900;font-size:16px;line-height:1.4}
+  .pdca span.d{display:block;font-size:14px;line-height:1.6;margin-top:2px}
+  .pdca-loop{margin-top:14px;font-size:14px;font-weight:700}
+  .pdca-loop .sub{display:block;font-weight:500;color:#3d4649;margin-top:2px}
+
+  /* ---------- footer ---------- */
+  .site-foot{background:var(--black);color:var(--white);padding:56px 0 40px}
+  .site-foot .thanks{font-family:var(--display);font-weight:900;font-synthesis:none;font-size:clamp(24px,3.4vw,34px);line-height:1.4}
+  .site-foot .contact{margin-top:14px;font-size:16px}
+  .site-foot .contact strong{color:var(--black);background:var(--yellow);padding:1px 8px;border-radius:6px;font-weight:900}
+  .site-foot .notes{margin-top:36px;padding-top:18px;border-top:1px solid #4a5356;font-size:12.5px;line-height:1.8;color:var(--gray)}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .hero .wrap{grid-template-columns:1fr;gap:40px}
+    .stickers{grid-template-columns:repeat(3,1fr)}
+    .issue{grid-template-columns:130px 1fr;}
+    .issue .pct{font-size:56px}
+    .issue .viz{grid-column:1 / -1}
+    .ten{max-width:360px}
+    .ten-cap{text-align:left}
+    .next-grid{grid-template-columns:1fr;gap:48px}
+  }
+  @media (max-width:600px){
+    body{font-size:16px}
+    .hero{padding:36px 0 64px}
+    .hero .lead{font-size:16px}
+    section.block{padding:64px 0}
+    .block .intro{font-size:16px}
+    .crowd{padding:20px 16px 16px;border-radius:22px}
+    .crowd-grid{gap:3px 2px}
+    .crowd-legend .rate{margin-left:0;width:100%}
+    .stickers{grid-template-columns:repeat(2,1fr);gap:36px 12px}
+    .sticker{width:128px;font-size:42px}
+    .stickers li:last-child:nth-child(odd){grid-column:1 / -1}
+    .stickers p{font-size:14.5px}
+    .issue{grid-template-columns:1fr;padding:24px 22px;gap:14px}
+    .issue .pct{font-size:52px}
+    .pdca{grid-template-columns:1fr}
+    .explain{padding:26px 20px}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="hat" viewBox="0 0 24 20">
+      <path d="M4.2 15.2C4.2 8.3 7.7 3.6 12 3.6s7.8 4.7 7.8 11.6z"/>
+      <rect x="1.2" y="15.2" width="21.6" height="3.2" rx="1.6"/>
+      <path d="M12 3.6v11.6" fill="none"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="tape" aria-hidden="true"></div>
+<header class="site-head">
+  <div class="wrap">
+    <span>品質アンケート 結果のご報告</span>
+    <span class="dept">品質保証本部</span>
+  </div>
+</header>
+
+<main>
+  <!-- ===== 1. お礼と概要 ===== -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1><span class="line"><span class="num">116</span>人の声が、</span><br><span class="line">集まりました。</span></h1>
+        <p class="lead">品質アンケートへのご協力、ありがとうございました。対象<strong>160人</strong>のうち<strong>116人</strong>が回答し、回答率は<strong>72.5%</strong>でした。みなさんの声から見えてきたことをお知らせします。</p>
+      </div>
+      <figure class="crowd" style="margin:0">
+        <div class="crowd-grid" role="img" aria-label="対象160人のうち116人が回答。回答率72.5%">
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:0"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:1"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:2"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:3"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:4"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:5"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:6"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:7"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:8"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:9"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:10"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:11"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:12"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:13"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:14"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:15"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:16"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:17"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:18"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:19"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:20"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:21"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:22"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:23"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:24"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:25"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:26"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:27"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:28"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:29"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:30"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:31"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:32"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:33"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:34"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:35"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:36"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:37"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:38"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:39"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:40"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:41"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:42"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:43"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:44"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:45"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:46"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:47"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:48"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:49"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:50"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:51"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:52"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:53"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:54"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:55"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:56"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:57"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:58"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:59"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:60"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:61"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:62"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:63"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:64"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:65"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:66"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:67"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:68"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:69"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:70"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:71"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:72"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:73"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:74"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:75"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:76"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:77"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:78"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:79"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:80"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:81"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:82"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:83"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:84"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:85"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:86"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:87"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:88"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:89"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:90"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:91"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:92"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:93"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:94"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:95"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:96"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:97"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:98"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:99"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:100"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:101"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:102"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:103"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:104"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:105"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:106"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:107"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:108"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:109"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:110"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:111"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:112"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:113"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:114"><use href="#hat"/></svg>
+          <svg class="hat on" viewBox="0 0 24 20" aria-hidden="true" style="--i:115"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+          <svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>
+        </div>
+        <figcaption>
+          <div class="crowd-legend">
+            <span><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>回答 116人</span>
+            <span><svg class="hat off" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg>未回答 44人</span>
+            <span class="rate"><small>回答率</small>72.5%</span>
+          </div>
+          <p class="crowd-note">ヘルメット1つが1人です。</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 2. できていること ===== -->
+  <section class="block good">
+    <div class="wrap">
+      <h2>できていること</h2>
+      <p class="intro">品質を意識して働く姿勢は、多くの職場で見られました</p>
+      <ul class="stickers">
+        <li>
+          <div class="sticker s-yellow" style="--r:-5deg"><span>97<small>%</small></span></div>
+          <p>会社に品質方針があることを知っている</p>
+        </li>
+        <li>
+          <div class="sticker s-white" style="--r:4deg"><span>72<small>%</small></span></div>
+          <p>自分の仕事が品質に関わっていると感じる</p>
+        </li>
+        <li>
+          <div class="sticker s-gray" style="--r:-2deg"><span>67<small>%</small></span></div>
+          <p>後工程やお客様を、いつも意識している<span class="sub">「ときどき」も含めると97%</span></p>
+        </li>
+        <li>
+          <div class="sticker s-yellow" style="--r:5deg"><span>81<small>%</small></span></div>
+          <p>標準書と実際のやり方が違ったら、誰かに伝える</p>
+        </li>
+        <li>
+          <div class="sticker s-white" style="--r:-4deg"><span>84<small>%</small></span></div>
+          <p>やり方を変える前に、上長や関係者に相談する</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 3. 見えてきた課題 ===== -->
+  <section class="block issues">
+    <div class="wrap">
+      <h2>見えてきた課題</h2>
+      <p class="intro">一方で、品質の仕組みが「毎日の仕事で使える・役に立つ」ところまでは、まだ届いていないようです。</p>
+      <ul class="issue-list">
+        <li class="issue">
+          <div class="pct">61<small>%</small></div>
+          <div>
+            <h3>作業標準書の最新版がどこにあるか、すぐにはわからない</h3>
+          </div>
+          <div class="viz">
+            <div class="ten" role="img" aria-label="10人のうち約6人"><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg></div>
+            <p class="ten-cap">10人のうち約6人</p>
+          </div>
+        </li>
+        <li class="issue">
+          <div class="pct">70<small>%</small></div>
+          <div>
+            <h3>記録を書くとき「これは何の役に立つのだろう」と感じることがある</h3>
+          </div>
+          <div class="viz">
+            <div class="ten" role="img" aria-label="10人のうち約7人"><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg></div>
+            <p class="ten-cap">10人のうち約7人</p>
+          </div>
+        </li>
+        <li class="issue">
+          <div class="pct">57<small>%</small></div>
+          <div>
+            <h3>品質の仕組みについて、説明（ISO教育など）を受けたことがない</h3>
+            <p class="extra">品質の仕組みが自分の仕事に「役立っている」と感じている人は、<strong>26%</strong>にとどまりました。</p>
+          </div>
+          <div class="viz">
+            <div class="ten" role="img" aria-label="10人のうち約6人"><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat on" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg><svg class="hat empty" viewBox="0 0 24 20" aria-hidden="true"><use href="#hat"/></svg></div>
+            <p class="ten-cap">10人のうち約6人</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== 4. これからのこと ===== -->
+  <section class="block next">
+    <div class="wrap">
+      <h2>これからのこと</h2>
+      <p class="intro">いただいた声をもとに、品質の仕組みを「使える・役立つ」ものにしていきます。</p>
+      <div class="next-grid">
+        <div>
+          <h3>取り組むこと（予定）</h3>
+          <ul class="plans">
+            <li>作業標準書の置き場所をそろえ、最新版がすぐに見つかるようにします。<span class="why">「どこにあるかわからない」61%への対応</span></li>
+            <li>品質の仕組みを知るための説明会・教育の機会をつくります。<span class="why">「説明を受けたことがない」57%への対応</span></li>
+          </ul>
+          <p class="plans-note">日程や進め方が決まりしだい、あらためて部門・所属長からお知らせします。</p>
+        </div>
+
+        <div class="explain">
+          <p class="q">ひとこと解説：品質の仕組みってなに？</p>
+          <p class="scope">対象は、製品や製造工程だけではありません。営業・購買・物流・総務も含めた<strong>会社のすべての仕事</strong>が対象です。<span class="sub">アンケートでこう答えた人は57%でした。</span></p>
+          <p class="scope">そのしくみの基本が、次の4つをくり返す「PDCA」です。</p>
+          <ol class="pdca">
+            <li><span class="letter" aria-hidden="true">P</span><b>計画（Plan）</b><span class="d">やり方と目標を決める。作業標準書はここでつくります。</span></li>
+            <li><span class="letter" aria-hidden="true">D</span><b>実行（Do）</b><span class="d">作業標準書のとおりに仕事をし、結果を記録に残す。</span></li>
+            <li class="check"><span class="letter" aria-hidden="true">C</span><b>確認（Check）</b><span class="d">記録を見て、うまくいったか確かめる。記録はここで役立ちます。</span></li>
+            <li><span class="letter" aria-hidden="true">A</span><b>改善（Act）</b><span class="d">気づいたことを提案し、標準書の見直しにつなげる。みなさんの気づきは、ここで生かされます。</span></li>
+          </ol>
+          <p class="pdca-loop">Aのあとは、また Pへ。くり返すことで、仕事が少しずつ良くなっていきます。<span class="sub">PDCAの意味まで知っていた人は38%でした。</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="thanks">これからも、みんなで品質をつくっていきましょう。</p>
+    <p class="contact">ご質問・ご意見は <strong>品質保証本部</strong> までお気軽にどうぞ。</p>
+    <p class="notes">対象160人、回答116人。割合は回答者に対するもので、小数点以下を四捨五入しています。無回答があった設問は、無回答を除いて計算しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>
